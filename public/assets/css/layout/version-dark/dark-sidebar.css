@@ -1,0 +1,23 @@
+[data-theme-version="dark"] .deznav, [data-theme-version="dark"] .read-content-attachment .attachment > div:not(:last-child) ,
+[data-theme-version="dark"][data-layout="vertical"][data-sidebar-position="fixed"] .deznav {
+    border-color: #444444;
+}
+[data-theme-version="dark"] .deznav .metismenu ul a:hover, [data-theme-version="dark"] .deznav .metismenu ul a:focus, [data-theme-version="dark"] .deznav .metismenu ul a.mm-active {
+    color: #fff !important;
+}
+[data-theme-version="dark"] .deznav .metismenu ul a:before {
+    background-color: #fff;
+}
+[data-theme-version="dark"] .deznav .metismenu > li:hover > a, [data-theme-version="dark"] .deznav .metismenu > li:focus > a, [data-theme-version="dark"] .deznav .metismenu > li.mm-active > a {
+    color: #fff !important;
+}
+[data-theme-version="dark"] .mix-chart-tab .nav-link {
+    background: #444444 !important;
+    color: #fff !important;
+}
+[data-theme-version="dark"][data-sidebar-style="mini"] .deznav .metismenu li > ul {
+    background-color: #242424;
+}
+[data-theme-version="dark"] .deznav .metismenu a {
+    color: #fff !important;
+}

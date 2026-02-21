@@ -1,0 +1,21 @@
+[data-theme-version="dark"] #AllProject .apexcharts-series path {
+    stroke: #444444;
+}
+[data-theme-version="dark"] .apexcharts-text tspan {
+    fill: #fff;
+}
+[data-theme-version="dark"] .ttl-project .pr-data:after, [data-theme-version="dark"] .active-country:after {
+    background: #444444;
+}
+[data-theme-version="dark"] #overiewChart line {
+    stroke: #444444;
+}       
+[data-theme-version="dark"] .apexcharts-canvas text {
+    fill: white !important;
+}
+[data-theme-version="dark"] .chart-grd:after {
+    background: transparent;
+}
+[data-theme-version="dark"] #NewCustomers #SvgjsSvg1006 {
+    margin-top: 16px;
+}

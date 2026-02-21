@@ -1,0 +1,214 @@
+@media (min-width: 47.9375rem) {
+    [data-sidebar-style="modern"] .nav-header {
+        width: 10.625rem;
+   }
+    [data-sidebar-style="modern"] .nav-header .brand-logo {
+        justify-content: center;
+		padding: 0 2rem;
+   }
+    [data-sidebar-style="modern"] .deznav {
+       background:var(--sidebar-bg);
+       
+   }
+    [data-sidebar-style="modern"] .deznav .header-profile {
+        margin-bottom: 0.3125rem;
+   }
+    [data-sidebar-style="modern"] .deznav .header-profile > a.nav-link {
+        display: block;
+        text-align: center;
+        margin: 0 -0.625rem 0.9375rem;
+        padding: 0.9375rem 0.625rem;
+        border-radius: var(--radius);
+   }
+    [data-sidebar-style="modern"] .deznav .header-profile > a.nav-link img {
+        margin-bottom: 0.3125rem;
+   }
+    [data-sidebar-style="modern"] .deznav .header-profile > a.nav-link .header-info {
+        margin-left: 0 !important;
+        text-align: center;
+        display: none;
+   }
+    [data-sidebar-style="modern"] .deznav .header-profile > a.nav-link .header-info small {
+        text-align: center !important;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li {
+        text-align: center;
+   }
+    [data-sidebar-style="modern"][data-layout="horizontal"] .deznav .metismenu > li {
+		border-right:1px solid rgba(255,255,255,.2);
+	}
+    [data-sidebar-style="modern"] .deznav .metismenu > li > a {
+        padding: 1.25rem 0.9375rem 1.25rem 0.9375rem;
+        margin: 0.125rem 0;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li > a::after {
+        display: none;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li > a:hover > a, [data-sidebar-style="modern"] .deznav .metismenu > li > a:focus > a, [data-sidebar-style="modern"] .deznav .metismenu > li > a:active > a, [data-sidebar-style="modern"] .deznav .metismenu > li > a.mm-active > a {
+        background-color: var(--primary-dark);
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li:hover, [data-sidebar-style="modern"] .deznav .metismenu > li.mm-active {
+        padding: 0;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li:hover > a, [data-sidebar-style="modern"] .deznav .metismenu > li.mm-active > a {
+        background: rgba(13, 153, 255, 0.05);
+        color: black;
+        border-radius: var(--radius);
+        box-shadow: none;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li:hover > a i, [data-sidebar-style="modern"] .deznav .metismenu > li.mm-active > a i {
+        color: var(--white);
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li:hover > a .nav-text, [data-sidebar-style="modern"] .deznav .metismenu > li.mm-active > a .nav-text {
+        color: #fff;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li:hover ul li a, [data-sidebar-style="modern"] .deznav .metismenu > li.mm-active ul li a {
+        padding: 0.5rem 1rem;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li li {
+        text-align: left;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu li a {
+        padding: 0.625rem 0.9375rem 0.625rem 0.9375rem;
+        font-size: 0.813rem;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu li ul:after {
+        content: none;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu li > ul {
+        height: auto !important;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu .nav-label {
+        display: none;
+   }
+    [data-sidebar-style="modern"] .deznav .nav-label {
+        display: none;
+   }
+    [data-sidebar-style="modern"] .deznav .nav-text {
+        display: block;
+        margin-top: 0.3125rem;
+   }
+    [data-sidebar-style="modern"] .deznav .plus-box, [data-sidebar-style="modern"] .deznav .copyright, [data-sidebar-style="modern"] .deznav .help-desk {
+        display: none;
+   }
+    [data-sidebar-style="modern"] .deznav .sidebar-info {
+        display: none !important;
+   }
+    [data-sidebar-style="modern"] .deznav .menu-title {
+        display: none;
+   }
+    [data-sidebar-style="modern"] .footer {
+        padding-left: 10.625rem;
+   }
+   
+    [data-sidebar-style="modern"] .content-body {
+        margin-left: 10.6rem;
+   }
+    [data-sidebar-style="modern"] .deznav .metismenu > li > a .menu-icon svg {
+		margin-right:0;
+		margin-bottom:.25rem;
+	}
+    [data-sidebar-style="modern"][data-layout="horizontal"] .deznav .metismenu li > a i {
+        padding: 0;
+        margin: 0;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav {
+        width: 10.625rem;
+        left: 0;
+        padding-top: 1rem;
+        z-index: 3;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .slimScrollDiv, [data-sidebar-style="modern"][data-layout="vertical"] .deznav .deznav-scroll {
+        overflow: visible !important;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu {
+        padding: 0.625rem 0.875rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu > li > a {
+        padding: 1.375rem 0.6em 0.9375rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu > li > a i {
+        padding: 0;
+        height: auto;
+        width: auto;
+        margin: 0;
+        line-height: 1;
+        margin-bottom: 0.3125rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu > li > ul {
+        display: none;
+        padding: 1.875rem 0.9375rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu li {
+        position: relative;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu li a {
+        padding: 1rem 1rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu li a:before {
+        content: none;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu li ul {
+        position: absolute;
+        left: 105%;
+        top: 0;
+        bottom: auto;
+        background-color: var(--sidebar-bg);
+        border: 0.0625rem solid var(--border);
+        width: 12.5rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .metismenu li:hover > ul {
+        display: block;
+        left: 100%;
+        padding: 1rem 0;
+        margin-left: 0;
+        border: 0;
+        box-shadow: 0.3125rem 0.3125rem 1.875rem 0rem rgba(20, 0, 30, 0.10);
+        border-radius: var(--radius);
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .nav-label {
+        display: none;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .nav-text {
+        display: block;
+        margin-top: 0;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .deznav .header-profile2 {
+        padding: 0 2.5rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .menu-toggle .deznav, [data-sidebar-style="modern"][data-layout="vertical"] .menu-toggle .nav-header {
+        left: -10.625rem;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .menu-toggle .header {
+        padding-left: 0;
+   }
+    [data-sidebar-style="modern"][data-layout="vertical"] .menu-toggle .content-body {
+        margin-left: 0;
+   }
+    [data-sidebar-style="modern"][data-layout="horizontal"] .nav-header {
+        width: 18.563rem;
+   }
+    [data-sidebar-style="modern"][data-layout="horizontal"] .header {
+        padding-left: 18.563rem;
+   }
+    [data-sidebar-style="modern"][data-layout="horizontal"] .footer, [data-sidebar-style="modern"][data-layout="horizontal"] .content-body {
+        margin-left: 0;
+   }
+    [data-sidebar-style="modern"][data-layout="horizontal"] .deznav .metismenu > li > a {
+        padding: .45rem 1rem;
+		border-radius:0;
+   }
+    [data-sidebar-style="modern"][data-layout="horizontal"] .deznav .metismenu > li > a .menu-icon {
+		height:1.4rem;
+	}
+    [data-sidebar-style="modern"][data-layout="horizontal"] .deznav .metismenu > li > ul {
+        top: 100%;
+   }
+    [data-sidebar-style="modern"][data-layout="horizontal"][data-container="boxed"] .deznav .metismenu > li > a {
+        padding: 0.8125rem 1.25rem;
+   }
+}
+[data-nav-headerbg="color_1"][data-headerbg="color_1"][data-sidebar-style="modern"][data-layout="horizontal"] .nav-header .color-title {
+    display: block !important;
+}
+

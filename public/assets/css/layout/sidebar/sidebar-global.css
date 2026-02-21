@@ -1,0 +1,200 @@
+
+.deznav {
+    width: 15rem;
+    padding-bottom: 10px;
+    height: calc(100% - 3.125rem);
+    position: var(--dz-sidebar-pos);
+    top:3.125rem;
+    padding-top: 1rem;
+    z-index: 6;
+    background-color: var(--sidebar-bg);
+	border-right:1px solid var(--border);
+    transition: all .2s ease;
+	box-shadow: 0rem 0.9375rem 1.875rem 0rem rgba(0, 0, 0, 0.02);
+}
+
+[data-sidebar-position="fixed"] {
+	--dz-sidebar-pos : fixed;
+}
+
+[data-sidebar-position="static"] [data-sidebar-style="modern"] .deznav {
+    position: fixed;   
+}     
+.deznav .metismenu  li {
+    position: relative;
+} 
+.deznav .metismenu  li a{
+	display: inline-block;
+	position: relative;
+	transition: all 0.5s;
+}
+.deznav .metismenu  li a:hover {
+	color: #fff;
+}
+.deznav .metismenu > li {
+	display: flex;
+    flex-direction: column;
+}
+.deznav .metismenu .menu-title:not(:first-child) {
+    margin-top: 10px;
+}
+.deznav .metismenu > li > a{
+	padding: 0.75rem 1.5rem;
+	font-weight: 400;
+	color :#fff;
+	font-size: 0.813rem;
+	display: inline-block;
+}
+.deznav .metismenu > li > a .menu-icon {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	height: auto;
+	width: auto;
+	text-align: center;
+	line-height: 1;
+	border-radius: 0.125rem;
+}
+.deznav .metismenu > li > a .menu-icon svg {
+	height: 100%;
+	margin-right: 0.4125rem;
+	margin-top: -0.0875rem;
+}
+.deznav .deznav-scroll {
+    position: relative;
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+.deznav .deznav-scroll .metismenu {
+	display: flex;
+	flex-direction: column;
+}
+.menu-title {
+	font-size: 0.75rem;
+	font-weight: 400;
+	padding: 8px 0px 10px 20.6px;
+	color: #fff;
+}
+.deznav .metismenu ul {
+    transition: all .2s ease-in-out;
+    position: relative;
+    z-index: 1;
+    padding: 0.5rem 0;
+}
+.deznav .metismenu ul a {
+	font-size: 0.813rem;
+	transition: all 0.5s;
+	display: block;
+	padding: 0.625rem 2.500rem;
+    color: rgba(255,255,255,.85);
+}
+.deznav .metismenu ul a:hover {
+	padding-left: 3.8rem;
+}
+.deznav .metismenu > li.mm-active > a:after {
+    border-top: 0.3125rem solid #fff;
+    border-left: 0.3125rem solid #fff;
+    top: 44%;
+    border-width: 1px;
+	transform: rotate(-135deg) translateY(-50%);
+}
+.deznav .metismenu .has-arrow:after {
+    border-top: 0.3125rem solid #fff;
+    border-left: 0.3125rem solid #fff;
+    border-bottom: 0.3125rem solid transparent;
+    border-right: 0.3125rem solid transparent;
+    right: 15px;
+    top: 44%;
+    border-width: 1px;
+    transform: rotate(-225deg) translateY(-50%);
+}
+
+.deznav .metismenu > li.mm-active .sub-menu > .mm-active > a {
+	color : #fff;
+}
+.deznav .metismenu > li.mm-active .sub-menu > .mm-active > a:after {
+	transform: rotate(-135deg) translateY(-50%);
+}
+
+
+[data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li .has-arrow:after {
+    right: 1.5rem;
+}
+.deznav .metismenu > li.mm-active > a {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: 400;
+}
+
+.deznav .menu-icon svg path, 
+.deznav .menu-icon svg ellipse, 
+.deznav .menu-icon svg path, 
+.deznav .menu-icon svg ellipse{
+	stroke :#fff; 
+}
+
+.deznav .metismenu > li.mm-active > a .menu-icon svg path {
+    stroke: #fff;
+}
+.extra-menu-area + .show-more-btn .show-less {
+    display: none;
+}
+.show-more-btn{
+    font-size: 0.813rem !important;
+    color: #fff ;
+    vertical-align: middle;
+    cursor: pointer;
+	padding: 0.75rem 1.5rem;
+    text-align: center;
+}
+.show-more-btn:before {
+	display: none;
+}
+.extra-menu-area.mm-show + .show-more-btn .show-less {
+    display: block;
+}
+.extra-menu-area.mm-show + .show-more-btn .show-more {
+    display: none;
+}
+.chatbox .nav .nav-link.active {
+    color: var(--primary) !important;
+    opacity: 1 !important;
+    border-color: var(--primary) !important;
+}
+.deznav .metismenu ul a:before {
+    position: absolute;
+    content: none;
+    height: 0.125rem;
+    width: 0.5rem;
+    top: 50%;
+    left: 1.75rem;
+    border-radius: 3.75rem;
+    transform: translateY(-50%);
+}
+[data-sidebar-style="full"] .deznav .metismenu ul a:before {
+    content: "";
+    height: 0.125rem;
+    width: 0.375rem;
+    background: var(--rgba-primary-5);
+    position: absolute;
+    left: 1.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+}
+[data-sidebar-style="full"] .deznav .metismenu ul a:hover {
+    padding-left: 3.8rem;  
+}
+[data-sidebar-style="full"] .deznav .metismenu ul a:hover:before {
+    width: 1.25rem;
+}
+[data-sidebar-style="compact"] .header {
+    width: 100%;
+    padding-left: 11.25rem;
+}
+[data-sidebar-style="compact"] .header .header-content {
+    padding-left:0;
+}

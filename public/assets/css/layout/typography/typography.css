@@ -1,0 +1,33 @@
+[data-typography="poppins"] {
+    --dz-ffont-family: 'poppins', sans-serif;
+    font-display: swap; 
+}
+[data-typography="cairo"] {
+    --dz-ffont-family: 'Cairo', sans-serif;
+    font-display: swap; 
+}
+[data-typography="helvetica"] {
+    --dz-ffont-family: 'HelveticaNeue';
+    font-display: swap; 
+}
+[data-typography="opensans"] {
+    --dz-ffont-family: 'Open Sans', sans-serif;
+    font-display: swap; 
+}
+
+[data-typography="roboto"] {
+    --dz-ffont-family: 'Roboto', sans-serif;
+    font-display: swap; 
+}
+  
+
+
+  
+
+
+
+  
+
+  
+
+  

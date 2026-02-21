@@ -1,0 +1,196 @@
+
+.card {
+    margin-bottom: 1.563rem;
+    background-color: #fff;
+    transition: all .5s ease-in-out;
+    position: relative;
+    border: 0rem solid transparent;
+    border-radius: 0.375rem;
+    height: calc(100% - 25px);
+    border: 1px solid #E6E6E6;
+    /* z-index: 0; */
+}
+
+[data-theme-version="dark"] .chatbox {
+	background: var(--dark-card);
+}
+.chatbox .chatbox-close {
+    position: absolute;
+    -webkit-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    transition: all 0.2s;
+    width: 0;
+    height: 100%;
+    right: 21.25rem;
+    background: #000;
+    z-index: 1;
+    opacity: 0.1;
+    cursor: pointer;
+}
+.chatbox .card-fotter {
+	padding: 0.75rem 1rem;
+}
+.chatbox.active {
+	right: 0 !important;
+}
+.chatbox.active .chatbox-close {
+	width: 100vw;
+}
+.chatbox .nav .nav-link:hover, .chatbox .nav .nav-link.active {
+	background: transparent;
+	color: var(--primary);
+	opacity: 1;
+	border-color: var(--primary);
+}
+.chatbox .img_cont {
+	width: 2.5rem;
+	border-radius: 2.5rem;
+	margin-right: 0.625rem;
+	position: relative;
+	height: 2.5rem;
+	background: #eee;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 0.875rem;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+}
+.chatbox .img_cont .icon {
+	color: #fff;
+}
+.chatbox .img_cont.primary {
+	background: var(--rgba-primary-1);
+	color: var(--primary);
+}
+[data-theme-version="dark"] .chatbox .img_cont.primary {
+	background: var(--rgba-primary-1);
+}
+.chatbox .img_cont.warning {
+	background: var(--warning-light);
+	color: var(--warning);
+}
+[data-theme-version="dark"] .chatbox .img_cont.warning {
+	background: var(--warning-opacity);
+}
+.chatbox .img_cont.success {
+	background: var(--success-light);
+	color: var(--success);
+}
+[data-theme-version="dark"] .chatbox .img_cont.success {
+	background: var(--success-opacity);
+}
+.chatbox .img_cont.info {
+	background: var(--info-light);
+	color: var(--info);
+}
+[data-theme-version="dark"] .chatbox .img_cont.info {
+	background: var(--info-opacity);
+}
+.chatbox .img_cont img {
+	width: 100%;
+}
+.chatbox .img_cont .online_icon {
+	background: var(--success);
+}
+.chatbox .img_cont .online_icon.offline {
+	background: var(--danger);
+}
+.chatbox .card {
+	border-radius: 0;
+}
+.chatbox .search {
+	height: 2.5rem;
+}
+[data-theme-version="dark"] .chatbox .user_info span {
+	color: var(--white);
+}
+[data-theme-version="dark"] .chatbox .contacts li {
+	border-color: var(--d-border);
+}
+.chatbox .contacts li:hover {
+	background: var(--rgba-primary-1);
+}
+[data-theme-version="dark"] .chatbox .contacts li:hover {
+	background-color: var(--d-bg);
+}
+.chatbox .contacts .name-first-letter {
+	background: var(--rgba-primary-1);
+	padding: 0.25rem 1rem;
+	font-weight: 700;
+	color: #000;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+[data-theme-version="dark"] .chatbox .contacts .name-first-letter {
+	color: var(--white);
+	background: var(--d-bg) !important;
+}
+.chatbox .contacts_body {
+	height: calc(100vh - 130px);
+}
+.chatbox .contacts_body.style-1 {
+	height: calc(100vh - 215px);
+}
+[data-theme-version="dark"] .chatbox .chat-list-header {
+	background: var(--dark-card);
+}
+[data-theme-version="dark"] .chatbox .chat-list-header a {
+	background: var(--rgba-primary-1);
+}
+[data-theme-version="dark"] .chatbox .chat-list-header a svg g [fill] {
+	fill: var(--white);
+}
+.chatbox .img_cont_msg {
+	max-width: 1.875rem;
+	min-width: 1.875rem;
+}
+.chatbox .msg_cotainer:after {
+	content: "";
+	position: absolute;
+	left: -0.625rem;
+	border-right: 0.625rem solid var(--primary);
+	border-bottom: 0.625rem solid transparent;
+	border-top: 0rem solid;
+	top: 0;
+}
+.chatbox .msg_cotainer_send:after {
+	content: "";
+	position: absolute;
+	right: -0.625rem;
+	border-left: 0.625rem solid var(--body-bg);
+	border-bottom: 0.625rem solid transparent;
+	border-top: 0rem solid;
+	top: 0;
+}
+[data-theme-version="dark"] .chatbox .msg_cotainer_send:after {
+	border-left: 0.625rem solid var(--d-bg);
+}
+.chatbox .video_cam {
+	margin-left: 0.9375rem;
+}
+.chatbox .video_cam span {
+	width: 2.1875rem;
+	height: 2.1875rem;
+	background: #10ca93;
+	text-align: center;
+	line-height: 2.1875rem;
+	border-radius: 2.1875rem;
+	color: #fff;
+	margin-right: 0.3125rem;
+	align-self: center;
+	font-size: 1rem;
+	padding: 0 0.1875rem;
+	display: inline-block;
+}
+@media only screen and (max-width: 36rem){
+	.chatbox .chatbox-close {
+		right: 17.5rem;
+	}
+	.card{ 
+		margin-bottom: 0.938rem;
+		height: calc(100% - 0.938rem);
+	}
+}

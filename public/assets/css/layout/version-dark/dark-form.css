@@ -1,0 +1,26 @@
+
+[data-theme-version="dark"] input,
+[data-theme-version="dark"] textarea {
+    background-color: #1E1E1E;
+    border-color: #444444 !important;
+    color: #fff !important;
+}
+[data-theme-version="dark"] .form-check-input {
+    border-color: #444444 !important;
+    background-color: #1E1E1E !important;
+}
+[data-theme-version="dark"] .form-check-input {
+    border-color: #444444 !important;
+    background-color: #1E1E1E !important;
+}
+[data-theme-version="dark"] .check-ai .form-check-input + .form-check-label {
+    background-color: #1E1E1E;
+    border-color: #444444;
+}
+[data-theme-version="dark"] .check-ai .form-check-input + .form-check-label {
+    background-color: #1E1E1E;
+    border-color: #444444;
+}
+[data-theme-version="dark"] .form-wizard .nav-wizard li .nav-link:after {
+    background: #1E1E1E !important;
+}

@@ -1,0 +1,174 @@
+[data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li > a {
+    font-size: 0.813rem;
+    padding: 0.75rem 1.5rem;
+    margin: 0px;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li.mm-active > a i {
+    color: var(--white);
+    font-weight: 300;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li .has-arrow:after {
+    right: 1.5rem;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header {
+    width: 3.75rem;
+    z-index: 999;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header .brand-logo {
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header .brand-logo .color-title {
+    display: none;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header .nav-control {
+    right: -3rem;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header .nav-control .hamburger .line {
+    background-color: white;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .copyright, [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .plus-box, [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .help-desk {
+    display: none;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .header {
+    padding-left: 7.5rem;
+    width: 100%;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .header .header-content {
+    padding-left: 0rem;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav {
+    width: 3.75rem;
+    overflow: visible;
+    position: absolute;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .nav-text {
+    display: none;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .slimScrollDiv, [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .deznav-scroll {
+    overflow: visible !important;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .header-info2 {
+    padding: 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .sidebar-info {
+    display: none !important;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .header-profile2 {
+    margin: 0 0.5rem;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li {
+    position: relative;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li a {
+    background: transparent;
+    margin: 0.125rem 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li a svg {
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+    margin-right: 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li a:before {
+    content: none;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li a i {
+    margin: 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li > ul {
+    position: absolute;
+    left: 3.7rem;
+    top: 0;
+    width: 12rem;
+    z-index: 1001;
+    display: none;
+    padding-left: 0.0625rem;
+    height: auto !important;
+    box-shadow: 0rem 0rem 2.5rem 0rem rgba(82, 63, 105, 0.1);
+    margin-left: 0;
+    border: 0;
+    border-radius: 0.375rem;
+    background: var(--sidebar-bg);
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li > ul li:hover ul {
+    left: 11.8125rem;
+    top: 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li:hover > ul {
+    display: block;
+    height: auto;
+    overflow: visible;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li {
+    transition: all 0.4s ease-in-out;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li > a {
+    padding: 0.725rem 0.775rem;
+    margin: 3px 0px;
+    text-align: center;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li > a.has-arrow:after {
+    display: none;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li.mm-active > a {
+    background-color: rgba(13, 153, 255, 0.05);
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li.mm-active > a i {
+    color: var(--white);
+    padding: 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover:nth-last-child(-n + 1) > ul {
+    bottom: 0;
+    top: auto;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > a {
+    background-color: rgba(13, 153, 255, 0.05);
+    color: var(--white);
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > a i {
+    color: var(--white);
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > ul {
+    height: auto !important;
+    padding: 0.625rem 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > ul a {
+    padding: 0.375rem 1.25rem 0.375rem 1.25rem;
+    margin-left: -0.1rem;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > ul ul {
+    padding: 0.625rem 0;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > ul ul a {
+    padding: 0.375rem 1.25rem 0.375rem 1.25rem;
+    margin-left: -0.1rem;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu .nav-label, [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu .nav-badge {
+    display: none;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu .menu-title {
+    display: none;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .content-body {
+    margin-left: 3.7rem;
+}
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle + .footer {
+    padding-left: 5.7rem;
+}
+[data-sidebar-style="full"][data-layout="horizontal"] .header .header-content {
+    padding-left: 1.875rem;
+}
+[data-nav-headerbg="color_1"] .menu-toggle .color-title {
+    display: none ! important;
+}
+
+.show-more-btn:before {
+    display: none;
+}
+.show-more-btn:active {
+    border: 0 !important;
+}
+.show-more-btn.collapsed {
+    border: 0;
+}

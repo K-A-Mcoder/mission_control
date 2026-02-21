@@ -1,0 +1,61 @@
+
+
+.buttons-container {
+  cursor: pointer;
+}
+
+.week {
+  overflow: hidden;
+}
+
+.week.highlight {
+  background: #efefef;
+}
+
+.week .day:first-child {
+  color: #FF5E5E;
+}
+
+.day {
+  display: inline-block;
+  width: 14.28%;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+.day:hover {
+  background: var(--rgba-primary-1);
+}
+.day.disabled span {
+  color: #AAA;
+  opacity: 0.3;
+}
+
+.day.today span {
+  font-weight: bold;
+}
+
+.months-container.hidden, .weeks-container.hidden {
+  display: none;
+}
+
+.months-wrapper {
+  overflow: hidden;
+  height: 54px;
+  line-height: 54px;
+  text-align: center;
+  border-radius: 0.25rem;
+  padding: 0.5em;
+  display: table-cell;
+}
+.months-wrapper .month {
+  width: 25%;
+  text-align: center;
+  display: inline-block;
+  height: 54px;
+  line-height: 54px;
+  margin: 2px 1.5px;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}

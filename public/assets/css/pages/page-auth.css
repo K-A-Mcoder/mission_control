@@ -1,0 +1,13 @@
+.login-form .login-title:before, .login-form .login-title:after {
+    content: "";
+    height: 1px;
+    flex: 1 1;
+    left: 0;
+    background-color: #E1E1F0;
+    margin: 0;
+    padding: 0;
+}
+[data-theme-version="dark"] .login-form .login-title:before, 
+[data-theme-version="dark"] .login-form .login-title:after {
+    background-color: #444444;
+}

@@ -1,0 +1,20 @@
+[data-theme-version="dark"] h1, [data-theme-version="dark"] .h1, [data-theme-version="dark"] h2, [data-theme-version="dark"] .h2, [data-theme-version="dark"] h3, [data-theme-version="dark"] .h3, [data-theme-version="dark"] h4, [data-theme-version="dark"] .h4, [data-theme-version="dark"] h5, [data-theme-version="dark"] .h5, [data-theme-version="dark"] h6, [data-theme-version="dark"] .h6 {
+    color: #fff !important;
+}
+[data-theme-version=dark] .apexcharts-gridlines-vertical line {
+    stroke: rgba(255, 255, 255, 0.1);
+}
+[data-theme-version="dark"] {
+    --danger-light: #ff5e5e0d;
+    --success-light: #3ac9771a;
+    --warning-light: #ff9f001a;
+    --info-light: #58bad71a;
+    --badge-secondary: #2c2c2c80;
+    --headerbg: #2C2C2C;
+    --nav-headbg: #2C2C2C;
+    --border-color: #444444;
+    --bs-body-bg: #242424;
+    --sidebar-bg: #242424;
+    color: #828690;
+    background: #1E1E1E;
+}

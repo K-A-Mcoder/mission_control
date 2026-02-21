@@ -1,0 +1,12 @@
+.offcanvas.is-closed {
+    transform: translateX(100%);
+}
+#left-offcanvas.offcanvas.is-closed {
+    transform: translateX(-100%);
+}
+#top-offcanvas.offcanvas.is-closed {
+    transform: translatey(-100%);
+}
+#bottom-offcanvas.offcanvas.is-closed {
+    transform: translatey(100%);
+}

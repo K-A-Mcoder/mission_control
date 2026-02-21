@@ -1,0 +1,155 @@
+.buttons-container {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+}
+
+.buttons-container .label-container {
+  display: inline-block;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 0.5em;
+  color: var(--secondary);
+}
+.buttons-container .label-container:hover {
+  background: var(--rgba-primary-1);
+}
+.year-dropdown {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  padding: 5px 20px;
+}
+
+.prev-button,
+.next-button {
+    height: 32px;
+    width: 32px;
+    border-radius: 0.375rem;
+    background: var(--rgba-primary-1);
+    color: var(--primary);
+    line-height: 32px;
+    margin: 0 15px;
+}
+
+.week {
+  margin: 5px 0;
+}
+
+.week.highlight {
+  border-radius: 5px;
+}
+
+.weeks-wrapper.calender-header {
+  background-color: #F0F4F9;
+  border-radius: 4px;
+}
+
+.week .day.calender-header {
+  font-weight: 400;
+  color: var(--secondary);
+  background-color: #F0F4F9;
+  border-radius: 0;
+  text-transform: uppercase;
+  line-height: 20px;
+  text-align: center;
+  padding: 0.5em;
+}
+
+.day span {
+    display: inline-block;
+    text-align: center;
+    border-radius: 0.25rem;
+    padding: 0.5em;
+    height: 39px;
+    width: 39px;
+    line-height: 32px;
+    font-size: 14px;
+}
+
+.day.today span {
+  background: var(--primary) !important;
+  color: #fff;
+  position: relative;
+  height: 42px;
+  width: 49px;
+  line-height: 30px;
+  border-radius: 0.375rem;
+  text-align: center;
+  padding: 0.5em;
+  font-weight: 500;
+}
+.weeks-container {
+  padding: 10px;
+}
+
+.week.start-on-monday .day:last-child {
+  color: red;
+}
+
+.day.today span:before {
+  content: "";
+  position: absolute;
+  height: 13px;
+  width: 13px;
+  border: 2px solid #fff;
+  top: -2px;
+  right: -2px;
+  background: #FF5E5E;
+  border-radius: 50%;
+}
+
+.day.sunday span {
+  color: #ff8a80;
+}
+
+.week .day.highlight span {
+  color: #2196f3;
+}
+
+.week .day.selected span {
+  background: #1565c0;
+  color: white;
+}
+
+.week .day[disabled="disabled"] span {
+  color: #aaa;
+  cursor: not-allowed;
+}
+.months-wrapper .month span {
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #888888;
+}
+
+.special-buttons {
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  display: none;
+}
+
+.today-button {
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  padding: 5px;
+}
+.day span {
+  line-height: 30px;
+  height: 43px;
+}

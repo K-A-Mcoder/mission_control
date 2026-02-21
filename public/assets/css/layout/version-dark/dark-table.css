@@ -1,0 +1,29 @@
+
+[data-theme-version="dark"] .table th, [data-theme-version="dark"] .table td {
+    border-color: #444444;
+    color: #fff !important;
+}
+table.dataTable tbody tr, table.dataTable tbody td {
+    background: transparent !important;
+}
+[data-theme-version="dark"] th {
+    background-color: #1E1E1E !important;
+    border-color: #444444 !important;
+}
+[data-theme-version="dark"] .active-projects.style-1 .dataTables_wrapper .dataTables_info,
+[data-theme-version="dark"] .active-projects .dataTables_info {
+    color: white !important;
+}
+[data-theme-version="dark"] .dt-filter .dataTables_filter label {
+    background: #1E1E1E !important; 
+}
+[data-theme-version="dark"] .dt-filter .dataTables_filter input[type="search"] {
+    background: #1E1E1E;
+}
+[data-theme-version="dark"] table.dataTable.display tbody td {
+    border-top: 1px solid #444444 !important;
+}
+[data-theme-version="dark"] .dataTables_info,
+[data-theme-version="dark"] table.dataTable tfoot th {
+    color: #fff !important;
+}

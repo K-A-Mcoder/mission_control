@@ -1,0 +1,86 @@
+.dataTables_length .nice-select {
+    float: none;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0 6px;
+    padding-left: 15px;
+    padding-right: 39px;
+}
+.dataTables_length .nice-select::after {
+    right: 15px;
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    transform: rotate(0deg);
+}
+.nice-select.style-3 {
+    display: inline-flex;
+}
+.Disabled.nice-select::after {
+    display: none;
+}
+.nice-select.style-3::after {
+    display: inline-block;
+    right: 0.8em; 
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    margin-top: -2px;
+}
+.nice-select.style-3.open::after {
+	-webkit-transform: rotate(0);
+	-ms-transform: rotate(0);
+	transform: rotate(0);
+}
+.nice-select.style-1::after{
+	border-bottom: 1.8px solid #a5a5a5 ;
+	border-right: 1.8px solid #a5a5a5 ;
+	right: 20px;
+}
+.nice-select.style-2::after{
+	border-bottom: 1.8px solid #a5a5a5 ;
+	border-right: 1.8px solid #a5a5a5 ;
+	left: 0px;
+}
+.nice-select.style-1.open .list {
+	width: 100%;
+}
+[data-theme-version="dark"] .nice-select.open .list:not(.switcher-select > .nice-select.open .list) {
+	background-color: #242424;
+	box-shadow: 0rem 0rem 0rem 0.0625rem rgba(255, 255, 255, 0.1);
+}
+[data-theme-version="dark"] .nice-select .option:hover:not(.switcher-select > .nice-select .option:hover) {
+	background-color: transparent;
+}
+[data-theme-version="dark"] .nice-select .option.focus:not(.switcher-select > .nice-select .option.focus), 
+[data-theme-version="dark"].nice-select .option.selected.focus:not(.switcher-select > .nice-select .option.selected.focus),
+[data-theme-version="dark"] .nice-select .option:not(.switcher-select > .nice-select .option) {
+	color: white;
+}
+[data-theme-version="dark"] .dataTables_length .nice-select {
+	background-color: transparent;
+	border-color: #444444;
+}
+[data-theme-version="dark"] .sidebar-right .nice-select {
+	border-color: #E6E6E6 !important;
+}
+[data-theme-version="dark"] .sidebar-right .nice-select .option {
+	padding: 0 1rem;
+	font-size: 13px;
+}
+
+/* Style the custom dropdown icon */
+.img-select.nice-select .option ,
+.img-select.nice-select .current {
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	padding-left: 36px;
+}
