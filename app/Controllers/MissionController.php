@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\Mission;
-use App\Controllers\BaseController;
+use App\Controllers\MainController;
 use Etus\Framework\Auth\Gate;
 use Etus\Framework\Http\Flash;
 use Etus\Framework\Http\Response;
 use Etus\Framework\Database\Connection;
 
-class MissionController extends BaseController
+class MissionController extends MainController
 {
     // 'auth' runs on every method — no guest can reach any mission route
     protected array $middleware = ['auth'];
@@ -34,12 +34,12 @@ class MissionController extends BaseController
         $role     = auth_role() ?? '';
 
         $missions = match (true) {
-            $role === 'admin'   => $this->mission->allWithTaskCounts(),
-            $role === 'manager' => $this->mission->nonSecretWithTaskCounts(),
-            default             => $this->mission->forUser($userId),
+            $role === 'admin'   =>  $this->mission_model->allWithTaskCounts(),
+            $role === 'manager' =>  $this->mission_model->nonSecretWithTaskCounts(),
+            default             =>  $this->mission_model->forUser($userId),
         };
 
-        return view('missions/index', [
+        return view('missions/Index', [
             'title'    => 'Missions',
             'missions' => $missions,
         ]);
@@ -75,7 +75,7 @@ class MissionController extends BaseController
             return redirect('/missions');
         }
 
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
 
         $codeName       = trim($this->request->input('code_name', ''));
         $title          = trim($this->request->input('title', ''));
@@ -109,7 +109,7 @@ class MissionController extends BaseController
         }
 
         try {
-            $this->mission->create([
+             $this->mission_model->create([
                 'm_code'         => $codeName,
                 'title'          => $title,
                 'description'    => $description,
@@ -141,9 +141,9 @@ class MissionController extends BaseController
             return $mission;
         }
 
-        $teams         = $this->mission->teamsForMission((int) $id);
+        $teams         =  $this->mission_model->teamsForMission((int) $id);
         $availableTeams = Gate::hasAnyRole(['admin', 'manager'])
-            ? $this->mission->allTeams()
+            ?  $this->mission_model->allTeams()
             : [];
 
         return view('missions.show', [
@@ -224,7 +224,7 @@ class MissionController extends BaseController
         }
 
         try {
-            $this->mission->update((int) $id, [
+             $this->mission_model->update((int) $id, [
                 'title'          => $title,
                 'description'    => $description,
                 'start_time'     => $startTime,
@@ -253,8 +253,8 @@ class MissionController extends BaseController
             return redirect('/missions');
         }
 
-        $userId  = (int) ($_SESSION['user_id'] ?? 0);
-        $mission = $this->mission->findActive((int) $id);
+        $userId  = ($this->authId() ?? 0);
+        $mission =  $this->mission_model->findActive((int) $id);
 
         if (! $mission) {
             Flash::error('Mission not found or already deleted.');
@@ -262,7 +262,7 @@ class MissionController extends BaseController
         }
 
         try {
-            $this->mission->softDelete((int) $id, $userId);
+             $this->mission_model->softDelete((int) $id, $userId);
             Flash::success("Mission \"{$mission['title']}\" was deleted.");
         } catch (\Throwable) {
             Flash::error('Something went wrong while deleting.');
@@ -283,7 +283,7 @@ class MissionController extends BaseController
             return redirect("/missions/{$id}");
         }
 
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
         $teamId = (int) $this->request->input('team_id', 0);
 
         if (! $teamId) {
@@ -291,7 +291,7 @@ class MissionController extends BaseController
             return redirect("/missions/{$id}");
         }
 
-        $mission = $this->mission->findActive((int) $id);
+        $mission =  $this->mission_model->findActive((int) $id);
 
         if (! $mission) {
             Flash::error('Mission not found.');
@@ -299,9 +299,9 @@ class MissionController extends BaseController
         }
 
         try {
-            $this->mission->assignTeam((int) $id, $teamId, $userId);
+             $this->mission_model->assignTeam((int) $id, $teamId, $userId);
 
-            $memberIds = $this->mission->teamMemberIds($teamId);
+            $memberIds =  $this->mission_model->teamMemberIds($teamId);
 
             if (! empty($memberIds)) {
                 $this->notifyUsers(
@@ -331,9 +331,9 @@ class MissionController extends BaseController
      */
     private function resolveOrAbort(int $id): array|Response
     {
-        $mission = $this->mission->findActive($id);
+        $mission =  $this->mission_model->findActive($id);
         $role    = $_SESSION['role'] ?? '';
-        $userId  = (int) ($_SESSION['user_id'] ?? 0);
+        $userId  = ($this->authId() ?? 0);
 
         if (! $mission) {
             Flash::error('Mission not found.');
@@ -348,7 +348,7 @@ class MissionController extends BaseController
 
         // Regular users may only view missions assigned to their teams
         if (! in_array($role, ['admin', 'manager'], strict: true)) {
-            $visibleIds = array_column($this->mission->forUser($userId), 'id');
+            $visibleIds = array_column( $this->mission_model->forUser($userId), 'id');
             if (! in_array($id, array_map('intval', $visibleIds), strict: true)) {
                 Flash::error('You do not have access to this mission.');
                 return redirect('/missions');

@@ -2,18 +2,54 @@
 
 namespace App\Controllers;
 
-use App\Models\Mission;
-use App\Models\User;
 use Etus\Framework\Controllers\AbstractController;
+use Etus\Framework\Http\Response;
 
-class BaseController extends AbstractController
+/**
+ * BaseController
+ *
+ * Application-level base controller. All app controllers extend this.
+ * Provides access to the request object and any shared helpers needed
+ * across the application layer.
+ *
+ * Framework-level concerns (middleware lists, request injection, response
+ * dispatching) are handled by AbstractController in the framework namespace.
+ */
+abstract class BaseController extends AbstractController
 {
-    protected User $user_model;
-    protected Mission $mission;
-    public function __construct()
+    // ── Shared helpers available to every controller ──────────────────────────
+
+    /**
+     * Shortcut: redirect to a URL.
+     */
+    protected function redirect(string $uri, int $status = 302): \Etus\Framework\Http\Response
     {
-        // Common initialization code for all controllers can go here
-        $this->user_model = new User();
-        $this->mission = new Mission();
+        return new Response('', $status, ['Location' => $uri]);
+    }
+
+    /**
+     * Shortcut: render a view (delegates to global view() helper).
+     *
+     * @param array<string, mixed> $data
+     */
+    protected function view(string $template, array $data = []): \Etus\Framework\Http\Response
+    {
+        return view($template, $data);
+    }
+
+    /**
+     * Return the currently authenticated user's ID from the session.
+     */
+    protected function authId(): string|int
+    {
+        return ($_SESSION['user_id'] ?? 0);
+    }
+
+    /**
+     * Return the currently authenticated user's role from the session.
+     */
+    protected function authRole(): string
+    {
+        return (string) ($_SESSION['role'] ?? '');
     }
 }

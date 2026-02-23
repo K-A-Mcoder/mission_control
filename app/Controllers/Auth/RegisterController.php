@@ -2,13 +2,13 @@
 
 namespace App\Controllers\Auth;
 
-use App\Controllers\BaseController;
+use App\Controllers\Auth\AuthMasterController;
 use Etus\Framework\Http\Flash;
 use Etus\Framework\Http\Response;
 use Etus\Framework\Mail\Mailer;
 use Etus\Framework\Support\Token;
 
-class RegisterController extends BaseController
+class RegisterController extends AuthMasterController
 {
     private const ACTIVATION_HOURS = 24;
 
@@ -99,35 +99,36 @@ class RegisterController extends BaseController
             $this->user_model->storeActivationToken($uuid, $token['hashed'], $expiry);
 
             // ── Send activation email ─────────────────────────────────────────
-            // $this->sendActivationEmail($email, $fullName, $token['raw']);
+            $this->sendActivationEmail($email, $fullName, $token['raw']);
 
             Flash::success('Account created! Please check your email to activate your account. Activation token: ' . $token['raw']);
 
             return redirect('/login');
         } catch (\Throwable $e) {
             Flash::error('Something went wrong during registration. Please try again.' . $e->getMessage());
-            // log_error("Registration failed for {$email}: " . $e->getMessage());
+            log_error("Registration failed for {$email}: " . $e->getMessage());
             return redirect('/register');
         }
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
-    private function sendActivationEmail(string $email, string $name, string $rawToken): void
+    private function sendActivationEmail(string $email, string $name, string $rawToken)
     {
         $baseUrl       = rtrim(env('APP_URL', 'http://localhost:8500'), '/');
         $activationUrl = "{$baseUrl}/auth/activate?token={$rawToken}";
 
+        $data = [
+            'appName'       => env('APP_NAME', 'App'),
+            'userName'      => $name,
+            'activationUrl' => $activationUrl,
+            'expiryHours'   => self::ACTIVATION_HOURS,
+        ];
         $this->mailer->sendTemplate(
             to: $email,
             subject: 'Activate your ' . env('APP_NAME', 'App') . ' account',
             template: 'activation',
-            data: [
-                'appName'       => env('APP_NAME', 'App'),
-                'userName'      => $name,
-                'activationUrl' => $activationUrl,
-                'expiryHours'   => self::ACTIVATION_HOURS,
-            ],
+            data: $data,
         );
     }
 

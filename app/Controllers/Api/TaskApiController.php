@@ -3,11 +3,11 @@
 namespace App\Controllers\Api;
 
 use App\Models\Task;
-use App\Controllers\BaseController;
+use App\Controllers\Api\ApiMasterController;
 use Etus\Framework\Auth\Gate;
 use Etus\Framework\Http\JsonResponse;
 
-class TaskApiController extends BaseController
+class TaskApiController extends ApiMasterController
 {
     private Task $task;
 
@@ -22,7 +22,7 @@ class TaskApiController extends BaseController
 
     public function index(): JsonResponse
     {
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
         $role   = $_SESSION['role'] ?? '';
 
         $filters = $this->extractFilters();
@@ -45,7 +45,7 @@ class TaskApiController extends BaseController
 
     public function kanban(): JsonResponse
     {
-        $userId  = (int) ($_SESSION['user_id'] ?? 0);
+        $userId  = ($this->authId() ?? 0);
         $filters = $this->extractFilters();
 
         if (! Gate::hasAnyRole(['admin', 'manager', 'super_admin'])) {
@@ -140,7 +140,7 @@ class TaskApiController extends BaseController
         }
 
         $ids    = $this->request->input('ids', []);
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
 
         if (empty($ids) || ! is_array($ids)) {
             return JsonResponse::error('ids[] is required.');
@@ -160,7 +160,7 @@ class TaskApiController extends BaseController
 
     public function stats(): JsonResponse
     {
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
 
         $scopeUserId = Gate::hasAnyRole(['admin', 'manager', 'super_admin']) ? null : $userId;
 
@@ -191,7 +191,7 @@ class TaskApiController extends BaseController
     {
         if (Gate::hasAnyRole(['admin', 'manager', 'super_admin'])) return true;
 
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
 
         return (int) $task['assigned_to'] === $userId
             || ($task['team_id'] && (new \App\Models\Team)->hasMember((int) $task['team_id'], $userId));

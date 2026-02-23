@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 use App\Models\Team;
 use App\Models\User;
-use App\Controllers\BaseController;
+use App\Controllers\MainController;
 use Etus\Framework\Auth\Gate;
 use Etus\Framework\Http\Flash;
 use Etus\Framework\Http\Response;
 use Etus\Framework\Database\Connection;
 
-class TeamController extends BaseController
+class TeamController extends MainController
 {
     protected array $middleware = ['auth'];
 

@@ -2,24 +2,28 @@
 
 namespace App\Controllers\Auth;
 
-use App\Controllers\BaseController;
-use App\Models\User;
+use App\Controllers\Auth\AuthMasterController;
 use Etus\Framework\Http\Flash;
 use Etus\Framework\Http\Response;
 
-class LogoutController extends BaseController
+class LogoutController extends AuthMasterController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Handle logout.
      * Route: POST /logout — apply ['auth', 'csrf'] middleware in web.php.
      */
     public function __invoke(): Response
     {
-        $userId = $_SESSION['user_id'] ?? null;
+        $userId = $this->authId() ?? null;
 
         // Clear remember-me cookie and token if one exists
         if ($userId && isset($_COOKIE['remember_me'])) {
-            (new User)->clearRememberToken($userId);
+            $this->user_model->clearRememberToken($userId);
 
             // Expire the cookie immediately
             setcookie('remember_me', '', [

@@ -2,24 +2,19 @@
 
 namespace App\Controllers\Auth;
 
-use App\Controllers\BaseController;
-use App\Models\Role;
-use App\Models\User;
+use App\Controllers\Auth\AuthMasterController;
 use Etus\Framework\Auth\Gate;
-use Etus\Framework\Auth\Auth;
 use Etus\Framework\Http\Flash;
 use Etus\Framework\Http\Response;
 
-class LoginController extends BaseController
+class LoginController extends AuthMasterController
 {
     private const MAX_ATTEMPTS    = 5;
     private const LOCKOUT_SECONDS = 15 * 60;
 
-    private User $user;
-
     public function __construct()
     {
-        $this->user = new User();
+        parent::__construct();
     }
 
     /**
@@ -51,7 +46,7 @@ class LoginController extends BaseController
             return $this->failWith('Invalid email format.');
         }
 
-        $user = $this->user->findByEmailWithRole($email);
+        $user =  $this->user_model->findByEmailWithRole($email);
 
         if (! $user) {
             return $this->failWith('No account found with that email.');
@@ -83,7 +78,7 @@ class LoginController extends BaseController
 
     private function handleSuccessfulLogin(array $user, bool $remember, string $ip): Response
     {
-        $this->user->resetFailedAttempts($user['user_id']);
+        $this->user_model->resetFailedAttempts($user['user_id']);
 
         session_regenerate_id(true);
 
@@ -95,8 +90,8 @@ class LoginController extends BaseController
 
         // Pre-load this role's permissions into Gate so every
         // can() check during this request hits the cache, not the DB.
-        $role        = (new Role)->findByName($user['role_name']);
-        $permissions = $role ? (new Role)->permissionNames((int) $role['id']) : [];
+        $role        = $this->role_model->findByName($user['role_name']);
+        $permissions = $role ? $this->role_model->permissionNames((int) $role['id']) : [];
         Gate::cacheRolePermissions($user['role_name'], $permissions);
 
         if ($remember) {
@@ -110,13 +105,13 @@ class LoginController extends BaseController
 
     private function handleFailedAttempt(array $user, string $ip): Response
     {
-        $this->user->incrementFailedAttempts($user['user_id']);
-        $this->user->recordLoginAttempt($user['email'], $ip);
+        $this->user_model->incrementFailedAttempts($user['user_id']);
+        $this->user_model->recordLoginAttempt($user['email'], $ip);
 
         $newCount = (int) $user['failed_attempts'] + 1;
 
         if ($newCount >= self::MAX_ATTEMPTS) {
-            $this->user->suspend($user['user_id']);
+            $this->user_model->suspend($user['user_id']);
             return $this->failWith('Account temporarily locked. Try again later.');
         }
 
@@ -131,7 +126,7 @@ class LoginController extends BaseController
         $hashedToken = hash('sha256', $token);
         $expiry      = date('Y-m-d H:i:s', strtotime('+30 days'));
 
-        $this->user->storeRememberToken($userId, $hashedToken, $expiry);
+        $this->user_model->storeRememberToken($userId, $hashedToken, $expiry);
 
         setcookie('remember_me', $userId . '|' . $token, [
             'expires'  => time() + (30 * 24 * 60 * 60),

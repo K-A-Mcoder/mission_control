@@ -256,7 +256,7 @@ if (! function_exists('env')) {
 }
 
 
-// ── Views ────────────────────────────────────────────────────────────────────
+// ── uuid ────────────────────────────────────────────────────────────────────
 
 if (! function_exists('uuid')) {
     /**
@@ -277,5 +277,35 @@ if (! function_exists('uuid')) {
 
         // Format as UUID string
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
+}
+
+if (! function_exists('log_error')) {
+    /**
+     * Log an error message to a file.
+     *
+     * @param string $message The error message to log
+     * @param string|null $file Optional file name (defaults to 'app.log')
+     */
+    function log_error(string $message, ?string $file = null): void
+    {
+        $logFile = __DIR__ . '/../../logs/' . ($file ?? 'app.log');
+        $timestamp = date('Y-m-d H:i:s');
+        $formattedMessage = "[$timestamp] ERROR: $message" . PHP_EOL;
+        file_put_contents($logFile, $formattedMessage, FILE_APPEND);
+    }
+}
+
+if(! function_exists('setting')) {
+    /**
+     * Get a setting value by key, with optional default.
+     *
+     * @param string $key The setting key (e.g. 'app.name')
+     * @param mixed $default The default value if the setting is not found
+     * @return mixed The setting value or default
+     */
+    function setting(string $key, mixed $default = null): mixed
+    {
+        return \App\Models\Setting::get($key, $default);
     }
 }

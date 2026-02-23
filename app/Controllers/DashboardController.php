@@ -19,8 +19,8 @@ class DashboardController extends BaseController
 
     public function index(): Response
     {
-        $userId = ($_SESSION['user_id'] ?? 0);
-        $role   = $_SESSION['role'] ?? '';
+        $userId = (auth_id() ?? 0);
+        $role   = auth_role() ?? '';
 
         $task    = new Task();
         $team    = new Team();

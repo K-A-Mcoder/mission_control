@@ -3,11 +3,11 @@
 namespace App\Controllers\Api;
 
 use App\Models\Team;
-use App\Controllers\BaseController;
 use Etus\Framework\Auth\Gate;
 use Etus\Framework\Http\JsonResponse;
+use App\Controllers\Api\ApiMasterController;
 
-class TeamApiController extends BaseController
+class TeamApiController extends ApiMasterController
 {
     private Team $team;
 
@@ -20,7 +20,7 @@ class TeamApiController extends BaseController
 
     public function index(): JsonResponse
     {
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
 
         try {
             $teams = Gate::hasAnyRole(['admin', 'manager', 'super_admin'])
@@ -41,7 +41,7 @@ class TeamApiController extends BaseController
 
         if (! $team) return JsonResponse::notFound('Team not found.');
 
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($this->authId() ?? 0);
 
         if (
             ! Gate::hasAnyRole(['admin', 'manager', 'super_admin'])
@@ -67,7 +67,7 @@ class TeamApiController extends BaseController
 
     public function stats(): JsonResponse
     {
-        $userId      = (int) ($_SESSION['user_id'] ?? 0);
+        $userId      = ($this->authId() ?? 0);
         $scopeUserId = Gate::hasAnyRole(['admin', 'manager', 'super_admin']) ? null : $userId;
 
         try {
@@ -85,7 +85,7 @@ class TeamApiController extends BaseController
             return JsonResponse::forbidden();
         }
 
-        $userId  = (int) ($_SESSION['user_id'] ?? 0);
+        $userId  = ($this->authId() ?? 0);
         $memberId = (int) $this->request->input('user_id', 0);
         $role     = $this->request->input('role', 'member');
 

@@ -2,14 +2,12 @@
 
 namespace App\Controllers\Api;
 
-use App\Models\Mission;
-use App\Controllers\BaseController;
+use App\Controllers\Api\ApiMasterController;
 use Etus\Framework\Auth\Gate;
 use Etus\Framework\Http\JsonResponse;
-use Etus\Framework\Http\Response;
 use Etus\Framework\Database\Connection;
 
-class MissionApiController extends BaseController
+class MissionApiController extends ApiMasterController
 {
 
     public function __construct()
@@ -30,9 +28,9 @@ class MissionApiController extends BaseController
 
         try {
             $missions = match (true) {
-                $role === 'admin'   => $this->mission->allWithTaskCounts(),
-                $role === 'manager' => $this->mission->nonSecretWithTaskCounts(),
-                default             => $this->mission->forUser($userId),
+                $role === 'admin'   =>  $this->mission_model->allWithTaskCounts(),
+                $role === 'manager' =>  $this->mission_model->nonSecretWithTaskCounts(),
+                default             =>  $this->mission_model->forUser($userId),
             };
 
             return JsonResponse::success('OK', ['data' => $missions]);
@@ -67,7 +65,7 @@ class MissionApiController extends BaseController
         }
 
         try {
-            $id = $this->mission->create([
+            $id =  $this->mission_model->create([
                 'm_code'         => $codeName,
                 'title'          => $title,
                 'description'    => $description,
@@ -110,7 +108,7 @@ class MissionApiController extends BaseController
             try {
                 $db->execute('BEGIN');
 
-                $deleted = $this->mission->softDeleteMany($ids, $userId);
+                $deleted =  $this->mission_model->softDeleteMany($ids, $userId);
 
                 foreach ($ids as $missionId) {
                     $this->logAudit($db, $userId, 'soft_delete_mission_bulk', $ip, ['mission_id' => $missionId]);
@@ -135,7 +133,7 @@ class MissionApiController extends BaseController
             return JsonResponse::error('Mission ID required.', 400);
         }
 
-        $exists = $this->mission->findActive($id);
+        $exists =  $this->mission_model->findActive($id);
 
         if (! $exists) {
             return JsonResponse::notFound('Mission not found or already deleted.');
@@ -144,7 +142,7 @@ class MissionApiController extends BaseController
         try {
             $db->execute('BEGIN');
 
-            $this->mission->softDelete($id, $userId);
+            $this->mission_model->softDelete($id, $userId);
             $this->logAudit($db, $userId, 'soft_delete_mission', $ip, ['mission_id' => $id]);
 
             $db->execute('COMMIT');
@@ -177,10 +175,10 @@ class MissionApiController extends BaseController
         }
 
         try {
-            $this->mission->assignTeam($missionId, $teamId, $userId);
+            $this->mission_model->assignTeam($missionId, $teamId, $userId);
 
             // Notify all members of the assigned team
-            $memberIds = $this->mission->teamMemberIds($teamId);
+            $memberIds =  $this->mission_model->teamMemberIds($teamId);
 
             if (! empty($memberIds)) {
                 $this->notifyUsers(
@@ -217,7 +215,7 @@ class MissionApiController extends BaseController
              VALUES (?, ?, ?, ?, ?, ?)',
             [
                 $action,
-                Mission::class,
+                $this->mission_model::class,
                 $meta['mission_id'] ?? null,
                 json_encode(array_merge($meta, ['ip' => $ip])),
                 $userId,

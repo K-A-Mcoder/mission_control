@@ -1,105 +1,144 @@
 <?php
-$layout  = 'auth';
-$flash   = get_flash();
+$layout = 'auth';
+$title  = 'Sign In';
+$flash  = get_flash();
 ?>
 
-<div class="login-form mx-auto max-w-[600px] lg:px-[50px] lg:py-0 sm:p-[25px] p-[14px]">
-    <div class="text-center">
-        <h3 class="title mb-2">Sign In</h3>
-        <p class="mb-4">Sign in to your account to start using MMS</p>
+<!-- Heading -->
+<div class="mb-8">
+    <h2 class="text-2xl font-bold text-dark mb-1.5">Welcome back</h2>
+    <p class="text-sm text-muted">Sign in to your account to continue</p>
+</div>
 
-        <?php if ($flash): ?>
-            <div class="alert py-3 px-6 mb-4 sm:text-sm text-xs rounded-md relative border flex items-center gap-2
+<!-- Flash message -->
+<?php if ($flash): ?>
+    <div class="flex items-start gap-3 px-4 py-3 mb-6 rounded-xl border text-sm
                 <?= $flash['type'] === 'error'
-                    ? 'text-danger bg-danger-light border-danger-light'
-                    : 'text-primary bg-primary-light border-primary-light' ?>">
-
-                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2"
-                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
-                    <?php if ($flash['type'] === 'error'): ?>
-                        <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
-                        <line x1="15" y1="9" x2="9" y2="15"></line>
-                        <line x1="9" y1="9" x2="15" y2="15"></line>
-                    <?php else: ?>
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                    <?php endif; ?>
-                </svg>
-
-                <span class="flex-1 text-left"> <?= htmlspecialchars($flash['msg']) ?></span>
-
-                <button type="button"
-                    onclick="this.closest('.alert').remove()"
-                    class="opacity-50 hover:opacity-100 transition-opacity ml-auto shrink-0">
-                    <i class="fa-solid fa-xmark scale-[1.2]"></i>
-                </button>
-            </div>
-        <?php endif; ?>
+                    ? 'bg-danger-light border-danger/30 text-danger'
+                    : 'bg-success-light border-success/30 text-success' ?>">
+        <i class="fa-solid <?= $flash['type'] === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check' ?>
+                  mt-0.5 shrink-0 text-base"></i>
+        <span class="flex-1"><?= htmlspecialchars($flash['msg']) ?></span>
+        <button onclick="this.closest('div').remove()"
+            class="opacity-50 hover:opacity-100 transition-opacity shrink-0 mt-0.5">
+            <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
     </div>
+<?php endif; ?>
 
-    <form action="/login" method="POST" autocomplete="off">
-        <?= csrf_field() ?>
-        <div class="mb-6">
-            <label class="mb-1 text-dark" for="login-email">Email</label>
+<!-- Form -->
+<form action="/login" method="POST" autocomplete="off" class="space-y-5" novalidate>
+    <?= csrf_field() ?>
+
+    <!-- Email -->
+    <div>
+        <label class="block text-sm font-medium text-dark mb-1.5" for="login-email">
+            Email address
+        </label>
+        <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted text-sm pointer-events-none">
+                <i class="fa-solid fa-envelope"></i>
+            </span>
             <input type="email"
                 id="login-email"
                 name="login-email"
-                class="form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-md py-1.5 px-3 duration-500 focus:border-primary dark:hover:border-b-color outline-none w-full"
-                placeholder="hello@example.com"
-                autocomplete="off">
+                required
+                autofocus
+                autocomplete="email"
+                placeholder="you@example.com"
+                class="auth-input form-control w-full h-11 border border-b-color rounded-xl
+                          pl-10 pr-4 text-sm text-body-color bg-gray-50 dark:bg-dark-card
+                          placeholder-gray-400 focus:bg-white dark:focus:bg-dark">
         </div>
+    </div>
 
-        <div class="mb-6 relative">
-            <label class="mb-1 text-dark" for="dz-password">Password</label>
+    <!-- Password -->
+    <div>
+        <div class="flex items-center justify-between mb-1.5">
+            <label class="text-sm font-medium text-dark" for="dz-password">Password</label>
+            <a href="/forgot-password"
+                class="text-xs text-primary hover:underline hover:text-hover-primary transition-colors">
+                Forgot password?
+            </a>
+        </div>
+        <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted text-sm pointer-events-none">
+                <i class="fa-solid fa-lock"></i>
+            </span>
             <input type="password"
                 id="dz-password"
                 name="login-password"
-                class="form-control relative text-[13px] h-[2.813rem] border border-b-color block rounded-md py-1.5 px-3 duration-500 focus:border-primary dark:hover:border-b-color outline-none w-full text-body-color"
-                placeholder="*****"
-                autocomplete="off">
-            <span class="show-pass eye absolute right-5 bottom-[10px] text-body-color cursor-pointer">
-                <i class="fa fa-eye-slash"></i>
-                <i class="fa fa-eye"></i>
-            </span>
-        </div>
-
-        <div class="form-row flex justify-between mt-6 mb-2">
-            <div class="mb-6">
-                <div class="leading-normal block min-h-[1.3125rem] pl-[1.5em] custom-checkbox mb-4 whitespace-nowrap">
-                    <input type="checkbox" class="form-check-input ml-[-1.5em]" id="customCheckBox1" name="remember_me">
-                    <label class="mt-[5px] text-body-color ml-[0.3125rem]" for="customCheckBox1">Remember me</label>
-                </div>
-            </div>
-            <div class="mb-6">
-                <a href="/forgot-password" class="sm:text-sm text-xs text-primary whitespace-nowrap dark:text-white">Forgot Password?</a>
-            </div>
-        </div>
-
-        <div class="text-center mb-6">
-            <button type="submit"
-                class="block w-full rounded font-medium text-[15px] max-xl:text-xs leading-5 py-[0.719rem] max-xl:px-4 px-[1.563rem] max-xl:py-2.5 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300 mb-2">
-                Sign In
+                required
+                autocomplete="current-password"
+                placeholder="Enter your password"
+                class="auth-input form-control w-full h-11 border border-b-color rounded-xl
+                          pl-10 pr-12 text-sm text-body-color bg-gray-50 dark:bg-dark-card
+                          placeholder-gray-400 focus:bg-white dark:focus:bg-dark">
+            <button type="button"
+                class="show-pass eye absolute right-3.5 top-1/2 -translate-y-1/2
+                           text-muted hover:text-dark transition-colors p-1">
+                <i class="fa fa-eye-slash text-sm"></i>
+                <i class="fa fa-eye    text-sm"></i>
             </button>
         </div>
+    </div>
 
-        <h6 class="login-title text-center relative mb-12 flex center z-[1] items-center">
-            <span>Or continue with</span>
-        </h6>
+    <!-- Remember me -->
+    <label class="flex items-center gap-2.5 cursor-pointer select-none">
+        <input type="checkbox"
+            name="remember_me"
+            id="remember_me"
+            class="w-4 h-4 rounded border-b-color text-primary accent-primary cursor-pointer">
+        <span class="text-sm text-body-color">Keep me signed in for 30 days</span>
+    </label>
 
-        <div class="mb-4">
-            <ul class="flex self-center justify-center gap-2">
-                <li><a target="_blank" href="https://www.facebook.com/" class="fab fa-facebook-f w-10 h-10 leading-[2.5rem] rounded-full text-white text-center bg-facebook"></a></li>
-                <li><a target="_blank" href="https://www.google.com/" class="fab fa-google-plus-g w-10 h-10 leading-[2.5rem] rounded-full text-white text-center bg-google-plus"></a></li>
-                <li><a target="_blank" href="https://www.linkedin.com/" class="fab fa-linkedin-in w-10 h-10 leading-[2.5rem] rounded-full text-white text-center bg-linkedin"></a></li>
-                <li><a target="_blank" href="https://twitter.com/" class="fab fa-twitter w-10 h-10 leading-[2.5rem] rounded-full text-white text-center bg-twitter"></a></li>
-            </ul>
-        </div>
+    <!-- Submit -->
+    <button type="submit"
+        class="btn-submit w-full h-11 rounded-xl bg-primary hover:bg-hover-primary
+                   text-white text-sm font-semibold transition-colors duration-200 mt-2">
+        Sign In
+        <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+    </button>
+</form>
 
-        <p class="text-center mb-2">
-            Not registered?
-            <a class="text-sm text-primary dark:text-white" href="/register">Register</a>
-        </p>
-    </form>
+<!-- Divider -->
+<div class="relative flex items-center my-7">
+    <div class="flex-1 border-t border-b-color"></div>
+    <span class="mx-4 text-xs text-muted bg-white dark:bg-dark-card px-2">or continue with</span>
+    <div class="flex-1 border-t border-b-color"></div>
 </div>
+
+<!-- Social (non-functional placeholders — wire up via OAuth if needed) -->
+<div class="grid grid-cols-2 gap-3">
+    <button type="button"
+        class="flex items-center justify-center gap-2 h-11 rounded-xl border border-b-color
+                   text-sm text-body-color hover:bg-gray-50 transition-colors font-medium">
+        <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+        </svg>
+        Google
+    </button>
+    <button type="button"
+        class="flex items-center justify-center gap-2 h-11 rounded-xl border border-b-color
+                   text-sm text-body-color hover:bg-gray-50 transition-colors font-medium">
+        <i class="fa-brands fa-microsoft text-blue-500 text-base"></i>
+        Microsoft
+    </button>
+</div>
+
+<!-- Register link -->
+<p class="text-center text-sm text-muted mt-8">
+    Don't have an account?
+    <a href="/register" class="text-primary font-medium hover:underline hover:text-hover-primary transition-colors">
+        Create one →
+    </a>
+</p>
+
+<!-- Activation resend hint (shown below register link) -->
+<p class="text-center text-xs text-muted mt-2">
+    Didn't get an activation email?
+    <a href="/auth/resend" class="text-primary hover:underline">Resend it</a>
+</p>

@@ -238,7 +238,7 @@ class Team extends Model
      *
      * @return array{total: int, active: int, inactive: int, archived: int}
      */
-    public function stats(?int $scopeUserId = null): array
+    public function stats($scopeUserId = null): array
     {
         $where  = ["deleted_at IS NULL"];
         $params = [];

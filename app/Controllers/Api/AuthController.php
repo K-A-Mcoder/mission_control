@@ -2,14 +2,13 @@
 
 namespace App\Controllers\Api;
 
-use App\Controllers\BaseController;
-use App\Models\User;
+use App\Controllers\Api\ApiMasterController;
 use Etus\Framework\Http\Flash;
 use Etus\Framework\Http\Response;
 use Etus\Framework\Mail\Mailer;
 use Etus\Framework\Support\Token;
 
-class AuthController extends BaseController
+class AuthController extends ApiMasterController
 {
 
     private const ACTIVATION_HOURS = 24;
@@ -17,12 +16,11 @@ class AuthController extends BaseController
     // Rate limit: max resend attempts per hour per IP
     private const MAX_RESENDS_PER_HOUR = 3;
 
-    private User   $user;
     private Mailer $mailer;
 
     public function __construct()
     {
-        $this->user   = new User();
+        parent::__construct();
         $this->mailer = new Mailer();
     }
 
@@ -52,9 +50,9 @@ class AuthController extends BaseController
         $hashedToken = Token::hash($rawToken);
 
         // ── Lookup — DB query already filters expired and non-pending rows ─────
-        $user = $this->user->findByActivationToken($hashedToken);
+        $user =  $this->user_model->findByActivationToken($hashedToken);
 
-        if (! $user) {
+        if (!$user) {
             // Intentionally vague — don't reveal whether the email is known
             // or whether the token expired vs. never existed.
             Flash::error('This activation link is invalid or has expired. Please request a new one.');
@@ -66,7 +64,7 @@ class AuthController extends BaseController
         // If the same link is clicked twice, findByActivationToken returns null
         // on the second hit because status is no longer 'pending' — safe.
         try {
-            $this->user->activate($user['user_id']);
+             $this->user_model->activate($user['user_id']);
         } catch (\Throwable) {
             Flash::error('Something went wrong. Please try again or contact support.');
             return redirect('/login');
@@ -125,7 +123,7 @@ class AuthController extends BaseController
             return redirect('/auth/resend');
         }
 
-        $user = $this->user->findPendingByEmail($email);
+        $user =  $this->user_model->findPendingByEmail($email);
 
         if ($user) {
             try {
@@ -133,7 +131,7 @@ class AuthController extends BaseController
                 $token  = Token::make();
                 $expiry = date('Y-m-d H:i:s', strtotime('+' . self::ACTIVATION_HOURS . ' hours'));
 
-                $this->user->storeActivationToken((int) $user['user_id'], $token['hashed'], $expiry);
+                 $this->user_model->storeActivationToken((int) $user['user_id'], $token['hashed'], $expiry);
 
                 $this->sendActivationEmail($user['email'], $user['full_name'], $token['raw']);
             } catch (\Throwable) {

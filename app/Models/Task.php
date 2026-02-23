@@ -220,7 +220,7 @@ class Task extends Model
      *
      * @return array<string, int>  keys: open, in_progress, review, closed, overdue, total
      */
-    public function stats(?int $scopeUserId = null): array
+    public function stats($scopeUserId = null): array
     {
         $where  = ['deleted_at IS NULL'];
         $params = [];

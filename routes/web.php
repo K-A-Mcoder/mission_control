@@ -12,6 +12,10 @@ use App\Controllers\Auth\LoginController;
 use App\Controllers\Auth\LogoutController;
 use App\Controllers\Auth\RegisterController;
 use App\Controllers\Api\AuthController;
+use App\Controllers\Api\NotificationApiController;
+use App\Controllers\NotificationController;
+use App\Controllers\ReportController;
+use App\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +81,25 @@ return function (Etus\Framework\Routing\Router $router): void {
     $router->post('/missions/{id}/delete',      [MissionController::class, 'destroy'],    ['auth', 'csrf']);
     $router->post('/missions/{id}/assign-team', [MissionController::class, 'assignTeam'], ['auth', 'csrf']);
 
+    // ── Reports ───────────────────────────────────────────────────────────────
+    // All authenticated users; access scoped inside controller by role.
+    $router->get('/reports',                    [ReportController::class, 'index'],    ['auth']);
+    $router->get('/reports/create',             [ReportController::class, 'create'],   ['auth']);
+    $router->post('/reports',                   [ReportController::class, 'store'],    ['auth', 'csrf']);
+    $router->get('/reports/{id}',               [ReportController::class, 'show'],     ['auth']);
+    $router->get('/reports/{id}/edit',          [ReportController::class, 'edit'],     ['auth']);
+    $router->post('/reports/{id}/update',       [ReportController::class, 'update'],   ['auth', 'csrf']);
+    $router->post('/reports/{id}/review',       [ReportController::class, 'review'],   ['auth', 'csrf']);
+    $router->post('/reports/{id}/escalate',     [ReportController::class, 'escalate'], ['auth', 'csrf']);
+    $router->post('/reports/{id}/delete',       [ReportController::class, 'destroy'],  ['auth', 'csrf']);
+
+    // ── Notifications (full page) ─────────────────────────────────────────────
+    $router->get('/notifications', [NotificationController::class, 'index'], ['auth']);
+
+    // ── System Settings (admin only, enforced inside controller) ─────────────
+    $router->get('/settings',   [SettingsController::class, 'index'],  ['auth']);
+    $router->post('/settings',  [SettingsController::class, 'update'], ['auth', 'csrf']);
+
     // ── API — Tasks ───────────────────────────────────────────────────────────
     $router->get('/api/tasks',             [TaskApiController::class, 'index'],       ['auth']);
     $router->get('/api/tasks/kanban',      [TaskApiController::class, 'kanban'],      ['auth']);
@@ -97,4 +120,11 @@ return function (Etus\Framework\Routing\Router $router): void {
     $router->post('/api/missions',             [MissionApiController::class, 'store'],      ['auth', 'csrf']);
     $router->post('/api/missions/delete',      [MissionApiController::class, 'destroy'],    ['auth', 'csrf']);
     $router->post('/api/missions/assign-team', [MissionApiController::class, 'assignTeam'], ['auth', 'csrf']);
+
+    // ── API — Notifications ───────────────────────────────────────────────────
+    // Lightweight polling endpoint — no CSRF (GET + safe POST with XHR header check)
+    $router->get('/api/notifications',           [NotificationApiController::class, 'index'],       ['auth']);
+    $router->get('/api/notifications/poll',      [NotificationApiController::class, 'poll'],        ['auth']);
+    $router->post('/api/notifications/{id}/read', [NotificationApiController::class, 'markRead'],    ['auth']);
+    $router->post('/api/notifications/read-all', [NotificationApiController::class, 'markAllRead'], ['auth']);
 };

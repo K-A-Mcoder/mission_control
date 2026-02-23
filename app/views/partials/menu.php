@@ -78,43 +78,17 @@
         <span class="nav-text">Site Settings</span>
     </a>
     <ul class="sub-menu">
-        <li><a href="chat.html">Chat</a></li>
+        <li><a href="/settings">Site Settings</a></li>
         <li><a class="has-arrow" href="javascript:void(0);">Users Manager</a>
             <ul class="sub-menu">
-                <li><a href="settings/user">User</a></li>
-                <li><a href="edit-profile.html">Add User</a></li>
-                <li><a href="user-roles.html">Roles Listing </a></li>
-                <li><a href="add-role.html">Add Roles</a></li>
-                <li><a href="app-profile.html">Profile 1</a></li>
-                <li><a href="app-profile-2.html">Profile 2 </a></li>
-                <li><a href="edit-profile.html">Edit Profile</a></li>
-                <li><a href="post-details.html">Post Details</a></li>
-            </ul>
-        </li>
-        <li><a class="has-arrow" href="javascript:void(0);">Customer Manager</a>
-            <ul class="sub-menu">
-                <li><a href="customer.html">Customer</a></li>
-                <li><a href="customer-profile.html">Customer Profile</a></li>
-            </ul>
-        </li>
-        <li><a href="contacts.html">Contacts </a></li>
-        <li><a class="has-arrow" href="javascript:void(0);">Email</a>
-            <ul class="sub-menu">
-                <li><a href="email-compose.html">Compose</a></li>
-                <li><a href="email-inbox.html">Inbox</a></li>
-                <li><a href="email-read.html">Read</a></li>
-            </ul>
-        </li>
-        <li><a href="app-calender.html">Calendar</a></li>
-        <li><a class="has-arrow" href="javascript:void(0);">Shop</a>
-            <ul class="sub-menu">
-                <li><a href="ecom-product-grid.html">Product Grid</a></li>
-                <li><a href="ecom-product-list.html">Product List</a></li>
-                <li><a href="ecom-product-detail.html">Product Details</a></li>
-                <li><a href="ecom-product-order.html">Order</a></li>
-                <li><a href="ecom-checkout.html">Checkout</a></li>
-                <li><a href="ecom-invoice.html">Invoice</a></li>
-                <li><a href="ecom-customers.html">Customers</a></li>
+                <li><a href="/settings/user">User</a></li>
+                <li><a href="/settings/user/add">Add User</a></li>
+                <li><a href="/settings/roles">Roles Listing </a></li>
+                <li><a href="/settings/roles/add">Add Roles</a></li>
+                <li><a href="/settings/profiles">Profile 1</a></li>
+                <li><a href="/settings/profiles/2">Profile 2 </a></li>
+                <li><a href="/settings/profiles/edit">Edit Profile</a></li>
+                <li><a href="/settings/posts/details">Post Details</a></li>
             </ul>
         </li>
     </ul>

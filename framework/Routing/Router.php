@@ -39,7 +39,7 @@ class Router
         $this->routes[] = [$method, $uri, ['handler' => $handler, 'middleware' => $middleware]];
     }
 
-    public function match(Request $request): MatchedRoute
+    public function matchOLD(Request $request): MatchedRoute
     {
         $dispatcher = simpleDispatcher(function (RouteCollector $routeCollector) {
             foreach ($this->routes as $route) {
@@ -50,6 +50,39 @@ class Router
         $routeInfo = $dispatcher->dispatch(
             $request->getMethod(),
             $request->getUri(),
+        );
+
+        return match ($routeInfo[0]) {
+            Dispatcher::NOT_FOUND          => throw new HttpNotFoundException(),
+            Dispatcher::METHOD_NOT_ALLOWED => throw new HttpMethodNotAllowedException(),
+            Dispatcher::FOUND              => new MatchedRoute(
+                handler: $routeInfo[1]['handler'],
+                vars: $routeInfo[2],
+                middleware: $routeInfo[1]['middleware'],
+            ),
+        };
+    }
+
+    public function match(Request $request): MatchedRoute
+    {
+        $dispatcher = simpleDispatcher(function (RouteCollector $routeCollector) {
+            foreach ($this->routes as $route) {
+                $routeCollector->addRoute(...$route);
+            }
+        });
+
+        // 👇 Strip query string
+        $uri = $request->getUri();
+
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+
+        $uri = rawurldecode($uri);
+
+        $routeInfo = $dispatcher->dispatch(
+            $request->getMethod(),
+            $uri
         );
 
         return match ($routeInfo[0]) {

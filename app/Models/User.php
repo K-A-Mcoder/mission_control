@@ -107,7 +107,7 @@ class User extends Model
             "SELECT *
              FROM   users
              WHERE  activation_token    = ?
-             AND    status              = 'pending'
+             AND    status              = 'inactive'
              AND    activation_expires_at > ?",
             [$hashedToken, date('Y-m-d H:i:s')],
         );
