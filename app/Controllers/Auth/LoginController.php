@@ -22,7 +22,7 @@ class LoginController extends AuthMasterController
      */
     public function index(): Response
     {
-        return view('auth.login', [
+        return view('auth/login', [
             'title' => 'Login Into Your Account',
         ]);
     }

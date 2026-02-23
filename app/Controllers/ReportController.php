@@ -434,7 +434,7 @@ class ReportController extends MainController
         return [$report, null];
     }
 
-    private function canReview(array $report, int $userId): bool
+    private function canReview(array $report, $userId): bool
     {
         // Member reports → reviewed by team lead
         if ($report['type'] === $this->report_model::TYPE_MEMBER && (int) $report['team_lead_id'] === $userId) {
@@ -449,7 +449,7 @@ class ReportController extends MainController
         return false;
     }
 
-    private function canEscalate(array $report, int $userId): bool
+    private function canEscalate(array $report, $userId): bool
     {
         // Only team lead can escalate a member report upward as a lead_report
         return $report['type'] === $this->report_model::TYPE_MEMBER
@@ -458,7 +458,7 @@ class ReportController extends MainController
             && ! empty($report['mission_id']);
     }
 
-    private function isTeamLead(int $userId): bool
+    private function isTeamLead($userId): bool
     {
         $row = Connection::getInstance()->selectOne(
             'SELECT id FROM teams WHERE lead_id = ? AND deleted_at IS NULL LIMIT 1',
@@ -467,7 +467,7 @@ class ReportController extends MainController
         return $row !== null;
     }
 
-    private function getLeadTeamId(int $userId): ?int
+    private function getLeadTeamId($userId): ?int
     {
         $row = Connection::getInstance()->selectOne(
             'SELECT id FROM teams WHERE lead_id = ? AND deleted_at IS NULL LIMIT 1',

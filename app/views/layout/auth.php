@@ -24,10 +24,10 @@
                         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
                     },
                     colors: {
-                        primary: '#3b82f6',
-                        'hover-primary': '#2563eb',
+                        primary: '#4ade80',
+                        'hover-primary': '#16a34a',
                         'primary-light': '#eff6ff',
-                        'primary-dark': '#1d4ed8',
+                        'primary-dark': '#16a34a',
                         success: '#22c55e',
                         'success-light': '#f0fdf4',
                         warning: '#f59e0b',

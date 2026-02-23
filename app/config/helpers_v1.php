@@ -296,7 +296,7 @@ if (! function_exists('log_error')) {
     }
 }
 
-if (! function_exists('setting')) {
+if(! function_exists('setting')) {
     /**
      * Get a setting value by key, with optional default.
      *
@@ -309,5 +309,3 @@ if (! function_exists('setting')) {
         return \App\Models\Setting::get($key, $default);
     }
 }
-
-require APP_PATH . '/Helpers/notification_helper.php';

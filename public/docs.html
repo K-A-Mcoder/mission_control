@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETUS — Platform Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/doc.css">
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="landing.html" class="topbar-back">
+    <i class="fa-solid fa-arrow-left" style="font-size:.625rem"></i>
+    Back
+  </a>
+  <div class="topbar-logo">
+    <div class="logo-hex"><i class="fa-solid fa-bolt"></i></div>
+    ETUS
+  </div>
+  <div class="topbar-divider"></div>
+  <span class="topbar-title">DOCUMENTATION</span>
+  <div class="topbar-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" id="searchInput" placeholder="Search docs… (Ctrl+K)" autocomplete="off">
+  </div>
+  <div class="topbar-links">
+    <a href="landing.html">Platform</a>
+    <a href="/login">Login</a>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Getting Started</div>
+    <a class="sidebar-link active" onclick="nav('overview')"><i class="fa-solid fa-house"></i> Overview</a>
+    <a class="sidebar-link" onclick="nav('installation')"><i class="fa-solid fa-download"></i> Installation</a>
+    <a class="sidebar-link" onclick="nav('architecture')"><i class="fa-solid fa-sitemap"></i> Architecture</a>
+    <a class="sidebar-link" onclick="nav('environment')"><i class="fa-solid fa-gear"></i> Environment</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Modules</div>
+    <a class="sidebar-link" onclick="nav('auth')"><i class="fa-solid fa-shield-halved"></i> Authentication</a>
+    <a class="sidebar-link" onclick="nav('missions')"><i class="fa-solid fa-crosshairs"></i> Missions</a>
+    <a class="sidebar-link" onclick="nav('teams')"><i class="fa-solid fa-users"></i> Teams</a>
+    <a class="sidebar-link" onclick="nav('tasks')"><i class="fa-solid fa-list-check"></i> Tasks & Kanban</a>
+    <a class="sidebar-link" onclick="nav('reports')"><i class="fa-solid fa-file-lines"></i> Reports</a>
+    <a class="sidebar-link" onclick="nav('chat')"><i class="fa-solid fa-comments"></i> Encrypted Chat</a>
+    <a class="sidebar-link" onclick="nav('notifications')"><i class="fa-solid fa-bell"></i> Notifications</a>
+    <a class="sidebar-link" onclick="nav('dashboard')"><i class="fa-solid fa-gauge-high"></i> Dashboards</a>
+    <a class="sidebar-link" onclick="nav('settings')"><i class="fa-solid fa-sliders"></i> Settings</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Administration</div>
+    <a class="sidebar-link" onclick="nav('admin')"><i class="fa-solid fa-user-shield"></i> Admin Module</a>
+    <a class="sidebar-link" onclick="nav('rbac')"><i class="fa-solid fa-key"></i> RBAC & Permissions</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Reference</div>
+    <a class="sidebar-link" onclick="nav('api')"><i class="fa-solid fa-code"></i> REST API <span class="badge">40+</span></a>
+    <a class="sidebar-link" onclick="nav('helpers')"><i class="fa-solid fa-puzzle-piece"></i> Helper Functions</a>
+    <a class="sidebar-link" onclick="nav('security')"><i class="fa-solid fa-lock"></i> Security</a>
+    <a class="sidebar-link" onclick="nav('database')"><i class="fa-solid fa-database"></i> Database Schema</a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="mainContent">
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<section class="doc-section" id="overview">
+  <div class="section-header">
+    <div class="section-tag">Getting Started</div>
+    <h1 class="section-title">ETUS Platform Documentation</h1>
+    <p class="section-sub">ETUS is a full-stack mission operations platform. This reference covers every module, model, route, API endpoint, and helper function in the system.</p>
+  </div>
+
+  <div class="overview-grid">
+    <div class="ov-card"><div class="ov-num" style="color:var(--green)">10</div><div class="ov-label">Modules</div></div>
+    <div class="ov-card"><div class="ov-num" style="color:var(--blue)">40+</div><div class="ov-label">Routes</div></div>
+    <div class="ov-card"><div class="ov-num" style="color:var(--amber)">35</div><div class="ov-label">Permissions</div></div>
+    <div class="ov-card"><div class="ov-num" style="color:var(--purple)">19</div><div class="ov-label">Notify Helpers</div></div>
+    <div class="ov-card"><div class="ov-num" style="color:var(--cyan)">10</div><div class="ov-label">Migrations</div></div>
+    <div class="ov-card"><div class="ov-num" style="color:var(--red)">4</div><div class="ov-label">Roles</div></div>
+  </div>
+
+  <div class="callout info"><i class="fa-solid fa-circle-info callout-icon"></i><div class="callout-body"><strong>Version 1.0.0</strong>Built on PHP 8.1+ using the custom Etus MVC framework. SQLite for development, MySQL/MariaDB recommended for production.</div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(74,222,128,.1);color:var(--green)"><i class="fa-solid fa-layer-group"></i></span>Platform Modules</h3>
+  <p class="doc-p">Each module follows the same pattern: a <strong>Model</strong> for data access, one or more <strong>Controllers</strong> for web routes, an optional <strong>API Controller</strong> for JSON endpoints, and one or more <strong>View</strong> templates.</p>
+
+  <div class="prop-table" style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden">
+    <table class="prop-table">
+      <thead><tr><th>Module</th><th>Model</th><th>Routes</th><th>Access</th></tr></thead>
+      <tbody>
+        <tr><td>Authentication</td><td><code>User</code></td><td>8</td><td>Guest</td></tr>
+        <tr><td>Missions</td><td><code>Mission</code></td><td>9</td><td>Auth</td></tr>
+        <tr><td>Teams</td><td><code>Team</code></td><td>10</td><td>Auth</td></tr>
+        <tr><td>Tasks</td><td><code>Task</code></td><td>9</td><td>Auth</td></tr>
+        <tr><td>Reports</td><td><code>Report</code></td><td>9</td><td>Auth</td></tr>
+        <tr><td>Chat</td><td><code>ChatRoom, ChatMessage</code></td><td>10</td><td>Auth</td></tr>
+        <tr><td>Notifications</td><td><code>Notification</code></td><td>5</td><td>Auth</td></tr>
+        <tr><td>Dashboards</td><td>—</td><td>4</td><td>Auth</td></tr>
+        <tr><td>Admin (RBAC)</td><td><code>Role, Permission</code></td><td>17</td><td>super_admin</td></tr>
+        <tr><td>Settings</td><td><code>Setting</code></td><td>2</td><td>admin+</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════ INSTALLATION ═══════════════ -->
+<section class="doc-section" id="installation">
+  <div class="section-header">
+    <div class="section-tag">Setup</div>
+    <h2 class="section-title">Installation</h2>
+    <p class="section-sub">Get ETUS running in four steps. PHP 8.1+ and a web server (Nginx or Apache) required.</p>
+  </div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-1"></i></span>Requirements</h3>
+  <div class="prop-table" style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Requirement</th><th>Minimum</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>PHP</td><td><code>8.1</code></td><td>openssl, pdo_sqlite/pdo_mysql, mbstring extensions</td></tr>
+      <tr><td>Database</td><td>SQLite 3.x</td><td>MySQL 8+ / MariaDB 10.6+ for production</td></tr>
+      <tr><td>Web server</td><td>Nginx / Apache</td><td>Document root must point to <code>/public</code></td></tr>
+      <tr><td>Composer</td><td>Optional</td><td>Only needed if adding external packages</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-2"></i></span>Environment File</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">.env</span></div><div class="code-body"><pre>
+APP_NAME=<span class="str">"ETUS Ops Platform"</span>
+APP_ENV=<span class="str">production</span>
+APP_URL=<span class="str">https://your-domain.com</span>
+
+<span class="cm"># Database — use absolute path for SQLite</span>
+DB_DRIVER=<span class="str">sqlite</span>
+DB_DATABASE=<span class="str">/var/www/etus/database/db.sqlite</span>
+
+<span class="cm"># For MySQL:</span>
+<span class="cm"># DB_DRIVER=mysql</span>
+<span class="cm"># DB_HOST=127.0.0.1</span>
+<span class="cm"># DB_DATABASE=etus</span>
+<span class="cm"># DB_USERNAME=etus_user</span>
+<span class="cm"># DB_PASSWORD=secure_password</span>
+
+<span class="cm"># AES-256-GCM chat encryption key (64 hex chars minimum)</span>
+APP_CHAT_KEY=<span class="str">generate-with-openssl-rand-hex-32</span>
+
+<span class="cm"># Mail (for account activation)</span>
+MAIL_HOST=<span class="str">smtp.example.com</span>
+MAIL_PORT=<span class="num">587</span>
+MAIL_FROM=<span class="str">noreply@your-domain.com</span>
+MAIL_USERNAME=<span class="str">your@email.com</span>
+MAIL_PASSWORD=<span class="str">smtp_password</span></pre></div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-3"></i></span>Run Migrations</h3>
+  <p class="doc-p">Execute all ten migration files in numbered order. Migration 010 seeds all 35 permissions and assigns them to the four default roles.</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Shell</span></div><div class="code-body"><pre>
+<span class="cm"># SQLite — run each migration file</span>
+<span class="kw">for</span> f <span class="kw">in</span> database/migrations/*.sql; <span class="kw">do</span>
+  sqlite3 database/db.sqlite < "$f"
+<span class="kw">done</span>
+
+<span class="cm"># MySQL</span>
+<span class="kw">for</span> f <span class="kw">in</span> database/migrations/*.sql; <span class="kw">do</span>
+  mysql -u root etus < "$f"
+<span class="kw">done</span></pre></div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-4"></i></span>Web Server Config</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Nginx</span></div><div class="code-body"><pre>
+server {
+  listen <span class="num">443</span> ssl;
+  server_name your-domain.com;
+
+  root /var/www/etus/<span class="str">public</span>;
+  index index.php;
+
+  location / {
+    try_files $uri $uri/ /index.php?$query_string;
+  }
+  location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+}</pre></div></div>
+
+  <div class="callout success"><i class="fa-solid fa-circle-check callout-icon"></i><div class="callout-body"><strong>First Login</strong>After migration, create your first super_admin user directly in the database. All subsequent users can be managed through the admin panel at <code>/admin/users</code>.</div></div>
+</section>
+
+<!-- ═══════════════ ARCHITECTURE ═══════════════ -->
+<section class="doc-section" id="architecture">
+  <div class="section-header">
+    <div class="section-tag">Core</div>
+    <h2 class="section-title">Architecture</h2>
+    <p class="section-sub">ETUS uses a custom MVC framework (Etus Framework) with PSR-4 autoloading, a middleware pipeline, and a simple query builder.</p>
+  </div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(167,139,250,.1);color:var(--purple)"><i class="fa-solid fa-folder-tree"></i></span>Directory Structure</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Directory Tree</span></div><div class="code-body"><pre>
+etus/
+├── app/
+│   ├── Controllers/          <span class="cm"># All controllers</span>
+│   │   ├── Admin/            <span class="cm"># super_admin only</span>
+│   │   ├── Api/              <span class="cm"># JSON API controllers</span>
+│   │   └── Auth/             <span class="cm"># Login, register, activation</span>
+│   ├── Models/               <span class="cm"># Data access layer</span>
+│   ├── config/
+│   │   └── helpers.php       <span class="cm"># 53 global helper functions</span>
+│   └── views/
+│       ├── layouts/          <span class="cm"># app.php, auth.php</span>
+│       ├── partials/         <span class="cm"># flash, notification_bell</span>
+│       └── [module]/         <span class="cm"># One folder per module</span>
+├── database/
+│   └── migrations/           <span class="cm"># 001–010 SQL files</span>
+├── framework/                <span class="cm"># Etus Framework core</span>
+│   ├── Auth/                 <span class="cm"># Gate, Auth classes</span>
+│   ├── Database/             <span class="cm"># Connection, Model, QueryBuilder</span>
+│   ├── Http/                 <span class="cm"># Request, Response, Flash, CSRF</span>
+│   ├── Mail/                 <span class="cm"># Mailer</span>
+│   ├── Routing/              <span class="cm"># Router</span>
+│   └── View/                 <span class="cm"># View renderer</span>
+├── public/
+│   └── index.php             <span class="cm"># Single entry point</span>
+└── routes/
+    └── web.php               <span class="cm"># All route definitions</span></pre></div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(167,139,250,.1);color:var(--purple)"><i class="fa-solid fa-arrows-turn-right"></i></span>Request Lifecycle</h3>
+  <p class="doc-p">Every HTTP request passes through the same pipeline:</p>
+  <div class="status-flow">
+    <span class="sf-item sf-sub">public/index.php</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-review">Router</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-review">Middleware</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-sub">Controller</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-sub">Model</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-act">View / JSON</span>
+  </div>
+  <p class="doc-p">Middleware tokens applied per-route: <code>auth</code> enforces login, <code>guest</code> redirects logged-in users, <code>csrf</code> validates the <code>_token</code> field on all POST requests.</p>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(167,139,250,.1);color:var(--purple)"><i class="fa-solid fa-database"></i></span>Base Model</h3>
+  <p class="doc-p">All models extend <code>Etus\Framework\Database\Model</code> which provides <code>find()</code>, <code>findOrFail()</code>, <code>all()</code>, <code>create()</code>, <code>update()</code>, <code>delete()</code>, <code>where()</code>, and automatic timestamp + audit field management.</p>
+</section>
+
+<!-- ═══════════════ AUTH ═══════════════ -->
+<section class="doc-section" id="auth">
+  <div class="section-header">
+    <div class="section-tag">Module 01</div>
+    <h2 class="section-title">Authentication</h2>
+    <p class="section-sub">Secure login, registration, email-based account activation, remember-me cookies, rate limiting, and anti-enumeration protections.</p>
+  </div>
+  <div class="tags"><span class="tag tg">Login</span><span class="tag tg">Register</span><span class="tag tg">Activation</span><span class="tag tb">CSRF</span><span class="tag ta">Rate Limit</span><span class="tag tp">Remember Me</span></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(74,222,128,.1);color:var(--green)"><i class="fa-solid fa-route"></i></span>Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/login</code></td><td>Login form</td><td><span class="guard-badge">guest</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/login</code></td><td>Process login</td><td><span class="guard-badge">guest csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/register</code></td><td>Registration form</td><td><span class="guard-badge">guest</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/register</code></td><td>Create account + send activation email</td><td><span class="guard-badge">guest csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/auth/activate</code></td><td>Activate account via token in email link</td><td>—</td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/auth/resend</code></td><td>Resend activation email form</td><td><span class="guard-badge">guest</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/auth/resend</code></td><td>Trigger new activation email</td><td><span class="guard-badge">guest csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/logout</code></td><td>Destroy session</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(74,222,128,.1);color:var(--green)"><i class="fa-solid fa-cube"></i></span>User Model — Key Methods</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Method</th><th>Returns</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>findByEmail($email)</td><td>array|null</td><td>Look up user by email (case-insensitive)</td></tr>
+      <tr><td>findByEmailWithRole($email)</td><td>array|null</td><td>User row joined with role_name</td></tr>
+      <tr><td>activate($userId)</td><td>void</td><td>Set status='active', clear activation token</td></tr>
+      <tr><td>storeActivationToken($id,$hash,$expiry)</td><td>void</td><td>Store SHA-256 of the raw token</td></tr>
+      <tr><td>findByActivationToken($hash)</td><td>array|null</td><td>Verify token not expired</td></tr>
+      <tr><td>storeRememberToken($id,$hash,$expiry)</td><td>void</td><td>Persistent login cookie support</td></tr>
+      <tr><td>incrementFailedAttempts($id)</td><td>void</td><td>Track brute-force attempts</td></tr>
+      <tr><td>resetFailedAttempts($id)</td><td>void</td><td>Clear on successful login</td></tr>
+      <tr><td>setStatus($id, $status)</td><td>void</td><td>One of: active, pending, suspended, inactive</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout warn"><i class="fa-solid fa-triangle-exclamation callout-icon"></i><div class="callout-body"><strong>Anti-enumeration</strong> The resend activation form always returns the same response regardless of whether the email exists, preventing user enumeration attacks.</div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(74,222,128,.1);color:var(--green)"><i class="fa-solid fa-lock"></i></span>Session Keys Set on Login</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">PHP</span></div><div class="code-body"><pre>
+$_SESSION[<span class="str">'user_id'</span>]   = <span class="var">$user</span>[<span class="str">'user_id'</span>];
+$_SESSION[<span class="str">'user_name'</span>] = <span class="var">$user</span>[<span class="str">'full_name'</span>];
+$_SESSION[<span class="str">'role'</span>]      = <span class="var">$user</span>[<span class="str">'role_name'</span>];   <span class="cm">// e.g. 'manager'</span>
+$_SESSION[<span class="str">'role_id'</span>]   = <span class="var">$user</span>[<span class="str">'role_id'</span>];
+$_SESSION[<span class="str">'email'</span>]     = <span class="var">$user</span>[<span class="str">'email'</span>];</pre></div></div>
+</section>
+
+<!-- ═══════════════ MISSIONS ═══════════════ -->
+<section class="doc-section" id="missions">
+  <div class="section-header">
+    <div class="section-tag">Module 02</div>
+    <h2 class="section-title">Mission Management</h2>
+    <p class="section-sub">Full mission lifecycle — create, assign teams, track status. Each mission carries a unique code, classification level, and team roster.</p>
+  </div>
+  <div class="tags"><span class="tag tr">CRUD</span><span class="tag tb">Team Assignment</span><span class="tag ta">Status Tracking</span><span class="tag tg">REST API</span></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(248,113,113,.1);color:var(--red)"><i class="fa-solid fa-route"></i></span>Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/missions</code></td><td>List all missions (role-filtered)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/missions/create</code></td><td>Create mission form</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/missions</code></td><td>Store new mission</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/missions/{id}</code></td><td>Mission detail with teams/tasks</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/missions/{id}/edit</code></td><td>Edit form</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/missions/{id}/update</code></td><td>Update mission</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/missions/{id}/delete</code></td><td>Soft delete</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/missions/{id}/assign-team</code></td><td>Assign team to mission</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(248,113,113,.1);color:var(--red)"><i class="fa-solid fa-cube"></i></span>Mission Model Methods</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Method</th><th>Returns</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>allWithTaskCounts()</td><td>array</td><td>All missions with aggregate task counts</td></tr>
+      <tr><td>nonSecretWithTaskCounts()</td><td>array</td><td>Non-classified missions only</td></tr>
+      <tr><td>forUser($userId)</td><td>array</td><td>Missions visible to a specific user via team membership</td></tr>
+      <tr><td>findActive($id)</td><td>array|null</td><td>Find non-deleted mission by ID</td></tr>
+      <tr><td>teamsForMission($missionId)</td><td>array</td><td>All teams assigned to a mission</td></tr>
+      <tr><td>assignTeam($missionId,$teamId,$by)</td><td>void</td><td>Link team to mission, auto-provisions chat room</td></tr>
+      <tr><td>softDelete($id,$deletedBy)</td><td>int</td><td>Sets deleted_at, preserves record</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4 class="doc-h4">API Endpoints</h4>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/missions</code></td><td>JSON list of missions</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/missions</code></td><td>Create mission via JSON</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/missions/assign-team</code></td><td>Assign team to mission</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ TEAMS ═══════════════ -->
+<section class="doc-section" id="teams">
+  <div class="section-header">
+    <div class="section-tag">Module 03</div>
+    <h2 class="section-title">Team Management</h2>
+    <p class="section-sub">Build and manage field teams. Assign leads, add/remove members, track task load, and link teams to missions.</p>
+  </div>
+  <div class="tags"><span class="tag tb">Members</span><span class="tag tb">Leads</span><span class="tag tg">REST API</span><span class="tag ta">Soft Delete</span></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-route"></i></span>Web Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/teams</code></td><td>List user's teams</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/teams/create</code></td><td>Create team form</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/teams</code></td><td>Store team</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/teams/{id}</code></td><td>Team detail with members and tasks</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/teams/{id}/members</code></td><td>Add member to team</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/teams/{id}/members/remove</code></td><td>Remove member</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/teams/{id}/delete</code></td><td>Soft delete team</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-cube"></i></span>Team Model Methods</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Method</th><th>Returns</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>allActive()</td><td>array</td><td>All non-deleted teams</td></tr>
+      <tr><td>forUser($userId)</td><td>array</td><td>Teams the user belongs to via team_membership</td></tr>
+      <tr><td>members($teamId)</td><td>array</td><td>Members with role, joined_at, user details</td></tr>
+      <tr><td>addMember($teamId,$userId,$by,$role)</td><td>void</td><td>Role: 'member' | 'lead'</td></tr>
+      <tr><td>hasMember($teamId,$userId)</td><td>bool</td><td>Membership check</td></tr>
+      <tr><td>taskStats($teamId)</td><td>array</td><td>Count per status: open, in_progress, review, closed</td></tr>
+      <tr><td>missions($teamId)</td><td>array</td><td>Missions this team is assigned to</td></tr>
+      <tr><td>stats(?$userId)</td><td>array</td><td>Aggregate stats, optionally scoped to one user</td></tr>
+      <tr><td>softDelete($teamId,$deletedBy)</td><td>void</td><td>Sets deleted_at</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ TASKS ═══════════════ -->
+<section class="doc-section" id="tasks">
+  <div class="section-header">
+    <div class="section-tag">Module 04</div>
+    <h2 class="section-title">Tasks & Kanban</h2>
+    <p class="section-sub">Create and assign tasks to team members. Status tracking through four stages, priority levels, threaded comments, bulk operations, and a drag-and-drop Kanban board.</p>
+  </div>
+  <div class="tags"><span class="tag tp">Kanban</span><span class="tag tb">Assignees</span><span class="tag ta">Comments</span><span class="tag tr">Priorities</span><span class="tag tg">Bulk Ops</span></div>
+
+  <h4 class="doc-h4">Status Flow</h4>
+  <div class="status-flow">
+    <span class="sf-item sf-sub">open</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-review">in_progress</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-review">review</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-act">closed</span>
+  </div>
+  <h4 class="doc-h4">Priority Levels</h4>
+  <div class="tags"><span class="tag tg">low</span><span class="tag tb">medium</span><span class="tag ta">high</span><span class="tag tr">critical</span></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(167,139,250,.1);color:var(--purple)"><i class="fa-solid fa-route"></i></span>Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/tasks/kanban</code></td><td>Drag-and-drop Kanban board (SortableJS)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/teams/{teamId}/tasks/create</code></td><td>Create task form scoped to team</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/teams/{teamId}/tasks</code></td><td>Store task</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/tasks/{id}</code></td><td>Task detail with comments</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/tasks/{id}/status</code></td><td>Update task status</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/tasks/{id}/comment</code></td><td>Add threaded comment</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/tasks/{id}/delete</code></td><td>Soft delete task</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(167,139,250,.1);color:var(--purple)"><i class="fa-solid fa-code"></i></span>API Endpoints</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/tasks</code></td><td>Filtered task list (status, priority, assignee params)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/tasks/kanban</code></td><td>Tasks grouped by status for Kanban board</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/tasks/stats</code></td><td>Counts per status for dashboard charts</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/tasks/{id}/status</code></td><td>Transition task status (validates allowed values)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/tasks/bulk-status</code></td><td>Body: <code>{"ids":[1,2],"status":"closed"}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/tasks/bulk-delete</code></td><td>Soft delete multiple tasks</td><td><span class="guard-badge">auth</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ REPORTS ═══════════════ -->
+<section class="doc-section" id="reports">
+  <div class="section-header">
+    <div class="section-tag">Module 05</div>
+    <h2 class="section-title">Reports</h2>
+    <p class="section-sub">Structured incident and progress reporting with a multi-stage review workflow. Each role sees a different inbox matching their position in the pipeline.</p>
+  </div>
+  <div class="tags"><span class="tag ta">Workflow</span><span class="tag tr">Escalation</span><span class="tag tg">Inbox</span><span class="tag tb">Review</span></div>
+
+  <h4 class="doc-h4">Report Types</h4>
+  <div class="tags"><span class="tag tb">member_report</span><span class="tag tp">lead_report</span></div>
+
+  <h4 class="doc-h4">Status Flow</h4>
+  <div class="status-flow">
+    <span class="sf-item sf-draft">draft</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-sub">submitted</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-review">under_review</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-esc">escalated</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-act">actioned</span>
+  </div>
+  <div class="status-flow">
+    <span style="font-family:var(--mono);font-size:.7rem;color:var(--muted)">or:</span>
+    <span class="sf-item sf-review">under_review</span>
+    <span class="sf-arrow">→</span>
+    <span class="sf-item sf-rej">rejected</span>
+  </div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(245,158,11,.1);color:var(--amber)"><i class="fa-solid fa-inbox"></i></span>Role Inboxes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Role</th><th>Sees In Inbox</th><th>Can Do</th></tr></thead>
+    <tbody>
+      <tr><td>user</td><td>Own submitted reports</td><td>Create, edit draft, view</td></tr>
+      <tr><td>manager</td><td>Reports submitted by their team</td><td>Review → approve/reject/escalate</td></tr>
+      <tr><td>admin</td><td>All escalated reports</td><td>Action (close) escalated reports</td></tr>
+      <tr><td>super_admin</td><td>All reports system-wide</td><td>Full control</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(245,158,11,.1);color:var(--amber)"><i class="fa-solid fa-route"></i></span>Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/reports</code></td><td>Role-aware inbox view</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/reports</code></td><td>Submit report</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/reports/{id}</code></td><td>Full report detail with action buttons</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/reports/{id}/review</code></td><td>Approve or reject (manager+)</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/reports/{id}/escalate</code></td><td>Escalate to admin tier</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout info"><i class="fa-solid fa-circle-info callout-icon"></i><div class="callout-body"><strong>Notifications on workflow transitions</strong> Use <code>notify_report_submitted()</code>, <code>notify_report_reviewed()</code>, <code>notify_report_escalated()</code>, and <code>notify_report_actioned()</code> helper functions to automatically notify relevant parties at each stage.</div></div>
+</section>
+
+<!-- ═══════════════ CHAT ═══════════════ -->
+<section class="doc-section" id="chat">
+  <div class="section-header">
+    <div class="section-tag">Module 06</div>
+    <h2 class="section-title">Encrypted Chat</h2>
+    <p class="section-sub">Real-time team messaging encrypted with AES-256-GCM. Three room types — team rooms, direct messages, and commander-only command channels. Orders require explicit acknowledgement.</p>
+  </div>
+  <div class="tags"><span class="tag tg">AES-256-GCM</span><span class="tag tr">Orders</span><span class="tag tb">Broadcast</span><span class="tag ta">ACK</span><span class="tag tp">Polling</span></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(34,211,238,.1);color:var(--cyan)"><i class="fa-solid fa-comments"></i></span>Room Types</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Type</th><th>Constant</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>team</td><td><code>TYPE_TEAM</code></td><td>Auto-created for each team+mission combination. All team members added automatically.</td></tr>
+      <tr><td>direct</td><td><code>TYPE_DIRECT</code></td><td>1-to-1 DM between any two users. Deduplicated — only one room per pair.</td></tr>
+      <tr><td>command</td><td><code>TYPE_COMMAND</code></td><td>Commander-only channels for a mission. Restricted to super_admin, admin, manager roles.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(34,211,238,.1);color:var(--cyan)"><i class="fa-solid fa-message"></i></span>Message Types</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Type</th><th>Who Can Send</th><th>Description</span></th></tr></thead>
+    <tbody>
+      <tr><td><code>text</code></td><td>Everyone</td><td>Standard message. Supports threaded replies.</td></tr>
+      <tr><td><code>system</code></td><td>System only</td><td>Auto-generated room events (member joined, etc.)</td></tr>
+      <tr><td><code>broadcast</code></td><td>Room leads, commanders</td><td>Highlighted announcement displayed centre-screen. Notifies all members.</td></tr>
+      <tr><td><code>order</code></td><td>Room leads, commanders</td><td>Requires explicit ACK from each recipient. Shows pending banner until acknowledged.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(34,211,238,.1);color:var(--cyan)"><i class="fa-solid fa-lock"></i></span>Encryption</h3>
+  <p class="doc-p">Every message is encrypted <strong>before storage</strong>. The raw ciphertext (<code>body_enc</code>) is never returned to the client — decryption happens server-side before the JSON response is built.</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">PHP — Encryption (ChatMessage::encrypt)</span></div><div class="code-body"><pre>
+<span class="cm">// Key derivation — HMAC-SHA256 of the APP_CHAT_KEY env var</span>
+<span class="var">$key</span> = <span class="fn">hash_hmac</span>(<span class="str">'sha256'</span>, APP_CHAT_KEY, <span class="str">'etus-chat-v1'</span>, <span class="kw">true</span>);
+
+<span class="cm">// Unique 12-byte IV per message</span>
+<span class="var">$iv</span>  = <span class="fn">random_bytes</span>(<span class="num">12</span>);
+<span class="var">$tag</span> = <span class="str">''</span>;
+
+<span class="var">$cipher</span> = <span class="fn">openssl_encrypt</span>(
+    <span class="var">$plaintext</span>, <span class="str">'aes-256-gcm'</span>, <span class="var">$key</span>,
+    OPENSSL_RAW_DATA, <span class="var">$iv</span>, <span class="var">$tag</span>
+);
+
+<span class="cm">// Stored: base64(iv[12] + tag[16] + ciphertext)</span>
+<span class="var">$stored</span> = <span class="fn">base64_encode</span>(<span class="var">$iv</span> . <span class="var">$tag</span> . <span class="var">$cipher</span>);</pre></div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(34,211,238,.1);color:var(--cyan)"><i class="fa-solid fa-route"></i></span>Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/chat</code></td><td>Chat landing (auto-provisions team rooms)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/chat/{roomId}</code></td><td>Open a specific room (checks participant access)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/chat/direct</code></td><td>Start DM — creates room if not exists, redirects</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/chat/command-room</code></td><td>Open command channel for a mission</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/chat/rooms</code></td><td>All rooms for current user (JSON)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/{roomId}/send</code></td><td>Send encrypted message. Body: <code>body, type, parent_id</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/chat/{roomId}/poll</code></td><td>Poll new messages since <code>?after={msgId}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/{roomId}/read</code></td><td>Mark all room messages as read</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/messages/{id}/ack</code></td><td>Acknowledge an order message</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/messages/{id}/delete</code></td><td>Soft delete own message</td><td><span class="guard-badge">auth</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(34,211,238,.1);color:var(--cyan)"><i class="fa-solid fa-rotate"></i></span>Real-Time Polling</h3>
+  <p class="doc-p">The chat client polls <code>/api/chat/{roomId}/poll?after={lastMsgId}</code> every <strong>3 seconds</strong>. The server returns only messages with <code>id &gt; lastMsgId</code>, auto-marks them as read, and returns the updated unread count. Smart scroll logic prevents force-scrolling when the user has scrolled up to read history.</p>
+
+  <div class="code-block"><div class="code-header"><span class="code-lang">JavaScript — Poll loop</span></div><div class="code-body"><pre>
+<span class="cm">// Started on DOMContentLoaded, cleared on beforeunload</span>
+<span class="kw">async function</span> <span class="fn">pollMessages</span>() {
+  <span class="kw">const</span> res  = <span class="kw">await</span> <span class="fn">fetch</span>(`/api/chat/${ROOM_ID}/poll?after=${lastMsgId}`);
+  <span class="kw">const</span> data = <span class="kw">await</span> res.<span class="fn">json</span>();
+
+  data.messages.<span class="fn">forEach</span>(msg =&gt; {
+    <span class="kw">if</span> (msg.sender_id !== MY_ID) <span class="fn">renderMessage</span>(msg, <span class="kw">false</span>);
+    lastMsgId = Math.<span class="fn">max</span>(lastMsgId, msg.id);
+  });
+
+  <span class="kw">if</span> (data.messages.length &gt; <span class="num">0</span> &amp;&amp; isAtBottom) <span class="fn">scrollToBottom</span>(<span class="kw">true</span>);
+}
+
+<span class="fn">setInterval</span>(pollMessages, <span class="num">3000</span>);</pre></div></div>
+</section>
+
+<!-- ═══════════════ NOTIFICATIONS ═══════════════ -->
+<section class="doc-section" id="notifications">
+  <div class="section-header">
+    <div class="section-tag">Module 07</div>
+    <h2 class="section-title">Notifications</h2>
+    <p class="section-sub">Real-time notification system with a bell dropdown, configurable polling interval, read receipts, and 19 helper functions covering every domain event in the platform.</p>
+  </div>
+  <div class="tags"><span class="tag ta">Polling</span><span class="tag tb">Bell UI</span><span class="tag tg">19 Helpers</span><span class="tag tp">Broadcast</span></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(251,146,60,.1);color:#fb923c"><i class="fa-solid fa-puzzle-piece"></i></span>Notification Helper Functions</h3>
+  <p class="doc-p">All helpers are global functions defined in <code>app/config/helpers.php</code>. They all accept a single user ID or an array of user IDs as the first argument.</p>
+
+  <div class="helper-grid">
+    <div class="helper-card"><div class="helper-name">notify($userIds, $title, $body, $url, $type)</div><div class="helper-desc">Core dispatcher. All domain helpers call this. Type is a Notification::TYPE_* constant or a string like 'success'.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_info / notify_success / notify_warning / notify_danger</div><div class="helper-desc">Generic severity shortcuts when no domain-specific helper applies.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_report_submitted($reviewerIds, $report, $authorName)</div><div class="helper-desc">Fires when a user submits a report. Auto-builds the /reports/{id} URL.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_report_reviewed($authorId, $report, $reviewerName, $action)</div><div class="helper-desc">$action: 'approved', 'rejected', or 'needs_revision'. Used in the report title.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_report_escalated($managerIds, $report, $escalatedBy)</div><div class="helper-desc">Fires when a lead escalates a report up to admin tier.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_report_actioned($authorId, $report, $actionedBy)</div><div class="helper-desc">Fires when an admin closes and actions a report.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_task_assigned($assigneeId, $task, $teamName)</div><div class="helper-desc">Fires on task creation or reassignment. Optional $teamName adds context.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_task_status_changed($userIds, $task, $newStatus, $changedBy)</div><div class="helper-desc">Notify leads/watchers when a task status changes.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_team_added($userId, $team, $addedBy)</div><div class="helper-desc">Fires when a user is added to a team.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_team_removed($userId, $team, $removedBy)</div><div class="helper-desc">Fires when a user is removed from a team.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_mission_assigned($memberIds, $mission, $team)</div><div class="helper-desc">Notifies all current team members when their team is assigned to a mission.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_chat_order($memberIds, $roomId, $preview, $commanderName)</div><div class="helper-desc">Fires on TYPE_ORDER chat message. Uses 'danger' type. Truncates preview to 80 chars.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_user_status_changed($userId, $newStatus, $reason)</div><div class="helper-desc">Tells a user their account was suspended, activated, etc.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_admins($title, $body, $url, $type)</div><div class="helper-desc">Queries all active super_admin and admin users and notifies them all. Useful for security events.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_role($roleName, $title, $body, $url, $type)</div><div class="helper-desc">Notifies all active users with a specific role name.</div></div>
+    <div class="helper-card"><div class="helper-name">notify_team_members($teamId, $title, $body, $url, $type, $exclude)</div><div class="helper-desc">Notifies all active members of a team. $exclude array skips specified user IDs (e.g. the actor).</div></div>
+  </div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(251,146,60,.1);color:#fb923c"><i class="fa-solid fa-code"></i></span>API Endpoints</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/notifications</code></td><td>All notifications for current user (newest first)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/notifications/poll</code></td><td>Unread count + new notifications since <code>?since={datetime}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/notifications/{id}/read</code></td><td>Mark single notification as read</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/notifications/read-all</code></td><td>Mark all as read</td><td><span class="guard-badge">auth</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<section class="doc-section" id="dashboard">
+  <div class="section-header">
+    <div class="section-tag">Module 08</div>
+    <h2 class="section-title">Dashboards</h2>
+    <p class="section-sub">Four role-specific dashboards served from a single controller. Each view presents the most relevant KPIs and data for that role's responsibilities.</p>
+  </div>
+  <div class="tags"><span class="tag tb">Chart.js</span><span class="tag tg">Role-aware</span><span class="tag ta">KPIs</span></div>
+
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Route</th><th>Role</th><th>What It Shows</th></tr></thead>
+    <tbody>
+      <tr><td><code>/dashboard</code></td><td>user</td><td>Own task stats, recent missions, report status, team membership</td></tr>
+      <tr><td><code>/dashboard/teams</code></td><td>manager</td><td>Team load chart, member task distribution, mission assignments</td></tr>
+      <tr><td><code>/dashboard/tasks</code></td><td>manager+</td><td>Task burndown, priority breakdown, overdue tasks, assignee table</td></tr>
+      <tr><td><code>/dashboard/missions</code></td><td>admin+</td><td>Mission status overview, team assignments, completion rates, activity log</td></tr>
+    </tbody>
+  </table></div>
+
+  <p class="doc-p">The <code>DashboardController</code> detects the user's role and redirects to the appropriate sub-route. Charts use <strong>Chart.js</strong> loaded from cdnjs. All data is rendered server-side into the view as PHP arrays, then passed to JS as <code>JSON.parse</code> literals — no additional API calls needed on load.</p>
+</section>
+
+<!-- ═══════════════ SETTINGS ═══════════════ -->
+<section class="doc-section" id="settings">
+  <div class="section-header">
+    <div class="section-tag">Module 09 / 10</div>
+    <h2 class="section-title">Settings</h2>
+    <p class="section-sub">Admin-configurable key-value settings with typed values and grouped tabs. Access restricted to admin and super_admin roles.</p>
+  </div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(244,114,182,.1);color:#f472b6"><i class="fa-solid fa-sliders"></i></span>Using the Setting Model</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">PHP</span></div><div class="code-body"><pre>
+<span class="cm">// Read a setting with a default fallback</span>
+<span class="var">$name</span>     = Setting::<span class="fn">get</span>(<span class="str">'app.name'</span>, <span class="str">'Etus'</span>);
+<span class="var">$chatOn</span>   = Setting::<span class="fn">get</span>(<span class="str">'chat.enabled'</span>, <span class="kw">true</span>);   <span class="cm">// auto-cast to bool</span>
+<span class="var">$retDays</span>  = Setting::<span class="fn">get</span>(<span class="str">'chat.message_retention'</span>, <span class="num">90</span>); <span class="cm">// int</span>
+
+<span class="cm">// Update a setting</span>
+Setting::<span class="fn">set</span>(<span class="str">'app.name'</span>, <span class="str">'My Ops Platform'</span>);
+
+<span class="cm">// All settings (returns flat key→value array)</span>
+<span class="var">$all</span> = Setting::<span class="fn">all</span>();</pre></div></div>
+
+  <h4 class="doc-h4">Built-in Setting Keys</h4>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Key</th><th>Type</th><th>Default</th></tr></thead>
+    <tbody>
+      <tr><td>app.name</td><td>string</td><td>Etus Framework</td></tr>
+      <tr><td>notifications.polling_interval</td><td>int</td><td>30 (seconds)</td></tr>
+      <tr><td>chat.enabled</td><td>bool</td><td>true</td></tr>
+      <tr><td>chat.message_retention</td><td>int</td><td>90 (days)</td></tr>
+      <tr><td>chat.allow_direct</td><td>bool</td><td>true</td></tr>
+      <tr><td>chat.encrypt_key_hint</td><td>string</td><td>APP_CHAT_KEY</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ ADMIN ═══════════════ -->
+<section class="doc-section" id="admin">
+  <div class="section-header">
+    <div class="section-tag">Module Administration</div>
+    <h2 class="section-title">Admin Module</h2>
+    <p class="section-sub">The <code>/admin</code> area is restricted to <code>super_admin</code> only — enforced at the controller level via <code>Gate::hasRole()</code>, not just middleware.</p>
+  </div>
+  <div class="tags"><span class="tag tr">super_admin only</span><span class="tag ta">RBAC</span><span class="tag tg">Live Cache Flush</span></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(248,113,113,.1);color:var(--red)"><i class="fa-solid fa-user-gear"></i></span>User Management — Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/admin/users</code></td><td>User list with stats (total, active, pending, suspended)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/admin/users/create</code></td><td>Create user form with role/status selects</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/users</code></td><td>Store new user</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/admin/users/{id}</code></td><td>Full profile: teams, tasks, stats, activity log</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/users/{id}/status</code></td><td>Suspend / activate / deactivate</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/users/{id}/delete</code></td><td>Soft delete (sets status=inactive)</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(248,113,113,.1);color:var(--red)"><i class="fa-solid fa-shield-halved"></i></span>Role Management — Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/admin/roles</code></td><td>Role cards with user_count and permission_count</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/admin/roles/{id}</code></td><td>Permission matrix with grouped checkboxes</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/roles/{id}/permissions</code></td><td>Sync all permissions atomically (DELETE + INSERT). Flushes Gate cache.</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/roles/{id}/delete</code></td><td>Delete role (blocked if system role or has users)</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(248,113,113,.1);color:var(--red)"><i class="fa-solid fa-key"></i></span>Permission Management — Routes</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>URI</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/admin/permissions</code></td><td>All permissions grouped by module with role_count</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/permissions</code></td><td>Create new permission. Auto-checks name uniqueness.</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/permissions/{id}/update</code></td><td>Update label or group (inline edit)</td><td><span class="guard-badge">auth csrf</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/admin/permissions/{id}/delete</code></td><td>Delete permission (cascades from role_permissions)</td><td><span class="guard-badge">auth csrf</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ RBAC ═══════════════ -->
+<section class="doc-section" id="rbac">
+  <div class="section-header">
+    <div class="section-tag">Reference</div>
+    <h2 class="section-title">RBAC & Permissions</h2>
+    <p class="section-sub">Role-Based Access Control with 35 granular permissions across 9 module groups. Permissions are cached in the session and flushed live when changed.</p>
+  </div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(245,158,11,.1);color:var(--amber)"><i class="fa-solid fa-th-large"></i></span>All 35 Permissions by Group</h3>
+  <div class="perm-grid">
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-user" style="font-size:.5rem"></i> Users</div><ul class="perm-list"><li>view-users</li><li>create-users</li><li>edit-users</li><li>delete-users</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-shield-halved" style="font-size:.5rem"></i> Roles</div><ul class="perm-list"><li>view-roles</li><li>create-roles</li><li>edit-roles</li><li>delete-roles</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-key" style="font-size:.5rem"></i> Permissions</div><ul class="perm-list"><li>view-permissions</li><li>create-permissions</li><li>edit-permissions</li><li>delete-permissions</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-crosshairs" style="font-size:.5rem"></i> Missions</div><ul class="perm-list"><li>view-missions</li><li>create-missions</li><li>edit-missions</li><li>delete-missions</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-users" style="font-size:.5rem"></i> Teams</div><ul class="perm-list"><li>view-teams</li><li>create-teams</li><li>edit-teams</li><li>delete-teams</li><li>manage-team-members</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-list-check" style="font-size:.5rem"></i> Tasks</div><ul class="perm-list"><li>view-tasks</li><li>create-tasks</li><li>edit-tasks</li><li>delete-tasks</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-file-lines" style="font-size:.5rem"></i> Reports</div><ul class="perm-list"><li>view-reports</li><li>create-reports</li><li>review-reports</li><li>delete-reports</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-comments" style="font-size:.5rem"></i> Chat</div><ul class="perm-list"><li>access-chat</li><li>send-orders</li><li>send-broadcasts</li></ul></div>
+    <div class="perm-group"><div class="perm-group-title"><i class="fa-solid fa-sliders" style="font-size:.5rem"></i> Settings</div><ul class="perm-list"><li>view-settings</li><li>edit-settings</li></ul></div>
+  </div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(245,158,11,.1);color:var(--amber)"><i class="fa-solid fa-code"></i></span>Using the Gate in Controllers</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">PHP</span></div><div class="code-body"><pre>
+<span class="cm">// In any controller or view:</span>
+<span class="kw">if</span> (! Gate::<span class="fn">can</span>(<span class="str">'edit-missions'</span>)) {
+    <span class="kw">return</span> <span class="fn">redirect</span>(<span class="str">'/dashboard'</span>);
+}
+
+<span class="cm">// Check role (bypasses permission lookup for super_admin)</span>
+<span class="kw">if</span> (Gate::<span class="fn">hasRole</span>(<span class="str">'super_admin'</span>)) { ... }
+
+<span class="cm">// Helper functions (views + controllers)</span>
+<span class="fn">can</span>(<span class="str">'view-reports'</span>)       <span class="cm">// bool</span>
+<span class="fn">cannot</span>(<span class="str">'delete-users'</span>)    <span class="cm">// bool</span>
+<span class="fn">can_any</span>([<span class="str">'edit-tasks'</span>, <span class="str">'edit-missions'</span>])  <span class="cm">// bool</span>
+<span class="fn">has_role</span>(<span class="str">'manager'</span>)       <span class="cm">// bool</span>
+<span class="fn">has_any_role</span>([<span class="str">'admin'</span>, <span class="str">'super_admin'</span>])  <span class="cm">// bool</span>
+
+<span class="cm">// In Blade-style PHP views:</span>
+&lt;?<span class="kw">php if</span> (<span class="fn">can</span>(<span class="str">'create-missions'</span>)): ?&gt;
+  &lt;a href=<span class="str">"/missions/create"</span>&gt;New Mission&lt;/a&gt;
+&lt;?<span class="kw">php endif</span>; ?&gt;</pre></div></div>
+
+  <div class="callout success"><i class="fa-solid fa-circle-check callout-icon"></i><div class="callout-body"><strong>Live Cache Flush</strong> When permissions are changed via the admin panel, <code>Gate::flushCache()</code> is called automatically inside <code>Role::syncPermissions()</code>, <code>Role::addPermission()</code>, and <code>Role::removePermission()</code>. Permission changes take effect on the next request without requiring users to log out.</div></div>
+</section>
+
+<!-- ═══════════════ API REFERENCE ═══════════════ -->
+<section class="doc-section" id="api">
+  <div class="section-header">
+    <div class="section-tag">Reference</div>
+    <h2 class="section-title">REST API Reference</h2>
+    <p class="section-sub">All API endpoints return <code>application/json</code>. Successful responses follow the envelope <code>{"success":true,"message":"...","data":{}}</code>. Authentication is session-based — send cookies with each request.</p>
+  </div>
+
+  <div class="callout info"><i class="fa-solid fa-circle-info callout-icon"></i><div class="callout-body"><strong>CSRF on API routes</strong> API controllers do NOT apply the csrf middleware. CSRF is enforced only on web POST routes. XHR/fetch requests from the front-end should include the <code>X-Requested-With: XMLHttpRequest</code> header. The <code>meta[name="csrf-token"]</code> tag in the layout provides the token for POST bodies when needed.</div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-check-circle"></i></span>Standard Response Shape</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">JSON</span></div><div class="code-body"><pre>
+<span class="cm">// Success</span>
+{ <span class="str">"success"</span>: <span class="kw">true</span>, <span class="str">"message"</span>: <span class="str">"OK"</span>, <span class="str">"data"</span>: { ... } }
+
+<span class="cm">// Error</span>
+{ <span class="str">"success"</span>: <span class="kw">false</span>, <span class="str">"message"</span>: <span class="str">"You are not authorised."</span>, <span class="str">"data"</span>: {} }
+
+<span class="cm">// HTTP status codes used:</span>
+<span class="cm">// 200 — success</span>
+<span class="cm">// 400 — validation error</span>
+<span class="cm">// 403 — unauthorised (not a participant, wrong role)</span>
+<span class="cm">// 404 — resource not found</span>
+<span class="cm">// 500 — server error</span></pre></div></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-table"></i></span>Complete Endpoint List</h3>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="route-table">
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/tasks</code></td><td>Task list. Params: status, priority, assignee_id, team_id</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/tasks/kanban</code></td><td>Tasks keyed by status for Kanban rendering</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/tasks/stats</code></td><td>Count per status for dashboard charts</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/tasks/{id}/status</code></td><td>Body: <code>{"status":"in_progress"}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/tasks/bulk-status</code></td><td>Body: <code>{"ids":[1,2],"status":"closed"}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/tasks/bulk-delete</code></td><td>Body: <code>{"ids":[3,4]}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/teams</code></td><td>All active teams</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/teams/stats</code></td><td>Team-level aggregate stats</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/teams/{id}</code></td><td>Single team with members array</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/teams/{id}/members</code></td><td>Add member. Body: <code>{"user_id":5,"role":"lead"}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/teams/{id}/members/{mid}/remove</code></td><td>Remove member from team</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/missions</code></td><td>List missions (role-filtered)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/missions</code></td><td>Create mission via JSON</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/missions/assign-team</code></td><td>Body: <code>{"mission_id":1,"team_id":3}</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/notifications</code></td><td>All notifications (newest first, limit 30)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/notifications/poll</code></td><td>Param: <code>since=2025-03-15+06:00:00</code></td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/notifications/{id}/read</code></td><td>Mark single read, returns updated unread_count</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/notifications/read-all</code></td><td>Mark all read for current user</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/chat/rooms</code></td><td>All rooms user participates in</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/{roomId}/send</code></td><td>Body: <code>body, type, parent_id</code> (form-encoded)</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge GET">GET</span></td><td><code>/api/chat/{roomId}/poll</code></td><td>Param: <code>after={lastMsgId}</code>. Auto-marks as read.</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/{roomId}/read</code></td><td>Mark entire room as read</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/messages/{id}/ack</code></td><td>Acknowledge an order message</td><td><span class="guard-badge">auth</span></td></tr>
+      <tr><td><span class="method-badge POST">POST</span></td><td><code>/api/chat/messages/{id}/delete</code></td><td>Soft delete (sender only)</td><td><span class="guard-badge">auth</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ HELPERS ═══════════════ -->
+<section class="doc-section" id="helpers">
+  <div class="section-header">
+    <div class="section-tag">Reference</div>
+    <h2 class="section-title">Helper Functions</h2>
+    <p class="section-sub">53 global helper functions defined in <code>app/config/helpers.php</code>. Available everywhere — controllers, views, and models.</p>
+  </div>
+
+  <h4 class="doc-h4">View Helpers</h4>
+  <div class="code-block"><div class="code-header"><span class="code-lang">PHP</span></div><div class="code-body"><pre>
+<span class="fn">view</span>(<span class="str">'missions.index'</span>, [<span class="str">'missions'</span> =&gt; <span class="var">$data</span>])   <span class="cm">// → Response</span>
+<span class="fn">partial</span>(<span class="str">'partials.flash'</span>)                         <span class="cm">// → string (rendered HTML)</span></pre></div></div>
+
+  <h4 class="doc-h4">Auth Helpers</h4>
+  <div class="code-block"><div class="code-header"><span class="code-lang">PHP</span></div><div class="code-body"><pre>
+<span class="fn">auth_check</span>()        <span class="cm">// bool — is logged in</span>
+<span class="fn">auth_user</span>()         <span class="cm">// ?array — full user row</span>
+<span class="fn">auth_id</span>()           <span class="cm">// ?int — current user ID</span>
+<span class="fn">auth_role</span>()         <span class="cm">// ?string — role slug</span>
+<span class="fn">can</span>(<span class="str">'edit-tasks'</span>)   <span class="cm">// bool</span>
+<span class="fn">cannot</span>(<span class="str">'...'</span>)       <span class="cm">// bool</span>
+<span class="fn">can_any</span>([...])      <span class="cm">// bool — true if has any</span>
+<span class="fn">can_all</span>([...])      <span class="cm">// bool — true if has all</span>
+<span class="fn">has_role</span>(<span class="str">'admin'</span>)   <span class="cm">// bool</span>
+<span class="fn">has_any_role</span>([...]) <span class="cm">// bool</span></pre></div></div>
+
+  <h4 class="doc-h4">Flash & HTTP</h4>
+  <div class="code-block"><div class="code-header"><span class="code-lang">PHP</span></div><div class="code-body"><pre>
+<span class="fn">flash_success</span>(<span class="str">'Saved!'</span>)
+<span class="fn">flash_error</span>(<span class="str">'Something went wrong.'</span>)
+<span class="fn">flash_info</span>(<span class="str">'Note this.'</span>)
+<span class="fn">get_flash</span>()                        <span class="cm">// ?array{type,msg}</span>
+<span class="fn">csrf_token</span>()                       <span class="cm">// string</span>
+<span class="fn">csrf_field</span>()                       <span class="cm">// &lt;input type="hidden" name="_token"&gt;</span>
+<span class="fn">redirect</span>(<span class="str">'/dashboard'</span>)            <span class="cm">// Response (302)</span>
+<span class="fn">json</span>([<span class="str">'data'</span> =&gt; <span class="var">$rows</span>], <span class="num">200</span>)    <span class="cm">// JsonResponse</span>
+<span class="fn">env</span>(<span class="str">'APP_NAME'</span>, <span class="str">'Etus'</span>)          <span class="cm">// mixed, auto-cast bool/null</span></pre></div></div>
+
+  <h4 class="doc-h4">Toast API (JavaScript)</h4>
+  <p class="doc-p">The app layout exposes a client-side toast system for all pages:</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">JavaScript</span></div><div class="code-body"><pre>
+window.<span class="fn">toast</span>(<span class="str">'Message'</span>, <span class="str">'info'</span>, <span class="num">4000</span>)   <span class="cm">// generic</span>
+window.<span class="fn">toastSuccess</span>(<span class="str">'Saved!'</span>)
+window.<span class="fn">toastError</span>(<span class="str">'Failed.'</span>)
+window.<span class="fn">toastWarning</span>(<span class="str">'Check this.'</span>)
+window.<span class="fn">dismissToast</span>(el)               <span class="cm">// programmatic dismiss</span>
+
+<span class="cm">// Server flash → toast bridge:</span>
+<span class="cm">// Flash messages are automatically rendered as toasts</span>
+<span class="cm">// in the layout's &lt;script&gt; block — no extra code needed.</span></pre></div></div>
+</section>
+
+<!-- ═══════════════ SECURITY ═══════════════ -->
+<section class="doc-section" id="security">
+  <div class="section-header">
+    <div class="section-tag">Reference</div>
+    <h2 class="section-title">Security</h2>
+    <p class="section-sub">A summary of every security mechanism in the platform.</p>
+  </div>
+
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>Mechanism</th><th>Where Applied</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr><td>AES-256-GCM</td><td>Chat messages</td><td>Key derived via HMAC-SHA256. Unique 12-byte IV per message. 16-byte GCM authentication tag detects tampering. Raw blob never sent to client.</td></tr>
+      <tr><td>CSRF Tokens</td><td>All POST web routes</td><td>Double-submit pattern via <code>CsrfMiddleware</code>. Token validated before any controller action.</td></tr>
+      <tr><td>Password Hashing</td><td>Registration, password reset</td><td><code>password_hash()</code> with <code>PASSWORD_DEFAULT</code> (bcrypt). Verified with <code>password_verify()</code>.</td></tr>
+      <tr><td>Rate Limiting</td><td>Login, activation resend</td><td>Per-IP attempt tracking with exponential backoff stored in the database.</td></tr>
+      <tr><td>Activation Tokens</td><td>Account creation</td><td>64-char hex token, stored as SHA-256 hash. Expire after 24 hours. Raw token sent once via email.</td></tr>
+      <tr><td>Remember-Me Tokens</td><td>Login (optional)</td><td>64-char random token stored hashed. Validated on every session-less request.</td></tr>
+      <tr><td>Anti-enumeration</td><td>Login, resend activation</td><td>Same response returned whether email exists or not.</td></tr>
+      <tr><td>Activity Audit Log</td><td>All model writes</td><td>Every create/update/delete logged to <code>activity_logs</code> with actor, action, model, and payload.</td></tr>
+      <tr><td>RBAC Gate</td><td>All controllers</td><td>Permission checked via <code>Gate::can()</code> or <code>can()</code> helper before every action. super_admin bypasses all checks.</td></tr>
+      <tr><td>Soft Deletes</td><td>Users, teams, tasks, missions</td><td>Records are never hard-deleted. <code>deleted_at</code> timestamp preserves audit trail.</td></tr>
+      <tr><td>SQL Injection</td><td>All queries</td><td>All user input bound as PDO prepared statement parameters. QueryBuilder enforces parameterisation.</td></tr>
+      <tr><td>XSS</td><td>All views</td><td>All output passed through <code>htmlspecialchars()</code>. JS uses <code>textContent</code> and a custom <code>esc()</code> function.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════ DATABASE ═══════════════ -->
+<section class="doc-section" id="database">
+  <div class="section-header">
+    <div class="section-tag">Reference</div>
+    <h2 class="section-title">Database Schema</h2>
+    <p class="section-sub">10 migration files build the complete schema. All tables use <code>id INTEGER PRIMARY KEY AUTOINCREMENT</code>. Foreign key cascade rules are set explicitly.</p>
+  </div>
+
+  <h4 class="doc-h4">Migration Files</h4>
+  <div style="border:1px solid var(--border);border-radius:.5rem;overflow:hidden"><table class="prop-table">
+    <thead><tr><th>File</th><th>Creates</th></tr></thead>
+    <tbody>
+      <tr><td>001_create_users_and_activity_logs.sql</td><td>users, activity_logs</td></tr>
+      <tr><td>002_create_auth_tables.sql</td><td>login_attempts, remember_tokens</td></tr>
+      <tr><td>003_create_roles_permissions.sql</td><td>roles, permissions, role_permissions</td></tr>
+      <tr><td>004_create_missions_teams_notifications.sql</td><td>missions, teams, team_membership, notifications</td></tr>
+      <tr><td>005_add_activation_token_to_users.sql</td><td>Adds activation_token, activation_expires, activation_sent_at to users</td></tr>
+      <tr><td>006_expand_teams_and_tasks.sql</td><td>tasks, task_comments (with soft delete columns)</td></tr>
+      <tr><td>007_reports_and_config.sql</td><td>reports, settings (initial keys)</td></tr>
+      <tr><td>008_system_settings_align.sql</td><td>Adds missing settings columns, aligns constraints</td></tr>
+      <tr><td>009_final_consolidation.sql</td><td>Indexes, constraints, notification columns</td></tr>
+      <tr><td>010_admin_and_chat.sql</td><td>chat_rooms, chat_participants, chat_messages, chat_message_reads, chat_message_acks + permission seed + role assignments</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="doc-h3"><span class="h3-icon" style="background:rgba(96,165,250,.1);color:var(--blue)"><i class="fa-solid fa-table-cells"></i></span>Core Tables</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">SQL — Chat Tables (Migration 010)</span></div><div class="code-body"><pre>
+<span class="kw">CREATE TABLE</span> chat_rooms (
+  id          <span class="cls">INTEGER</span> <span class="kw">PRIMARY KEY</span> AUTOINCREMENT,
+  type        <span class="cls">TEXT</span>    <span class="kw">NOT NULL</span>,              <span class="cm">-- team|direct|command</span>
+  name        <span class="cls">TEXT</span>    <span class="kw">NOT NULL</span>,
+  team_id     <span class="cls">INTEGER</span> <span class="kw">REFERENCES</span> teams(id),
+  mission_id  <span class="cls">INTEGER</span> <span class="kw">REFERENCES</span> missions(id),
+  is_active   <span class="cls">INTEGER</span> <span class="kw">NOT NULL DEFAULT</span> <span class="num">1</span>,
+  created_at  <span class="cls">TEXT</span>, updated_at <span class="cls">TEXT</span>
+);
+
+<span class="kw">CREATE TABLE</span> chat_messages (
+  id          <span class="cls">INTEGER</span> <span class="kw">PRIMARY KEY</span> AUTOINCREMENT,
+  room_id     <span class="cls">INTEGER</span> <span class="kw">NOT NULL REFERENCES</span> chat_rooms(id),
+  sender_id   <span class="cls">INTEGER</span> <span class="kw">NOT NULL REFERENCES</span> users(user_id),
+  msg_type    <span class="cls">TEXT</span>    <span class="kw">NOT NULL DEFAULT</span> <span class="str">'text'</span>,
+  body_enc    <span class="cls">TEXT</span>    <span class="kw">NOT NULL</span>,             <span class="cm">-- AES-256-GCM ciphertext</span>
+  body_preview <span class="cls">TEXT</span>,                        <span class="cm">-- First 72 chars unencrypted</span>
+  parent_id   <span class="cls">INTEGER</span> <span class="kw">REFERENCES</span> chat_messages(id),
+  is_deleted  <span class="cls">INTEGER</span> <span class="kw">DEFAULT</span> <span class="num">0</span>,
+  edited_at   <span class="cls">TEXT</span>, created_at <span class="cls">TEXT</span>
+);</pre></div></div>
+
+  <div class="callout warn"><i class="fa-solid fa-triangle-exclamation callout-icon"></i><div class="callout-body"><strong>body_preview</strong> The first 72 characters of each message are stored unencrypted in <code>body_preview</code> to allow room list last-message previews without decrypting the full message. This is intentional — previews are safe for operational context. Set to <code>NULL</code> for any message content you never want previewed.</div></div>
+</section>
+
+</main>
+</div><!-- .layout -->
+
+<script src="assets/js/doc.js"></script>
+</body>
+</html>
