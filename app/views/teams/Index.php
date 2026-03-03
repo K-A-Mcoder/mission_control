@@ -2,7 +2,7 @@
 
 <div class="flex items-center justify-between mb-6">
     <h2 class="text-xl font-semibold text-dark">Teams</h2>
-    <?php if (has_any_role(['admin', 'manager'])): ?>
+    <?php if (has_any_role(['super_admin', 'admin', 'manager'])): ?>
         <a href="/teams/create" class="btn btn-primary text-sm px-4 py-2">+ New Team</a>
     <?php endif; ?>
 </div>

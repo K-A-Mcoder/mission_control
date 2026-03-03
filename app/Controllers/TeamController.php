@@ -47,7 +47,7 @@ class TeamController extends MainController
 
     public function create(): Response
     {
-        if (! Gate::hasAnyRole(['admin', 'manager'])) {
+        if (! Gate::hasAnyRole(['super_admin', 'admin', 'manager'])) {
             Flash::error('You are not authorized to create teams.');
             return redirect('/teams');
         }
