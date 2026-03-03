@@ -272,12 +272,12 @@ class User extends Model
     public function recentTasks($userId, int $limit = 5): array
     {
         return $this->db()->select(
-            'SELECT tk.*, t.name AS team_name
+            "SELECT tk.*, t.name AS team_name
              FROM   tasks tk
              LEFT JOIN teams t ON t.id = tk.team_id
              WHERE  tk.assigned_to = ? AND tk.deleted_at IS NULL
-             ORDER  BY tk.created_at DESC LIMIT ?',
-            [$userId, $limit],
+             ORDER  BY tk.created_at DESC LIMIT  $limit",
+            [$userId],
         );
     }
 
@@ -480,8 +480,8 @@ class User extends Model
     public function activityLog($userId, int $limit = 20): array
     {
         return $this->db()->select(
-            'SELECT * FROM activity_logs WHERE user_id=? ORDER BY created_at DESC LIMIT ?',
-            [$userId, $limit],
+            "SELECT * FROM activity_logs WHERE user_id=? ORDER BY created_at DESC LIMIT $limit",
+            [$userId],
         );
     }
 

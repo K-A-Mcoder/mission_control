@@ -103,12 +103,14 @@ class UserController extends BaseController
         }
 
         $userId = $this->users->create([
+            'user_id'    => uuid(),
             'full_name'  => $name,
             'email'      => $email,
             'password'   => password_hash($password, PASSWORD_BCRYPT),
             'role_id'    => $roleId,
             'status'     => in_array($status, User::STATUSES, true) ? $status : 'active',
             'created_by' => $this->authId(),
+            'phone'      => '0700000000',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
@@ -123,7 +125,7 @@ class UserController extends BaseController
     {
         $this->guard();
 
-        $user = $this->users->findWithRole((int) $id);
+        $user = $this->users->findWithRole($id);
         if (! $user) {
             Flash::error('User not found.');
             return redirect('/admin/users');
@@ -146,7 +148,7 @@ class UserController extends BaseController
     {
         $this->guard();
 
-        $user = $this->users->findWithRole((int) $id);
+        $user = $this->users->findWithRole($id);
         if (! $user) {
             Flash::error('User not found.');
             return redirect('/admin/users');
@@ -165,7 +167,7 @@ class UserController extends BaseController
     {
         $this->guard();
 
-        $userId = (int) $id;
+        $userId = $id;
         $user   = $this->users->findWithRole($userId);
 
         if (! $user) {

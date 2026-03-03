@@ -126,7 +126,7 @@ class DashboardController extends BaseController
 
     public function tasks(): Response
     {
-        $userId      = (int) ($_SESSION['user_id'] ?? 0);
+        $userId      = ($_SESSION['user_id'] ?? 0);
         $task        = new Task();
         $team        = new Team();
         $scopeUserId = Gate::hasAnyRole(['super_admin', 'admin']) ? null : $userId;

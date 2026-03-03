@@ -70,7 +70,7 @@ class MissionController extends MainController
      */
     public function store(): Response
     {
-        if (! Gate::hasAnyRole(['admin', 'manager'])) {
+        if (! Gate::hasAnyRole(['super_admin', 'admin', 'manager'])) {
             Flash::error('You are not authorized to create missions.');
             return redirect('/missions');
         }
@@ -109,7 +109,7 @@ class MissionController extends MainController
         }
 
         try {
-             $this->mission_model->create([
+            $this->mission_model->create([
                 'm_code'         => $codeName,
                 'title'          => $title,
                 'description'    => $description,
@@ -224,7 +224,7 @@ class MissionController extends MainController
         }
 
         try {
-             $this->mission_model->update((int) $id, [
+            $this->mission_model->update((int) $id, [
                 'title'          => $title,
                 'description'    => $description,
                 'start_time'     => $startTime,
@@ -262,7 +262,7 @@ class MissionController extends MainController
         }
 
         try {
-             $this->mission_model->softDelete((int) $id, $userId);
+            $this->mission_model->softDelete((int) $id, $userId);
             Flash::success("Mission \"{$mission['title']}\" was deleted.");
         } catch (\Throwable) {
             Flash::error('Something went wrong while deleting.');
@@ -299,7 +299,7 @@ class MissionController extends MainController
         }
 
         try {
-             $this->mission_model->assignTeam((int) $id, $teamId, $userId);
+            $this->mission_model->assignTeam((int) $id, $teamId, $userId);
 
             $memberIds =  $this->mission_model->teamMemberIds($teamId);
 
@@ -348,7 +348,7 @@ class MissionController extends MainController
 
         // Regular users may only view missions assigned to their teams
         if (! in_array($role, ['admin', 'manager'], strict: true)) {
-            $visibleIds = array_column( $this->mission_model->forUser($userId), 'id');
+            $visibleIds = array_column($this->mission_model->forUser($userId), 'id');
             if (! in_array($id, array_map('intval', $visibleIds), strict: true)) {
                 Flash::error('You do not have access to this mission.');
                 return redirect('/missions');
