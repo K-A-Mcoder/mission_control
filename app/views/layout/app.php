@@ -307,7 +307,7 @@
         <aside id="sidebar"
             class="w-60 shrink-0 bg-white dark:bg-dark-card border-r border-b-color
                   flex flex-col fixed left-0 top-0 bottom-0 z-30">
-            <?= partial('partials.nav') ?>
+            <?//= partial('partials.nav') ?>
             <?php
             $currentPath  = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
             $isSuperAdmin = has_role('super_admin');

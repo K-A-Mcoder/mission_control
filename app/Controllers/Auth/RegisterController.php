@@ -89,6 +89,7 @@ class RegisterController extends AuthMasterController
                 'email'      => $email,
                 'password'   => password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]),
                 'status'     => 'inactive',   // must activate before login
+                'phone'      => '075X-XXX-XXXX',
                 'role_id'    => $this->defaultRoleId(),
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
@@ -116,7 +117,7 @@ class RegisterController extends AuthMasterController
     private function sendActivationEmail(string $email, string $name, string $rawToken)
     {
         $baseUrl       = rtrim(env('APP_URL', 'http://localhost:8500'), '/');
-        $activationUrl = "{$baseUrl}/auth/activate?token={$rawToken}";
+        $activationUrl = "{$baseUrl}/auth/activate?_token={$rawToken}";
 
         $data = [
             'appName'       => env('APP_NAME', 'App'),

@@ -118,7 +118,7 @@ class Team extends Model
     /**
      * Add a member to the team. Silently ignores if already a member.
      */
-    public function addMember(int $teamId, int $userId, int $addedBy, string $role = 'member'): void
+    public function addMember(int $teamId, string $userId, int $addedBy, string $role = 'member'): void
     {
         if ($this->hasMember($teamId, $userId)) {
             return;
@@ -134,7 +134,7 @@ class Team extends Model
     /**
      * Remove a member from the team.
      */
-    public function removeMember(int $teamId, int $userId): void
+    public function removeMember(int $teamId, $userId): void
     {
         $this->db()->execute(
             'DELETE FROM team_membership WHERE team_id = ? AND user_id = ?',
@@ -267,7 +267,7 @@ class Team extends Model
 
     // ── Soft delete ───────────────────────────────────────────────────────────
 
-    public function softDelete(int $teamId, int $deletedBy): void
+    public function softDelete(int $teamId, string $deletedBy): void
     {
         $this->db()->execute(
             'UPDATE teams SET deleted_at = ?, deleted_by = ? WHERE id = ?',

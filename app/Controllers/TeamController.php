@@ -70,10 +70,10 @@ class TeamController extends MainController
             return redirect('/teams');
         }
 
-        $userId      = (int) ($_SESSION['user_id'] ?? 0);
+        $userId      = ($_SESSION['user_id'] ?? 0);
         $name        = trim($this->request->input('name', ''));
         $description = trim($this->request->input('description', ''));
-        $leadId      = (int) $this->request->input('lead_id', 0);
+        $leadId      = $this->request->input('lead_id', 0);
         $status      = $this->request->input('status', 'active');
         $memberIds   = $this->request->input('member_ids', []);
 
@@ -94,7 +94,7 @@ class TeamController extends MainController
         }
 
         try {
-            $teamId = (int) $this->team->create([
+            $teamId = $this->team->create([
                 'name'        => $name,
                 'description' => $description,
                 'lead_id'     => $leadId ?: null,
@@ -119,8 +119,9 @@ class TeamController extends MainController
 
             Flash::success("Team \"{$name}\" created successfully.");
             return redirect("/teams/{$teamId}");
-        } catch (\Throwable) {
-            Flash::error('Something went wrong. Please try again.');
+        } catch (\Throwable $e) {
+            Flash::error('Something went wrong. Please try again.' . $e);
+            // log_message(. $e->getMessage());
             return redirect('/teams/create');
         }
     }

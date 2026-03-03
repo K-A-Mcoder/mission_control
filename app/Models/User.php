@@ -360,6 +360,12 @@ class User extends Model
         $this->setStatus($userId, 'inactive');
     }
 
+    public function isFirstUser(): bool
+    {
+        $count = $this->db()->selectOne('SELECT COUNT(*) AS count FROM users');
+        return $count && $count['count'] == 0;
+    }
+
     // ── Auth flow ─────────────────────────────────────────────────────────────
 
     public function findByEmailWithRole(string $email): ?array
