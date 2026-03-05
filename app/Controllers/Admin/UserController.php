@@ -111,8 +111,8 @@ class UserController extends BaseController
             'status'     => in_array($status, User::STATUSES, true) ? $status : 'active',
             'created_by' => $this->authId(),
             'phone'      => '0700000000',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
+            // 'created_at' => date('Y-m-d H:i:s'),
+            // 'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
         Flash::success("User \"{$name}\" created successfully.");
