@@ -33,7 +33,7 @@ class TeamController extends MainController
         $userId = (int) ($_SESSION['user_id'] ?? 0);
         $role   = $_SESSION['role'] ?? '';
 
-        $teams = Gate::hasAnyRole(['admin', 'manager'])
+        $teams = Gate::hasAnyRole(['super_admin', 'admin', 'manager'])
             ? $this->team->allActive()
             : $this->team->forUser($userId);
 
@@ -65,7 +65,7 @@ class TeamController extends MainController
 
     public function store(): Response
     {
-        if (! Gate::hasAnyRole(['admin', 'manager'])) {
+        if (! Gate::hasAnyRole(['super_admin','admin', 'manager'])) {
             Flash::error('You are not authorized to create teams.');
             return redirect('/teams');
         }
@@ -102,19 +102,22 @@ class TeamController extends MainController
                 'created_by'  => $userId,
             ]);
 
-            // Add selected members
-            $members = is_array($memberIds)
-                ? array_map('intval', $memberIds)
-                : [];
+            // Add selected members && ignored due to in operation
+            // $members = is_array($memberIds)
+            //     ? array_map('intval', $memberIds)
+            //     : [];
 
-            foreach ($members as $memberId) {
-                $role = ($memberId === $leadId) ? 'lead' : 'member';
-                $this->team->addMember($teamId, $memberId, $userId, $role);
+                foreach ($memberIds as $memberId) {
+                    $role = ($memberId === $leadId) ? 'lead' : 'member';
+                $this->team->addMember($teamId, $userId, $memberId, $role);
             }
 
             // Auto-add lead if not in the members list
-            if ($leadId && ! in_array($leadId, $members, strict: true)) {
+            if ($leadId && !in_array($leadId, $members, strict: true)) {
                 $this->team->addMember($teamId, $leadId, $userId, 'lead');
+            }else{
+                // Update user in team_membership from member to lead.
+
             }
 
             Flash::success("Team \"{$name}\" created successfully.");

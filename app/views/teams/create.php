@@ -42,9 +42,13 @@
                                focus:border-primary outline-none duration-300">
                     <option value="">— No lead assigned —</option>
                     <?php foreach ($users as $user): ?>
+                        <? //php if ($user['role_name'] == 'team_leader'): 
+                        ?>
                         <option value="<?= $user['user_id'] ?>">
                             <?= htmlspecialchars($user['full_name']) ?>
                         </option>
+                        <? //php endif; 
+                        ?>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -69,14 +73,18 @@
             <label class="block mb-2 text-sm font-medium text-dark">Add Members</label>
             <div class="border border-b-color rounded-md divide-y divide-b-color max-h-56 overflow-y-auto">
                 <?php foreach ($users as $user): ?>
-                    <label class="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50
+                    <?php if ($user['role_name'] == 'user'):
+                    ?>
+                        <label class="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50
                                   dark:hover:bg-dark cursor-pointer text-sm">
-                        <input type="checkbox" name="member_ids[]"
-                            value="<?= $user['user_id'] ?>"
-                            class="form-check-input">
-                        <span class="flex-1"><?= htmlspecialchars($user['full_name']) ?></span>
-                        <span class="text-xs text-muted"><?= htmlspecialchars($user['email']) ?></span>
-                    </label>
+                            <input type="checkbox" name="member_ids[]"
+                                value="<?= $user['user_id'] ?>"
+                                class="form-check-input">
+                            <span class="flex-1"><?= htmlspecialchars($user['full_name']) ?></span>
+                            <span class="text-xs text-muted"><?= htmlspecialchars($user['email']) ?></span>
+                        </label>
+                    <?php endif;
+                    ?>
                 <?php endforeach; ?>
             </div>
             <p class="text-xs text-muted mt-1">

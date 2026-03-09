@@ -55,6 +55,24 @@ class Mission extends Model
              ORDER  BY m.created_at DESC',
         );
     }
+    /**
+     * All Mission from all Classifications - for Super Admins
+     * 
+     * @return array<int, array<string, mixed>>
+     */
+    public function allMissionsWithTaskCount()
+    {
+        return $this->db()->select(
+            'SELECT m.*,
+                    COUNT(t.id) AS total_tasks,
+                    SUM(CASE WHEN t.status = \'closed\' THEN 1 ELSE 0 END) AS completed_tasks
+             FROM   missions m
+             LEFT   JOIN tasks t ON m.id = t.mission_id
+             WHERE  m.deleted_at IS NULL
+             GROUP  BY m.id
+             ORDER  BY m.created_at DESC',
+        );
+    }
 
     /**
      * Missions visible to a specific user via their team memberships.

@@ -79,12 +79,12 @@
                                 <a href="/missions/<?= $mission['id'] ?>"
                                     class="text-primary hover:underline text-xs">View</a>
 
-                                <?php if (has_any_role(['admin', 'manager'])): ?>
+                                <?php if (has_any_role(['super_admin','admin', 'manager'])): ?>
                                     <a href="/missions/<?= $mission['id'] ?>/edit"
                                         class="text-muted hover:text-dark text-xs">Edit</a>
                                 <?php endif; ?>
 
-                                <?php if (has_role('admin')): ?>
+                                <?php if (has_any_role(['super_admin','admin'])): ?>
                                     <form action="/missions/<?= $mission['id'] ?>/delete" method="POST"
                                         onsubmit="return confirm('Delete this mission?')">
                                         <?= csrf_field() ?>

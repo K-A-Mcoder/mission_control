@@ -66,7 +66,7 @@ class Team extends Model
      *
      * @return array<int, array<string, mixed>>
      */
-    public function forUser($userId): array
+    public function forUser(string $userId): array
     {
         return $this->db()->select(
             'SELECT t.*,
@@ -105,7 +105,7 @@ class Team extends Model
     /**
      * Check whether a user is already a member of the team.
      */
-    public function hasMember(int $teamId, int $userId): bool
+    public function hasMember(int $teamId, string $userId): bool
     {
         $row = $this->db()->selectOne(
             'SELECT id FROM team_membership WHERE team_id = ? AND user_id = ?',
@@ -118,16 +118,25 @@ class Team extends Model
     /**
      * Add a member to the team. Silently ignores if already a member.
      */
-    public function addMember(int $teamId, string $userId, int $addedBy, string $role = 'member'): void
+    public function addMember(int $teamId, string $userId,string $addedBy, string $role = 'member'): void
     {
+        $user = $this->db()->select(
+            'SELECT user_id FROM users WHERE user_id = ?',
+            [$userId]
+        );
+
+        if (!$user) {
+            throw new \Exception("User does not exist.");
+        }
+
         if ($this->hasMember($teamId, $userId)) {
             return;
         }
 
         $this->db()->execute(
-            'INSERT INTO team_membership (team_id, user_id, role, added_by, created_at)
-             VALUES (?, ?, ?, ?, ?)',
-            [$teamId, $userId, $role, $addedBy, date('Y-m-d H:i:s')],
+            'INSERT INTO team_membership (team_id, `user_id`, `role`, added_by)
+             VALUES (?, ?, ?, ?)',
+            [$teamId, $userId, $role, $addedBy],
         );
     }
 

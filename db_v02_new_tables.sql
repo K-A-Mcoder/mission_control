@@ -284,3 +284,10 @@ VALUES
 ('chat.message_retention','90','Message Retention (days)','Days before old messages are purged.','number','chat',0),
 ('chat.allow_direct','1','Allow Direct Messages','Members can send 1-to-1 direct chats.','boolean','chat',0),
 ('chat.encrypt_key_hint','','Encryption Key Name','ENV var holding the AES chat key.','text','chat',0);
+
+
+
+
+-- Update these also
+-- Mission Table updates
+ALTER TABLE `missions` ADD `updated_by` CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL AFTER `created_at`;

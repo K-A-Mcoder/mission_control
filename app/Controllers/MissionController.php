@@ -34,6 +34,7 @@ class MissionController extends MainController
         $role     = auth_role() ?? '';
 
         $missions = match (true) {
+            $role === 'super_admin' => $this->mission_model->allMissionsWithTaskCount(),
             $role === 'admin'   =>  $this->mission_model->allWithTaskCounts(),
             $role === 'manager' =>  $this->mission_model->nonSecretWithTaskCounts(),
             default             =>  $this->mission_model->forUser($userId),
@@ -52,10 +53,10 @@ class MissionController extends MainController
      */
     public function create(): Response
     {
-        // if (! Gate::hasAnyRole(['admin', 'manager'])) {
-        //     Flash::error('You are not authorized to create missions.');
-        //     return redirect('/missions');
-        // }
+        if (! Gate::hasAnyRole(['super_admin', 'admin', 'manager'])) {
+            Flash::error('You are not authorized to create missions.');
+            return redirect('/missions');
+        }
 
         return view('missions/create', [
             'title'           => 'Create Mission',
@@ -122,8 +123,9 @@ class MissionController extends MainController
             Flash::success("Mission \"{$title}\" created successfully.");
 
             return redirect('/missions');
-        } catch (\Throwable) {
-            Flash::error('Something went wrong. Please try again.');
+        } catch (\Throwable $e) {
+
+            Flash::error('Something went wrong. Please try again.' . $e->getMessage());
             return redirect('/missions/create');
         }
     }
@@ -161,7 +163,7 @@ class MissionController extends MainController
      */
     public function edit(string $id): Response
     {
-        if (! Gate::hasAnyRole(['admin', 'manager'])) {
+        if (! Gate::hasAnyRole(['super_admin', 'admin', 'manager'])) {
             Flash::error('You are not authorized to edit missions.');
             return redirect('/missions');
         }
@@ -244,11 +246,11 @@ class MissionController extends MainController
     // ── POST /missions/{id}/delete ────────────────────────────────────────────
 
     /**
-     * Soft delete a single mission. Admin only.
+     * Soft delete a single mission. Admin or Super Admins only .
      */
     public function destroy(string $id): Response
     {
-        if (! Gate::hasRole('admin')) {
+        if (! Gate::hasAnyRole(['super_admin', 'admin'])) {
             Flash::error('Only admins can delete missions.');
             return redirect('/missions');
         }
@@ -278,7 +280,7 @@ class MissionController extends MainController
      */
     public function assignTeam(string $id): Response
     {
-        if (! Gate::hasAnyRole(['admin', 'manager'])) {
+        if (! Gate::hasAnyRole(['super_admin', 'admin', 'manager'])) {
             Flash::error('You are not authorized to assign teams.');
             return redirect("/missions/{$id}");
         }
@@ -347,7 +349,7 @@ class MissionController extends MainController
         }
 
         // Regular users may only view missions assigned to their teams
-        if (! in_array($role, ['admin', 'manager'], strict: true)) {
+        if (! in_array($role, ['super_admin', 'admin', 'manager'], strict: true)) {
             $visibleIds = array_column($this->mission_model->forUser($userId), 'id');
             if (! in_array($id, array_map('intval', $visibleIds), strict: true)) {
                 Flash::error('You do not have access to this mission.');
