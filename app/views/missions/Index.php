@@ -15,7 +15,7 @@
 <?php if (empty($missions)): ?>
     <div class="text-center py-16 text-muted">
         <p class="text-lg mb-2">No missions found.</p>
-        <p class="text-sm">Missions assigned to your team will appear here.</p>
+        <p class="text-sm">Missions assigned to your team or you will appear here.</p>
     </div>
 <?php else: ?>
     <div class="overflow-x-auto rounded-lg border border-b-color">
