@@ -79,7 +79,7 @@ class Mission extends Model
      *
      * @return array<int, array<string, mixed>>
      */
-    public function forUser($userId): array
+    public function forUserOLD($userId): array
     {
         return $this->db()->select(
             'SELECT m.*,
@@ -99,6 +99,89 @@ class Mission extends Model
             [$userId],
         );
     }
+    public function forUser($userId): array
+    {
+        return $this->db()->select(
+            'SELECT m.*,
+                COUNT(DISTINCT t.id) AS total_tasks,
+                SUM(CASE WHEN t.status = \'closed\' THEN 1 ELSE 0 END) AS completed_tasks
+         FROM   missions m
+         LEFT   JOIN tasks t ON t.mission_id = m.id
+         WHERE  m.deleted_at IS NULL
+         AND    m.id IN (
+                SELECT te.mission_id 
+                FROM   mission_team_assignments te
+                JOIN   team_membership tm ON tm.team_id = te.team_id
+                WHERE  tm.user_id = ?
+         )
+         GROUP  BY m.id
+         ORDER  BY m.created_at DESC',  // ✅ comma here
+            [$userId]
+        );
+    }
+
+    // public function forUser($userId): array
+    // {
+    //     error_log("forUser called with userId: " . $userId);
+
+    //     $results = $this->db()->select(
+    //         'SELECT m.*,
+    //             COUNT(DISTINCT t.id) AS total_tasks,
+    //             SUM(CASE WHEN t.status = \'closed\' THEN 1 ELSE 0 END) AS completed_tasks
+    //      FROM   missions m
+    //      LEFT   JOIN tasks t ON t.mission_id = m.id
+    //      WHERE  m.deleted_at IS NULL
+    //      AND    m.id IN (
+    //             SELECT te.mission_id 
+    //             FROM   mission_team_assignments te
+    //             JOIN   team_membership tm ON tm.team_id = te.team_id
+    //             WHERE  tm.user_id = ?
+    //      )
+    //      GROUP  BY m.id
+    //      ORDER  BY m.created_at DESC',
+    //         [$userId]
+    //     );
+
+    //     // log_error("forUser results: " . var_export($results, true));
+
+    //     return $results;
+    // }
+
+//     public function forUser($userId): array
+//     {
+//         return $this->db()->select(
+//             'SELECT m.*,
+//        COUNT(DISTINCT t.id) AS total_tasks,
+//        SUM(CASE WHEN t.status = \'closed\' THEN 1 ELSE 0 END) AS completed_tasks
+// FROM   missions m
+// LEFT   JOIN tasks t ON t.mission_id = m.id
+// WHERE  m.deleted_at IS NULL
+// AND    m.id IN (
+//         SELECT te.mission_id 
+//         FROM   mission_team_assignments te
+//         JOIN   team_membership tm ON tm.team_id = te.team_id
+//         WHERE  tm.user_id = ?
+// )
+// GROUP  BY m.id
+// ORDER  BY m.created_at DESC;'
+
+//             // 'SELECT m.*,
+//             //         COUNT(t.id) AS total_tasks,
+//             //         SUM(CASE WHEN t.status = \'closed\' THEN 1 ELSE 0 END) AS completed_tasks
+//             //  FROM   missions m
+//             //  LEFT   JOIN tasks t ON m.id = t.mission_id
+//             //  WHERE  m.deleted_at IS NULL
+//             //  AND    m.id IN (
+//             //         SELECT te.mission_id 
+//             //         FROM   mission_team_assignments te
+//             //         JOIN   team_membership tm ON tm.team_id = te.team_id
+//             //         WHERE  tm.user_id = ?
+//             //  )
+//             //  GROUP  BY m.id
+//             //  ORDER  BY m.created_at DESC',
+//             [$userId],
+//         );
+//     }
 
     /**
      * Find a single non-deleted mission by ID.
@@ -173,14 +256,14 @@ class Mission extends Model
     /**
      * Assign a team to a mission (upsert — silently ignores duplicate).
      */
-    public function assignTeam(int $missionId, int $teamId, int $assignedBy): void
+    public function assignTeam(int $missionId, int $teamId, string $assignedBy): void
     {
         $this->db()->execute(
             'INSERT INTO mission_team_assignments (mission_id, team_id, assigned_by)
-             VALUES (?, ?, ?)
-             ON CONFLICT (mission_id, team_id) DO NOTHING',
+             VALUES (?, ?, ?)',
             [$missionId, $teamId, $assignedBy],
         );
+        //  ON CONFLICT (mission_id, team_id) DO NOTHING',
     }
 
     /**
@@ -194,8 +277,16 @@ class Mission extends Model
             'SELECT user_id FROM team_membership WHERE team_id = ?',
             [$teamId],
         );
+        // $rows = $this->db()->select(
+        //     'SELECT tm.user_id 
+        //  FROM team_membership tm
+        //  INNER JOIN users u ON tm.user_id = u.user_id
+        //  WHERE tm.team_id = ?',
+        //     [$teamId],
+        // );
 
-        return array_map('intval', array_column($rows, 'user_id'));
+        // return ;
+        return array_column($rows, 'user_id');
     }
 
     // ── Shortcut ──────────────────────────────────────────────────────────────

@@ -29,7 +29,6 @@ class ChatController extends BaseController
     public function index(): Response
     {
         $userId = $this->authId();
-
         $this->ensureTeamRooms($userId);
         $rooms = $this->rooms->forUser($userId);
 
@@ -162,9 +161,10 @@ class ChatController extends BaseController
     {
         $db    = Connection::getInstance();
         $teams = $db->select(
-            'SELECT t.id, t.name, t.lead_id
+            'SELECT t.id, t.name, t.lead_id, tma.mission_id
              FROM teams t
              JOIN team_membership tm ON tm.team_id=t.id
+             JOIN mission_team_assignments tma ON tma.team_id=t.id
              WHERE tm.user_id=? AND t.deleted_at IS NULL',
             [$userId],
         );
@@ -176,10 +176,10 @@ class ChatController extends BaseController
                 '# ' . $team['name'],
             );
 
-            $memberIds = array_map('intval', array_column(
+            $memberIds = array_column(
                 $db->select('SELECT user_id FROM team_membership WHERE team_id=?', [(int)$team['id']]),
                 'user_id',
-            ));
+            );
             $this->rooms->syncTeamParticipants($roomId, $memberIds);
 
             if ($team['lead_id']) {

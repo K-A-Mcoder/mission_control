@@ -218,7 +218,7 @@ $role   = $_SESSION['role'] ?? '';
                     onEnd: async function(evt) {
                         const newStatus = evt.to.dataset.status;
                         const taskId = parseInt(evt.item.dataset.taskId);
-
+                        console.log(evt.to.dataset);
                         if (!taskId || !newStatus) return;
 
                         // Optimistic UI — update count badges immediately
@@ -229,9 +229,9 @@ $role   = $_SESSION['role'] ?? '';
 
                         // Persist via API
                         setIndicator('Saving…', 'text-muted');
-
+                        console.log(newStatus); // returns null
                         try {
-                            const res = await fetch(`/api/tasks/${taskId}/status`, {
+                            const res = await fetch(`/api/tasks/${taskId}/status/${newStatus}`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',

@@ -30,10 +30,10 @@ class TeamController extends MainController
      */
     public function index(): Response
     {
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($_SESSION['user_id'] ?? 0);
         $role   = $_SESSION['role'] ?? '';
 
-        $teams = Gate::hasAnyRole(['super_admin', 'admin', 'manager'])
+        $teams = Gate::hasAnyRole(['admin', 'manager'])
             ? $this->team->allActive()
             : $this->team->forUser($userId);
 
@@ -65,7 +65,7 @@ class TeamController extends MainController
 
     public function store(): Response
     {
-        if (! Gate::hasAnyRole(['super_admin','admin', 'manager'])) {
+        if (! Gate::hasAnyRole(['admin', 'manager'])) {
             Flash::error('You are not authorized to create teams.');
             return redirect('/teams');
         }
@@ -107,15 +107,15 @@ class TeamController extends MainController
             //     ? array_map('intval', $memberIds)
             //     : [];
 
-                foreach ($memberIds as $memberId) {
-                    $role = ($memberId === $leadId) ? 'lead' : 'member';
+            foreach ($memberIds as $memberId) {
+                $role = ($memberId === $leadId) ? 'lead' : 'member';
                 $this->team->addMember($teamId, $userId, $memberId, $role);
             }
 
             // Auto-add lead if not in the members list
-            if ($leadId && !in_array($leadId, $members, strict: true)) {
+            if ($leadId && !in_array($leadId, $memberIds, strict: true)) {
                 $this->team->addMember($teamId, $leadId, $userId, 'lead');
-            }else{
+            } else {
                 // Update user in team_membership from member to lead.
 
             }
@@ -131,7 +131,7 @@ class TeamController extends MainController
 
     // ── GET /teams/{id} ───────────────────────────────────────────────────────
 
-    public function show(string $id): Response
+    public function showOLD(string $id): Response
     {
         $team = $this->resolveOrAbort((int) $id);
 
@@ -161,6 +161,50 @@ class TeamController extends MainController
             'taskStats'      => $taskStats,
             'missions'       => $missions,
             'availableUsers' => array_values($availableUsers),
+        ]);
+    }
+
+    public function show(string $id): Response
+    {
+        $team = $this->resolveOrAbort((int) $id);
+        $userId =  ($_SESSION['user_id'] ?? 0);
+        if ($team instanceof Response) {
+            return $team;
+        }
+
+        $members   = $this->team->members((int) $id);
+        $tasks     = $this->team->tasks((int) $id);
+        $taskStats = $this->team->taskStats((int) $id);
+        $missions  = $this->team->missions((int) $id);
+
+        $memberIds  = array_column($members, 'user_id');
+        $isMember   = in_array($userId, $memberIds, strict: true);
+        $isPrivileged = Gate::hasAnyRole(['admin', 'manager']);
+
+        // Only team members, admins, or managers can view
+        if (! $isMember && ! $isPrivileged) {
+            Flash::error('You are not a member of this team.');
+            return redirect('/teams');
+            // return abort(403, 'You are not a member of this team.');
+        }
+
+        // Only admins/managers can add new members
+        $availableUsers = $isPrivileged
+            ? array_values(array_filter(
+                (new User)->active(),
+                fn($u) => ! in_array($u['user_id'], $memberIds, strict: true)
+            ))
+            : [];
+
+        return view('teams.show', [
+            'title'          => $team['name'],
+            'team'           => $team,
+            'members'        => $members,
+            'tasks'          => $tasks,
+            'taskStats'      => $taskStats,
+            'missions'       => $missions,
+            'availableUsers' => $availableUsers,
+            'canManage'      => $isPrivileged, // useful in the view to hide/show action buttons
         ]);
     }
 
@@ -276,8 +320,8 @@ class TeamController extends MainController
             return redirect("/teams/{$id}");
         }
 
-        $addedBy = (int) ($_SESSION['user_id'] ?? 0);
-        $userId  = (int) $this->request->input('user_id', 0);
+        $addedBy = ($_SESSION['user_id'] ?? 0);
+        $userId  = $this->request->input('user_id', 0);
         $role    = $this->request->input('role', 'member');
 
         if (! $userId) {
@@ -308,7 +352,7 @@ class TeamController extends MainController
             );
 
             Flash::success('Member added successfully.');
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
             Flash::error('Something went wrong while adding the member.');
         }
 
@@ -327,7 +371,7 @@ class TeamController extends MainController
             return redirect("/teams/{$id}");
         }
 
-        $userId = (int) $this->request->input('user_id', 0);
+        $userId = $this->request->input('user_id', 0);
 
         if (! $userId) {
             Flash::error('No user specified.');
@@ -352,7 +396,7 @@ class TeamController extends MainController
     private function resolveOrAbort(int $id): array|Response
     {
         $team   = $this->team->findActive($id);
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($_SESSION['user_id'] ?? 0);
 
         if (! $team) {
             Flash::error('Team not found.');
@@ -375,7 +419,7 @@ class TeamController extends MainController
      */
     private function notifyUsers(
         array $userIds,
-        int $senderId,
+        string $senderId,
         string $title,
         string $body,
         string $url,

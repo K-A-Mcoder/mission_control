@@ -63,10 +63,10 @@ class TaskController extends MainController
             return redirect("/teams/{$teamId}");
         }
 
-        $userId      = (int) ($_SESSION['user_id'] ?? 0);
+        $userId      = ($_SESSION['user_id'] ?? 0);
         $title       = trim($this->request->input('title', ''));
         $description = trim($this->request->input('description', ''));
-        $assignedTo  = (int) $this->request->input('assigned_to', 0);
+        $assignedTo  = $this->request->input('assigned_to', 0);
         $priority    = $this->request->input('priority', 'medium');
         $status      = $this->request->input('status', 'open');
         $dueDate     = $this->request->input('due_date');
@@ -118,8 +118,8 @@ class TaskController extends MainController
 
             Flash::success("Task \"{$title}\" created.");
             return redirect("/tasks/{$taskId}");
-        } catch (\Throwable) {
-            Flash::error('Something went wrong. Please try again.');
+        } catch (\Throwable $e) {
+            Flash::error('Something went wrong. Please try again.' . $e);
             return redirect("/teams/{$teamId}/tasks/create");
         }
     }
@@ -301,7 +301,7 @@ class TaskController extends MainController
      */
     public function kanban(): Response
     {
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($_SESSION['user_id'] ?? 0);
         $team   = new Team();
 
         $teams = Gate::hasAnyRole(['admin', 'manager', 'super_admin'])
@@ -323,7 +323,7 @@ class TaskController extends MainController
             return redirect('/teams');
         }
 
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($_SESSION['user_id'] ?? 0);
         $task   = $this->task->findActive((int) $id);
 
         if (! $task) {
@@ -397,8 +397,8 @@ class TaskController extends MainController
     }
 
     private function notifyUser(
-        int $userId,
-        int $senderId,
+        string $userId,
+        string $senderId,
         string $title,
         string $body,
         string $url,

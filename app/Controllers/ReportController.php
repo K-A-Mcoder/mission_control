@@ -52,7 +52,7 @@ class ReportController extends MainController
             // Regular members see their own reports
             $reports   = $this->report_model->byAuthor($userId);
             $myReports = [];
-            $view      = 'reports/my_reports';
+            $view      = 'reports/my_report';
             $stats     = $this->report_model->stats(null, $userId);
         }
 

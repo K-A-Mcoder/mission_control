@@ -136,7 +136,7 @@ class ChatRoom extends Model
             'SELECT user_id FROM chat_participants WHERE room_id=?',
             [$roomId],
         );
-        return array_map('intval', array_column($rows, 'user_id'));
+        return array_column($rows, 'user_id');
     }
 
     public function isParticipant(int $roomId, $userId): bool
@@ -253,7 +253,7 @@ class ChatRoom extends Model
 
         foreach (array_unique($userIds) as $uid) {
             $db->execute(
-                'INSERT OR IGNORE INTO chat_participants (room_id, user_id, is_admin, joined_at)
+                'INSERT IGNORE INTO chat_participants (room_id, user_id, is_admin, joined_at)
                  VALUES (?,?,0,?)',
                 [$roomId, $uid, $now],
             );

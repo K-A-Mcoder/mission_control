@@ -291,3 +291,10 @@ VALUES
 -- Update these also
 -- Mission Table updates
 ALTER TABLE `missions` ADD `updated_by` CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL AFTER `created_at`;
+
+
+
+-- Updates (24th March 2026):
+ALTER TABLE `team_membership` ADD `status` VARCHAR(30) NOT NULL DEFAULT 'active' AFTER `added_by`; 
+ALTER TABLE `notifications` ADD `type` VARCHAR(100) NOT NULL AFTER `body`;
+ALTER TABLE `notifications` ADD `related_id` INT NOT NULL AFTER `type`, ADD `relatedType` VARCHAR(100) NOT NULL AFTER `related_id`;

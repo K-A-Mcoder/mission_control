@@ -255,7 +255,7 @@ class Report extends Model
     /**
      * @return array<string, int>
      */
-    public function stats(?int $teamId = null, ?int $authorId = null): array
+    public function stats(?int $teamId = null, ?string $authorId = null): array
     {
         $where  = ['1=1'];
         $params = [];

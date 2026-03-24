@@ -70,7 +70,7 @@ class TaskApiController extends ApiMasterController
     // Body: { status: "in_progress" }
     // Used by the kanban drag-and-drop to update a single card's status.
 
-    public function updateStatus(string $id): JsonResponse
+    public function updateStatus(string $id, $status): JsonResponse
     {
         $task = $this->task->findActive((int) $id);
 
@@ -82,8 +82,10 @@ class TaskApiController extends ApiMasterController
             return JsonResponse::forbidden();
         }
 
-        $status = trim($this->request->input('status', ''));
-
+        // $status = trim($this->request->input('status', ''));
+        // $this->request->input('status');
+        // var_dump($this->request->);
+        // exit;
         if (! in_array($status, Task::STATUSES, true)) {
             return JsonResponse::error("Invalid status. Allowed: " . implode(', ', Task::STATUSES));
         }

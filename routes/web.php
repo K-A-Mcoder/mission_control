@@ -142,7 +142,7 @@ return function (Etus\Framework\Routing\Router $router): void {
     $router->get('/api/tasks',              [TaskApiController::class, 'index'],        ['auth']);
     $router->get('/api/tasks/kanban',       [TaskApiController::class, 'kanban'],       ['auth']);
     $router->get('/api/tasks/stats',        [TaskApiController::class, 'stats'],        ['auth']);
-    $router->post('/api/tasks/{id}/status', [TaskApiController::class, 'updateStatus'], ['auth']);
+    $router->post('/api/tasks/{id}/status/{status}', [TaskApiController::class, 'updateStatus'], ['auth']);
     $router->post('/api/tasks/bulk-status', [TaskApiController::class, 'bulkStatus'],   ['auth']);
     $router->post('/api/tasks/bulk-delete', [TaskApiController::class, 'bulkDelete'],   ['auth']);
 

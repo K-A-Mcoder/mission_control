@@ -8,6 +8,7 @@ use Etus\Framework\Database\Connection;
 class Team extends Model
 {
     public const STATUSES = ['active', 'inactive', 'archived'];
+    public const M_STATUSES = ['active', 'deleted', 'suspended'];
 
     protected string $table      = 'teams';
     protected string $primaryKey = 'id';
@@ -41,42 +42,78 @@ class Team extends Model
 
     // ── Collection lookups ────────────────────────────────────────────────────
 
-    /**
-     * All active teams with lead name and member count.
-     *
-     * @return array<int, array<string, mixed>>
-     */
+    // /**
+    //  * All active teams with lead name and member count.
+    //  *
+    //  * @return array<int, array<string, mixed>>
+    //  */
+    // public function allActive(): array
+    // {
+    //     return $this->db()->select(
+    //         'SELECT t.*,
+    //                 u.full_name AS lead_name,
+    //                 COUNT(DISTINCT tm.id) AS member_count
+    //          FROM   teams t
+    //          LEFT   JOIN users u            ON u.user_id = t.lead_id
+    //          LEFT   JOIN team_membership tm  ON tm.team_id = t.id
+    //          WHERE  t.deleted_at IS NULL
+    //          GROUP  BY t.id,u.full_name, tm2.role
+    //          ORDER  BY t.name ASC',
+    //     );
+    // }
+
+    // /**
+    //  * Teams the current user belongs to.
+    //  *
+    //  * @return array<int, array<string, mixed>>
+    //  */
+    // public function forUser(string $userId): array
+    // {
+    //     return $this->db()->select(
+    //         'SELECT t.*,
+    //             u.full_name               AS lead_name,
+    //             tm2.role                  AS my_role,
+    //             COUNT(DISTINCT tm_all.id) AS member_count
+    //      FROM   teams t
+    //      JOIN   team_membership tm2     ON tm2.team_id = t.id AND tm2.user_id = ?
+    //      JOIN   team_membership tm_all  ON tm_all.team_id = t.id
+    //      LEFT   JOIN users u            ON u.user_id = t.lead_id
+    //      WHERE  t.deleted_at IS NULL
+    //      GROUP  BY t.id, u.full_name, tm2.role
+    //      ORDER  BY t.name ASCC',
+    //         [$userId],
+    //     );
+    // }
+
     public function allActive(): array
     {
         return $this->db()->select(
             'SELECT t.*,
-                    u.full_name AS lead_name,
-                    COUNT(DISTINCT tm.id) AS member_count
-             FROM   teams t
-             LEFT   JOIN users u            ON u.user_id = t.lead_id
-             LEFT   JOIN team_membership tm  ON tm.team_id = t.id
-             WHERE  t.deleted_at IS NULL
-             GROUP  BY t.id
-             ORDER  BY t.name ASC',
+                u.full_name           AS lead_name,
+                COUNT(DISTINCT tm.id) AS member_count
+         FROM   teams t
+         LEFT   JOIN users u           ON u.user_id = t.lead_id
+         LEFT   JOIN team_membership tm ON tm.team_id = t.id
+         WHERE  t.deleted_at IS NULL
+         GROUP  BY t.id, u.full_name
+         ORDER  BY t.name ASC',
         );
     }
 
-    /**
-     * Teams the current user belongs to.
-     *
-     * @return array<int, array<string, mixed>>
-     */
     public function forUser(string $userId): array
     {
         return $this->db()->select(
             'SELECT t.*,
-                    u.full_name AS lead_name,
-                    tm2.role    AS my_role
-             FROM   teams t
-             JOIN   team_membership tm2 ON tm2.team_id = t.id AND tm2.user_id = ?
-             LEFT   JOIN users u        ON u.user_id = t.lead_id
-             WHERE  t.deleted_at IS NULL
-             ORDER  BY t.name ASC',
+                u.full_name               AS lead_name,
+                tm2.role                  AS my_role,
+                COUNT(DISTINCT tm_all.id) AS member_count
+         FROM   teams t
+         JOIN   team_membership tm2      ON tm2.team_id = t.id AND tm2.user_id = ?
+         JOIN   team_membership tm_all   ON tm_all.team_id = t.id
+         LEFT   JOIN users u             ON u.user_id = t.lead_id
+         WHERE  t.deleted_at IS NULL
+         GROUP  BY t.id, u.full_name, tm2.role
+         ORDER  BY t.name ASC',
             [$userId],
         );
     }
@@ -88,7 +125,7 @@ class Team extends Model
      *
      * @return array<int, array<string, mixed>>
      */
-    public function members(int $teamId): array
+    public function members(int $teamId, $m_status = 'active'): array
     {
         return $this->db()->select(
             'SELECT u.user_id, u.full_name, u.email, r.role_name,
@@ -96,9 +133,10 @@ class Team extends Model
              FROM   team_membership tm
              JOIN   users u  ON u.user_id = tm.user_id
              JOIN   roles r  ON r.id      = u.role_id
-             WHERE  tm.team_id = ?
+             WHERE  tm.team_id = ? 
+             AND tm.status = ?
              ORDER  BY tm.role DESC, u.full_name ASC',
-            [$teamId],
+            [$teamId, $m_status],
         );
     }
 
@@ -118,7 +156,7 @@ class Team extends Model
     /**
      * Add a member to the team. Silently ignores if already a member.
      */
-    public function addMember(int $teamId, string $userId,string $addedBy, string $role = 'member'): void
+    public function addMember(int $teamId, string $userId, string $addedBy, string $role = 'member'): void
     {
         $user = $this->db()->select(
             'SELECT user_id FROM users WHERE user_id = ?',
@@ -143,11 +181,18 @@ class Team extends Model
     /**
      * Remove a member from the team.
      */
-    public function removeMember(int $teamId, $userId): void
+    public function removeMember(int $teamId, $userId, $m_status = 'deleted'): void
     {
+        // remove peramently done by super_admin
+        // $this->db()->execute(
+        //     'DELETE FROM team_membership WHERE team_id = ? AND user_id = ?',
+        //     [$teamId, $userId],
+        // );
+
+        // change status to deleted don by admin and managers, team leaded
         $this->db()->execute(
-            'DELETE FROM team_membership WHERE team_id = ? AND user_id = ?',
-            [$teamId, $userId],
+            'UPDATE team_membership SET `status` = ? WHERE team_id = ? AND user_id = ?',
+            [$m_status, $teamId, $userId],
         );
     }
 

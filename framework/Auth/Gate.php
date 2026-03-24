@@ -100,6 +100,9 @@ class Gate
 
     public static function hasAnyRole(array $roles): bool
     {
+        $roles[] = 'super_admin';
+        // var_dump($roles);
+        // exit;
         foreach ($roles as $role) {
             if (static::hasRole($role)) {
                 return true;

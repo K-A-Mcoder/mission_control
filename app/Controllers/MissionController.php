@@ -30,7 +30,7 @@ class MissionController extends MainController
      */
     public function index(): Response
     {
-        $userId   = (auth_id() ?? 0);
+        $userId   = ($_SESSION['user_id'] ?? 0);
         $role     = auth_role() ?? '';
 
         $missions = match (true) {
@@ -39,6 +39,9 @@ class MissionController extends MainController
             $role === 'manager' =>  $this->mission_model->nonSecretWithTaskCounts(),
             default             =>  $this->mission_model->forUser($userId),
         };
+
+        // var_dump($userId);
+        // exit;
 
         return view('missions/Index', [
             'title'    => 'Missions',
@@ -280,7 +283,7 @@ class MissionController extends MainController
      */
     public function assignTeam(string $id): Response
     {
-        if (! Gate::hasAnyRole(['super_admin', 'admin', 'manager'])) {
+        if (! Gate::hasAnyRole(['admin', 'manager'])) {
             Flash::error('You are not authorized to assign teams.');
             return redirect("/missions/{$id}");
         }
@@ -304,7 +307,8 @@ class MissionController extends MainController
             $this->mission_model->assignTeam((int) $id, $teamId, $userId);
 
             $memberIds =  $this->mission_model->teamMemberIds($teamId);
-
+            // var_dump($memberIds);
+            // exit;
             if (! empty($memberIds)) {
                 $this->notifyUsers(
                     userIds: $memberIds,
@@ -316,8 +320,8 @@ class MissionController extends MainController
             }
 
             Flash::success('Team assigned successfully.');
-        } catch (\Throwable) {
-            Flash::error('Something went wrong while assigning the team.');
+        } catch (\Throwable $e) {
+            Flash::error('Something went wrong while assigning the team.' . $e);
         }
 
         return redirect("/missions/{$id}");
@@ -365,7 +369,7 @@ class MissionController extends MainController
      */
     private function notifyUsers(
         array $userIds,
-        int $senderId,
+        string $senderId,
         string $title,
         string $body,
         string $url,
@@ -375,7 +379,7 @@ class MissionController extends MainController
 
         foreach ($userIds as $uid) {
             $db->execute(
-                'INSERT INTO notifications (user_id, sender_id, title, body, url, is_read, created_at)
+                'INSERT INTO notifications (`user_id`, sender_id, title, body, `url`, is_read, created_at)
                  VALUES (?, ?, ?, ?, ?, 0, ?)',
                 [$uid, $senderId, $title, $body, $url, $now],
             );

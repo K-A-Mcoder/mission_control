@@ -131,7 +131,7 @@ class ChatMessage extends Model
      */
     public function send(
         int    $roomId,
-        int    $senderId,
+        string    $senderId,
         string $plaintext,
         string $type     = self::TYPE_TEXT,
         ?int   $parentId = null,

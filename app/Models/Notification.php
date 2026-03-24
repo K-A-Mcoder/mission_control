@@ -127,12 +127,12 @@ class Notification extends Model
      * @param int|int[] $userIds
      */
     public static function send(
-        int|array $userIds,
+        string|array $userIds,
         string    $title,
         string    $body,
         string    $url      = '',
         string    $type     = self::TYPE_GENERAL,
-        ?int      $senderId = null,
+        ?string      $senderId = null,
         ?int      $relatedId   = null,
         ?string   $relatedType = null,
     ): void {

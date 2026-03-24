@@ -50,7 +50,7 @@ class ChatApiController extends BaseController
             $room = $this->rooms->findWithParticipants($roomId);
             $isLeadInRoom = false;
             foreach ($room['participants'] as $p) {
-                if ((int)$p['user_id'] === $userId && $p['is_room_admin']) {
+                if ($p['user_id'] === $userId && $p['is_room_admin']) {
                     $isLeadInRoom = true;
                     break;
                 }
@@ -178,7 +178,7 @@ class ChatApiController extends BaseController
     {
         $participants = $this->rooms->participantIds($roomId);
         $targets      = array_filter($participants, fn($uid) => $uid !== $senderId);
-
+        
         if (empty($targets)) return;
 
         $senderName = $_SESSION['user_name'] ?? 'Someone';

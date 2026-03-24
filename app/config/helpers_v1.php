@@ -309,3 +309,5 @@ if(! function_exists('setting')) {
         return \App\Models\Setting::get($key, $default);
     }
 }
+
+// ── teams ────────────────────────────────────────────────────────────────────

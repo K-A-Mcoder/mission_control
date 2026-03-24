@@ -786,18 +786,20 @@ $partCount      = count($participants);
                 }),
             });
             const data = await res.json();
-
+            console.log(data)
             if (data.success && data.message) {
                 renderMessage(data.message, /* mine */ true);
                 lastMsgId = Math.max(lastMsgId, data.message.id);
                 scrollToBottom(true);
             } else {
+
                 window.toastError?.(data.message ?? 'Failed to send message.');
                 // Restore input on failure
                 if (msgInput) msgInput.value = body;
             }
-        } catch {
+        } catch (e) {
             window.toastError?.('Network error — please retry.');
+            console.log(e);
             if (msgInput) msgInput.value = body;
         }
 
@@ -840,7 +842,8 @@ $partCount      = count($participants);
             if (msgs.length > 0 && isAtBottom) scrollToBottom(true);
 
         } catch {
-            /* silent */ }
+            /* silent */
+        }
     }
 
     // ══════════════════════════════════════════════════════════════════════════════
