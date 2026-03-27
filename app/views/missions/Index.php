@@ -4,7 +4,7 @@
     <h2 class="text-xl font-semibold text-dark">Missions</h2>
     <?php if (can('create-missions') || has_any_role(['admin', 'manager'])): ?>
     <a href="/missions/create" class="btn btn-primary text-sm px-4 py-2">
-        + New Mission+
+        + New Mission
     </a>
     <?php endif; ?>
 </div>
