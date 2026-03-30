@@ -15,17 +15,19 @@ class LogoutController extends AuthMasterController
 
     /**
      * Handle logout.
-     * Route: POST /logout — apply ['auth', 'csrf'] middleware in web.php.
+     * Route: POST /logout — middleware: ['auth', 'csrf']
      */
     public function __invoke(): Response
     {
-        $userId = $this->authId() ?? null;
+        // ── 1. Grab user ID BEFORE any session work ───────────────────────────
+        $userId = $this->authId();
 
-        // Clear remember-me cookie and token if one exists
-        if ($userId && isset($_COOKIE['remember_me'])) {
-            $this->user_model->clearRememberToken($userId);
+        // ── 2. Clear remember-me token ────────────────────────────────────────
+        if (isset($_COOKIE['remember_me'])) {
+            if ($userId) {
+                $this->user_model->clearRememberToken($userId);
+            }
 
-            // Expire the cookie immediately
             setcookie('remember_me', '', [
                 'expires'  => time() - 3600,
                 'path'     => '/',
@@ -33,34 +35,45 @@ class LogoutController extends AuthMasterController
                 'httponly' => true,
                 'samesite' => 'Strict',
             ]);
+
+            unset($_COOKIE['remember_me']);
         }
 
-        // Destroy session data
+        // ── 3. Wipe in-memory session data ────────────────────────────────────
         $_SESSION = [];
 
-        // Destroy the session cookie
+        // ── 4. Expire the session cookie in the browser ───────────────────────
         if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                [
-                    'expires'  => time() - 3600,
-                    'path'     => $params['path'],
-                    'domain'   => $params['domain'],
-                    'secure'   => $params['secure'],
-                    'httponly' => $params['httponly'],
-                    'samesite' => 'Strict',
-                ]
-            );
+            setcookie(session_name(), '', [
+                'expires'  => time() - 3600,
+                'path'     => $params['path'],
+                'domain'   => $params['domain'],
+                'secure'   => $params['secure'],
+                'httponly' => $params['httponly'],
+                'samesite' => 'Strict',
+            ]);
         }
 
+        // ── 5. Destroy the on-disk session data ───────────────────────────────
         session_destroy();
 
-        // Start a fresh session just long enough to flash the message
+        // ── 6. Force a brand-new session ID BEFORE restarting ─────────────────
+        // This is the critical step — do NOT use session_regenerate_id() here.
+        // After session_destroy(), set a fresh ID manually, then start clean.
+        session_id(bin2hex(random_bytes(16)));
         session_start();
+
+        // ── 7. Write only what the new session needs ──────────────────────────
+        $_SESSION['just_logged_out'] = true;
         Flash::success('You have been logged out successfully.');
 
+        // ── 8. Commit and close NOW — before the framework's shutdown hooks ───
+        // Prevents the framework response pipeline from writing anything back
+        // over this clean session.
+        session_write_close();
+
+        // ── 9. Redirect ───────────────────────────────────────────────────────
         return redirect('/login');
     }
 }

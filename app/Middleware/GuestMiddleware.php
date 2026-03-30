@@ -15,14 +15,16 @@ class GuestMiddleware implements MiddlewareInterface
      */
     public function handle(Request $request, callable $next): Response
     {
-        if (!empty($_SESSION['user_id'])) {
-            return new Response('', 302, ['Location' => '/login']);
+        // Treat user as guest if user_id is absent, zero, or session was
+        // just freshly created after a logout (just_logged_out flag).
+        $isAuthenticated = isset($_SESSION['user_id'])
+            && (int) $_SESSION['user_id'] > 0
+            && empty($_SESSION['just_logged_out']);  // ← guard against race
+
+        if ($isAuthenticated) {
+            return new Response('', 302, ['Location' => '/dashboard']);
         }
 
-        $response = $next();
-
-        // After the controller runs...
-
-        return $response;
+        return $next();
     }
 }

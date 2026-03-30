@@ -8,12 +8,9 @@
     <meta name="csrf-token" content="<?= csrf_token() ?>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-        rel="stylesheet"
+    <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <link rel="stylesheet" href="assets/css/landing.css" />
 </head>
@@ -33,7 +30,7 @@
                 ETUS
             </a>
             <div class="nav-links">
-                <a href="#modules">Modules</a>
+                <a href="#modules">Modules <?= $_SESSION['user_id'] ?></a>
                 <a href="#security">Security</a>
                 <a href="#roles">Access</a>
                 <a href="#api">API</a>
@@ -41,9 +38,7 @@
                 <a href="docs.html">Docs</a>
             </div>
             <a href="/login" class="nav-cta">
-                <i
-                    class="fa-solid fa-arrow-right-to-bracket"
-                    style="font-size: 0.625rem"></i>
+                <i class="fa-solid fa-arrow-right-to-bracket" style="font-size: 0.625rem"></i>
                 Launch Platform
             </a>
         </div>
@@ -77,9 +72,7 @@
 
             <div class="hero-actions">
                 <a href="/login" class="btn-primary">
-                    <i
-                        class="fa-solid fa-shield-halved"
-                        style="font-size: 0.875rem"></i>
+                    <i class="fa-solid fa-shield-halved" style="font-size: 0.875rem"></i>
                     Access Platform
                 </a>
                 <a href="docs.html" class="btn-secondary">
@@ -152,8 +145,8 @@
                 </div>
                 <div class="t-out">{"success":true,"messages":[</div>
                 <div class="t-out">
-                    &nbsp;&nbsp;{"id":42,"msg_type":"order","body":"<span
-                        style="color: #f87171">All units converge on grid ref 442-B at 0600.</span>",
+                    &nbsp;&nbsp;{"id":42,"msg_type":"order","body":"<span style="color: #f87171">All units converge on
+                        grid ref 442-B at 0600.</span>",
                 </div>
                 <div class="t-out">
                     &nbsp;&nbsp;&nbsp;"sender_name":"Col. Reeves","time_ago":"2m
@@ -419,8 +412,7 @@
                             <p class="sec-item-title">Activity Audit Log</p>
                             <p class="sec-item-desc">
                                 Every create, update, and delete operation logged to
-                                <code
-                                    style="
+                                <code style="
                       font-family: var(--mono);
                       font-size: 0.75em;
                       color: var(--green);
@@ -446,8 +438,8 @@
                     <div class="ev-label">// AES-256-GCM message encryption</div>
                     <br />
                     <div>
-                        <span style="color: #a78bfa">$key</span> = hash_hmac(<span
-                            class="s">'sha256'</span>, APP_CHAT_KEY,
+                        <span style="color: #a78bfa">$key</span> = hash_hmac(<span class="s">'sha256'</span>,
+                        APP_CHAT_KEY,
                     </div>
                     <div>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
@@ -455,8 +447,7 @@
                     </div>
                     <br />
                     <div>
-                        <span style="color: #a78bfa">$iv</span> = random_bytes(<span
-                            style="color: #fb923c">12</span>);
+                        <span style="color: #a78bfa">$iv</span> = random_bytes(<span style="color: #fb923c">12</span>);
                     </div>
                     <div>
                         <span style="color: #a78bfa">$tag</span> =
@@ -596,40 +587,59 @@
             <div class="api-grid">
                 <div class="endpoint-list reveal">
                     <div class="endpoint">
-                        <span class="method get">GET</span><span class="endpoint-path">/api/chat/{id}/poll</span><span class="endpoint-desc">Poll new messages</span>
+                        <span class="method get">GET</span><span class="endpoint-path">/api/chat/{id}/poll</span><span
+                            class="endpoint-desc">Poll new messages</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method post">POST</span><span class="endpoint-path">/api/chat/{id}/send</span><span class="endpoint-desc">Send encrypted message</span>
+                        <span class="method post">POST</span><span class="endpoint-path">/api/chat/{id}/send</span><span
+                            class="endpoint-desc">Send encrypted message</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method post">POST</span><span class="endpoint-path">/api/chat/messages/{id}/ack</span><span class="endpoint-desc">Acknowledge order</span>
+                        <span class="method post">POST</span><span
+                            class="endpoint-path">/api/chat/messages/{id}/ack</span><span
+                            class="endpoint-desc">Acknowledge order</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method get">GET</span><span class="endpoint-path">/api/tasks</span><span class="endpoint-desc">List tasks</span>
+                        <span class="method get">GET</span><span class="endpoint-path">/api/tasks</span><span
+                            class="endpoint-desc">List tasks</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method post">POST</span><span class="endpoint-path">/api/tasks/{id}/status</span><span class="endpoint-desc">Update task status</span>
+                        <span class="method post">POST</span><span
+                            class="endpoint-path">/api/tasks/{id}/status</span><span class="endpoint-desc">Update task
+                            status</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method post">POST</span><span class="endpoint-path">/api/tasks/bulk-status</span><span class="endpoint-desc">Bulk status change</span>
+                        <span class="method post">POST</span><span
+                            class="endpoint-path">/api/tasks/bulk-status</span><span class="endpoint-desc">Bulk status
+                            change</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method get">GET</span><span class="endpoint-path">/api/teams/{id}</span><span class="endpoint-desc">Team + members</span>
+                        <span class="method get">GET</span><span class="endpoint-path">/api/teams/{id}</span><span
+                            class="endpoint-desc">Team + members</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method post">POST</span><span class="endpoint-path">/api/teams/{id}/members</span><span class="endpoint-desc">Add member</span>
+                        <span class="method post">POST</span><span
+                            class="endpoint-path">/api/teams/{id}/members</span><span class="endpoint-desc">Add
+                            member</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method get">GET</span><span class="endpoint-path">/api/notifications/poll</span><span class="endpoint-desc">Bell poll</span>
+                        <span class="method get">GET</span><span
+                            class="endpoint-path">/api/notifications/poll</span><span class="endpoint-desc">Bell
+                            poll</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method post">POST</span><span class="endpoint-path">/api/notifications/read-all</span><span class="endpoint-desc">Mark all read</span>
+                        <span class="method post">POST</span><span
+                            class="endpoint-path">/api/notifications/read-all</span><span class="endpoint-desc">Mark all
+                            read</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method delete">POST</span><span class="endpoint-path">/api/chat/messages/{id}/delete</span><span class="endpoint-desc">Soft delete</span>
+                        <span class="method delete">POST</span><span
+                            class="endpoint-path">/api/chat/messages/{id}/delete</span><span class="endpoint-desc">Soft
+                            delete</span>
                     </div>
                     <div class="endpoint">
-                        <span class="method get">GET</span><span class="endpoint-path">/api/missions</span><span class="endpoint-desc">List missions</span>
+                        <span class="method get">GET</span><span class="endpoint-path">/api/missions</span><span
+                            class="endpoint-desc">List missions</span>
                     </div>
                 </div>
 
@@ -746,15 +756,13 @@
                     <h3>Clone & Configure</h3>
                     <p>
                         Copy
-                        <code
-                            style="
+                        <code style="
                   font-family: var(--mono);
                   font-size: 0.8em;
                   color: var(--green);
                 ">.env.example</code>
                         to
-                        <code
-                            style="
+                        <code style="
                   font-family: var(--mono);
                   font-size: 0.8em;
                   color: var(--green);
@@ -788,14 +796,12 @@
                     <h3>Point Web Server</h3>
                     <p>
                         Point your Nginx or Apache document root to
-                        <code
-                            style="
+                        <code style="
                   font-family: var(--mono);
                   font-size: 0.8em;
                   color: var(--green);
                 ">/public</code>. All traffic routes through
-                        <code
-                            style="
+                        <code style="
                   font-family: var(--mono);
                   font-size: 0.8em;
                   color: var(--green);
@@ -840,9 +846,7 @@
         <div class="footer-inner">
             <div class="footer-left">
                 <div class="logo-mark" style="width: 1.5rem; height: 1.5rem">
-                    <i
-                        class="fa-solid fa-bolt"
-                        style="font-size: 0.55rem; color: #080c0f"></i>
+                    <i class="fa-solid fa-bolt" style="font-size: 0.55rem; color: #080c0f"></i>
                 </div>
                 <span class="footer-copy">ETUS Mission Operations Platform &copy; 2025</span>
             </div>
