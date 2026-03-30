@@ -201,7 +201,7 @@ class Mission extends Model
     /**
      * Soft delete a single mission.
      */
-    public function softDelete(int $id, int $deletedBy): int
+    public function softDelete(int $id, int|string $deletedBy): int
     {
         return $this->db()->execute(
             'UPDATE missions SET deleted_at = ?, deleted_by = ? WHERE id = ? AND deleted_at IS NULL',
@@ -214,7 +214,7 @@ class Mission extends Model
      *
      * @param  array<int, int> $ids
      */
-    public function softDeleteMany(array $ids, int $deletedBy): int
+    public function softDeleteMany(array $ids, int|string  $deletedBy): int
     {
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
 

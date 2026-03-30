@@ -269,8 +269,8 @@ class MissionController extends MainController
         try {
             $this->mission_model->softDelete((int) $id, $userId);
             Flash::success("Mission \"{$mission['title']}\" was deleted.");
-        } catch (\Throwable) {
-            Flash::error('Something went wrong while deleting.');
+        } catch (\Throwable $e) {
+            Flash::error('Something went wrong while deleting.'. $e);
         }
 
         return redirect('/missions');

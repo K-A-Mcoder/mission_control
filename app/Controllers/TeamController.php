@@ -285,12 +285,12 @@ class TeamController extends MainController
 
     public function destroy(string $id): Response
     {
-        if (! Gate::hasRole('admin')) {
+        if (! Gate::hasAnyRole(['admin'])) {
             Flash::error('Only admins can delete teams.');
             return redirect('/teams');
         }
 
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($_SESSION['user_id'] ?? 0);
         $team   = $this->team->findActive((int) $id);
 
         if (! $team) {
