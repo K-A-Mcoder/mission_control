@@ -278,7 +278,7 @@ class TaskController extends MainController
             return $task;
         }
 
-        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        $userId = ($_SESSION['user_id'] ?? 0);
         $body   = trim($this->request->input('body', ''));
 
         if (empty($body)) {
@@ -336,8 +336,8 @@ class TaskController extends MainController
         try {
             $this->task->softDelete((int) $id, $userId);
             Flash::success("Task \"{$task['title']}\" deleted.");
-        } catch (\Throwable) {
-            Flash::error('Something went wrong while deleting.');
+        } catch (\Throwable $e) {
+            Flash::error('Something went wrong while deleting.'. $e);
         }
 
         return redirect($redirectTo);

@@ -121,7 +121,7 @@ class ReportController extends MainController
 
         // Validate team access
         $team =  $this->team_model->findActive($teamId);
-        if (! $team || (! Gate::hasAnyRole(['admin', 'super_admin']) && ! $this->team_model->hasMember($teamId, $userId))) {
+        if (! $team || (! Gate::hasAnyRole(['admin']) && ! $this->team_model->hasMember($teamId, $userId))) {
             Flash::error('Invalid team selection.');
             return redirect('/reports/create');
         }
@@ -153,18 +153,18 @@ class ReportController extends MainController
 
         try {
             $reportId = (int) $this->report_model->create([
-                'type'             => $type,
+                'report_type'      => $type,
                 'team_id'          => $teamId,
                 'mission_id'       => $missionId ?: null,
                 'author_id'        => $userId,
                 'title'            => $title,
                 'summary'          => $summary,
-                'challenges'       => $challenges,
+                'blockers'         => $challenges,
                 'actions_taken'    => $actions_taken,
                 'next_steps'       => $next_steps,
                 'recommendations'  => $recommendations,
-                'context_info'     => $context_info,
-                'attachments_note' => $attachmentsNote,
+                'context_data'     => $context_info,
+                'attachments'      => $attachmentsNote,
                 'status'           => $status,
                 'submitted_at'     => $status === $this->report_model::STATUS_SUBMITTED ? date('Y-m-d H:i:s') : null,
                 'parent_report_id' => $parentReportId ?: null,
@@ -182,7 +182,7 @@ class ReportController extends MainController
             Flash::success($msg);
             return redirect("/reports/{$reportId}");
         } catch (\Throwable $e) {
-            Flash::error('Something went wrong. Please try again.');
+            Flash::error('Something went wrong. Please try again.' . $e);
             return redirect('/reports/create');
         }
     }

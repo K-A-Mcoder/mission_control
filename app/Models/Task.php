@@ -263,17 +263,17 @@ class Task extends Model
         );
     }
 
-    public function addComment(int $taskId, int $userId, string $body): int
+    public function addComment(int $taskId, string $userId, string $body): int
     {
         return $this->db()->insert(
-            'INSERT INTO task_comments (task_id, user_id, body, created_at) VALUES (?, ?, ?, ?)',
+            'INSERT INTO task_comments (task_id, `user_id`, body, created_at) VALUES (?, ?, ?, ?)',
             [$taskId, $userId, $body, date('Y-m-d H:i:s')],
         );
     }
 
     // ── Soft delete ───────────────────────────────────────────────────────────
 
-    public function softDelete(int $taskId, int $deletedBy): void
+    public function softDelete(int $taskId, string $deletedBy): void
     {
         $this->db()->execute(
             'UPDATE tasks SET deleted_at = ?, deleted_by = ? WHERE id = ?',
