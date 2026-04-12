@@ -83,8 +83,10 @@
         <h3 class="text-sm font-semibold text-dark mb-4">Task Status</h3>
         <div class="relative" style="height:200px">
             <canvas id="taskStatusChart"></canvas>
+            <?= $_SESSION['just_logged_out']??'bad' ?>
         </div>
     </div>
+
 
     <!-- Recent tasks table -->
     <div class="col-span-2 bg-white dark:bg-dark-card border border-b-color rounded-lg p-5">

@@ -48,7 +48,7 @@ class TaskApiController extends ApiMasterController
         $userId  = ($this->authId() ?? 0);
         $filters = $this->extractFilters();
 
-        if (! Gate::hasAnyRole(['admin', 'manager', 'super_admin'])) {
+        if (! Gate::hasAnyRole(['admin', 'manager'])) {
             $filters['scope_user'] = $userId;
         }
 

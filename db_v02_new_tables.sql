@@ -298,3 +298,26 @@ ALTER TABLE `missions` ADD `updated_by` CHAR(36) CHARACTER SET utf8mb4 COLLATE u
 ALTER TABLE `team_membership` ADD `status` VARCHAR(30) NOT NULL DEFAULT 'active' AFTER `added_by`; 
 ALTER TABLE `notifications` ADD `type` VARCHAR(100) NOT NULL AFTER `body`;
 ALTER TABLE `notifications` ADD `related_id` INT NOT NULL AFTER `type`, ADD `relatedType` VARCHAR(100) NOT NULL AFTER `related_id`;
+
+
+CREATE TABLE report_reviews (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    report_id INT UNSIGNED NOT NULL,
+    reviewer_id CHAR(36) NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    comment TEXT NULL,
+    created_at DATETIME NOT NULL,
+
+    -- Optional: indexes for performance
+    INDEX idx_report_id (report_id),
+    INDEX idx_reviewer_id (reviewer_id),
+
+    -- Optional: foreign key constraints (if tables exist)
+    FOREIGN KEY (report_id) REFERENCES reports(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (reviewer_id) REFERENCES users(user_id)
+        ON DELETE CASCADE
+);
+
+ALTER TABLE `notifications` CHANGE `related_id` `related_id` INT NULL;

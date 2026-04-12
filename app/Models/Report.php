@@ -215,7 +215,7 @@ class Report extends Model
     /**
      * Add a review action to a report.
      */
-    public function addReview(int $reportId, int $reviewerId, string $action, ?string $comment = null): void
+    public function addReview(int $reportId, string $reviewerId, string $action, ?string $comment = null): void
     {
         if (! in_array($action, self::REVIEW_ACTIONS, true)) {
             throw new \InvalidArgumentException("Invalid review action: [{$action}].");

@@ -35,7 +35,7 @@ class ReportController extends MainController
     {
         $userId = ($this->authId() ?? 0);
 
-        if (Gate::hasAnyRole(['admin', 'super_admin', 'manager'])) {
+        if (Gate::hasAnyRole(['admin', 'manager'])) {
             // Managers see all lead reports escalated to them (by mission)
             $reports = $this->report_model->inbox($userId);
             $view    = 'reports/Inbox';
@@ -135,9 +135,12 @@ class ReportController extends MainController
         $recommendations = trim($this->request->input('recommendations', ''));
         $context_info    = trim($this->request->input('context_info', ''));
         $attachmentsNote = trim($this->request->input('attachments_note', ''));
-        $missionId       = (int) $this->request->input('mission_id', 0);
+        // $missionId       = (int) $this->request->input('mission_id', 0);
         $parentReportId  = (int) $this->request->input('parent_report_id', 0);
 
+        # Get mission from the Team Active mission
+        $missionId = $this->team_model->current_mission($teamId);
+        // dd($missionId['id']);
         // Validation
         $errors = [];
         if (empty($title))   $errors[] = 'Report title is required.';
@@ -155,7 +158,7 @@ class ReportController extends MainController
             $reportId = (int) $this->report_model->create([
                 'report_type'      => $type,
                 'team_id'          => $teamId,
-                'mission_id'       => $missionId ?: null,
+                'mission_id'       => $missionId['id'] ?: null,
                 'author_id'        => $userId,
                 'title'            => $title,
                 'summary'          => $summary,
@@ -163,8 +166,8 @@ class ReportController extends MainController
                 'actions_taken'    => $actions_taken,
                 'next_steps'       => $next_steps,
                 'recommendations'  => $recommendations,
-                'context_data'     => $context_info,
-                'attachments'      => $attachmentsNote,
+                'context_data'     => json_encode($context_info ?? []),
+                'attachments'      => json_encode($attachmentsNote?? []),
                 'status'           => $status,
                 'submitted_at'     => $status === $this->report_model::STATUS_SUBMITTED ? date('Y-m-d H:i:s') : null,
                 'parent_report_id' => $parentReportId ?: null,
@@ -199,6 +202,7 @@ class ReportController extends MainController
         $canReview = $this->canReview($report, $userId);
         $canEscalate = $this->canEscalate($report, $userId);
 
+        // dd($canReview);
         // Mark related notification as read
         $this->markNotificationRead($userId, 'report', (int) $id);
 
@@ -224,7 +228,7 @@ class ReportController extends MainController
 
         $userId = ($_SESSION['user_id'] ?? 0);
 
-        if ((int) $report['author_id'] !== $userId) {
+        if ($report['author_id'] !== $userId) {
             Flash::error('You can only edit your own reports.');
             return redirect("/reports/{$id}");
         }
@@ -423,6 +427,7 @@ class ReportController extends MainController
 
         // Access: author, their team lead, or admin/manager
         $isAuthor  = $report['author_id'] === $userId;
+        // dd($isAuthor);
         $isLead    = $report['team_lead_id'] === $userId;
         $isManager = Gate::hasAnyRole(['admin', 'super_admin', 'manager']);
 
@@ -436,16 +441,22 @@ class ReportController extends MainController
 
     private function canReview(array $report, $userId): bool
     {
+        // echo 'from step 0 <br>';
         // Member reports → reviewed by team lead
-        if ($report['type'] === $this->report_model::TYPE_MEMBER && (int) $report['team_lead_id'] === $userId) {
+        if ($report['report_type'] === $this->report_model::TYPE_MEMBER &&  $report['team_lead_id'] === $userId) {
+            // echo 'to step 2 <br>';
+            // dd($report['report_type'] === $this->report_model::TYPE_MEMBER &&  $report['team_lead_id'] === $userId);
             return in_array($report['status'], [$this->report_model::STATUS_SUBMITTED, $this->report_model::STATUS_UNDER_REVIEW], true);
         }
 
         // Lead reports → reviewed by manager/admin
-        if ($report['type'] === $this->report_model::TYPE_LEAD && Gate::hasAnyRole(['admin', 'super_admin', 'manager'])) {
+        if ($report['report_type'] === $this->report_model::TYPE_LEAD && Gate::hasAnyRole(['admin','manager'])) {
+            // echo 'to step 3 <br>' ;
+            // dd($report['report_type'] === $this->report_model::TYPE_LEAD && Gate::hasAnyRole(['admin', 'manager']));
             return in_array($report['status'], [$this->report_model::STATUS_SUBMITTED, $this->report_model::STATUS_UNDER_REVIEW], true);
         }
-
+        // echo 'to step 4 <br>';
+        // dd($report);
         return false;
     }
 
@@ -476,7 +487,7 @@ class ReportController extends MainController
         return $row ? (int) $row['id'] : null;
     }
 
-    private function notifyOnSubmit(int $reportId, string $type, ?array $team, int $authorId): void
+    private function notifyOnSubmit(int $reportId, string $type, ?array $team, string $authorId): void
     {
         if (!setting('notifications.on_report_submit', true)) return;
 
@@ -497,7 +508,7 @@ class ReportController extends MainController
         }
     }
 
-    private function notifyAuthorOfReview(array $report, int $reviewerId, string $action, string $comment): void
+    private function notifyAuthorOfReview(array $report, string $reviewerId, string $action, string $comment): void
     {
         if (!setting('notifications.on_report_review', true)) return;
 

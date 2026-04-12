@@ -197,4 +197,6 @@ class ChatController extends BaseController
         );
         return $row !== null;
     }
+
+    
 }

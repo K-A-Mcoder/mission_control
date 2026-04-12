@@ -127,10 +127,11 @@ class Task extends Model
         }
 
         if (! empty($filters['scope_user'])) {
-            $uid      = (int) $filters['scope_user'];
-            $where[]  = '(tk.assigned_to = ? OR tk.team_id IN (SELECT team_id FROM team_membership WHERE user_id = ?))';
+            $uid      = (string) $filters['scope_user'];
+            $where[]  = '(tk.assigned_to = ? OR tk.team_id IN (SELECT team_id FROM team_membership WHERE user_id = ? AND status != ?))';
             $params[] = $uid;
             $params[] = $uid;
+            $params[] =  "deleted";
         }
 
         $w = implode(' AND ', $where);

@@ -92,14 +92,35 @@ class Team extends Model
                 u.full_name           AS lead_name,
                 COUNT(DISTINCT tm.id) AS member_count
          FROM   teams t
-         LEFT   JOIN users u           ON u.user_id = t.lead_id
-         LEFT   JOIN team_membership tm ON tm.team_id = t.id
+         LEFT   JOIN users u 
+                ON u.user_id = t.lead_id
+         LEFT   JOIN team_membership tm 
+                ON tm.team_id = t.id 
+                AND tm.status != ?
          WHERE  t.deleted_at IS NULL
          GROUP  BY t.id, u.full_name
          ORDER  BY t.name ASC',
+            ["deleted"]
         );
     }
 
+    public function forUser_v1(string $userId): array
+    {
+        return $this->db()->select(
+            'SELECT t.*,
+                u.full_name               AS lead_name,
+                tm2.role                  AS my_role,
+                COUNT(DISTINCT tm_all.id) AS member_count
+         FROM   teams t
+         JOIN   team_membership tm2      ON tm2.team_id = t.id AND tm2.user_id = ? AND tm.status != ?
+         JOIN   team_membership tm_all   ON tm_all.team_id = t.id
+         LEFT   JOIN users u             ON u.user_id = t.lead_id
+         WHERE  t.deleted_at IS NULL
+         GROUP  BY t.id, u.full_name, tm2.role
+         ORDER  BY t.name ASC',
+            [$userId, "deleted"],
+        );
+    }
     public function forUser(string $userId): array
     {
         return $this->db()->select(
@@ -108,13 +129,19 @@ class Team extends Model
                 tm2.role                  AS my_role,
                 COUNT(DISTINCT tm_all.id) AS member_count
          FROM   teams t
-         JOIN   team_membership tm2      ON tm2.team_id = t.id AND tm2.user_id = ?
-         JOIN   team_membership tm_all   ON tm_all.team_id = t.id
-         LEFT   JOIN users u             ON u.user_id = t.lead_id
+         JOIN   team_membership tm2      
+                ON tm2.team_id = t.id 
+                AND tm2.user_id = ? 
+                AND tm2.status != ?
+         LEFT   JOIN team_membership tm_all   
+                ON tm_all.team_id = t.id 
+                AND tm_all.status != ?
+         LEFT   JOIN users u             
+                ON u.user_id = t.lead_id
          WHERE  t.deleted_at IS NULL
          GROUP  BY t.id, u.full_name, tm2.role
          ORDER  BY t.name ASC',
-            [$userId],
+            [$userId, "deleted", "deleted"],
         );
     }
 
@@ -281,6 +308,28 @@ class Team extends Model
              ORDER  BY mta.assigned_at DESC',
             [$teamId],
         );
+    }
+
+    /**
+     * Get current active mission assigned to a team.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function current_mission(int $teamId): ?array
+    {
+        $result = $this->db()->select(
+            'SELECT m.*, mta.assigned_at
+         FROM   missions m
+         JOIN   mission_team_assignments mta ON mta.mission_id = m.id
+         WHERE  mta.team_id   = ?
+         AND    m.status     != ?
+         AND    m.deleted_at  IS NULL
+         ORDER  BY mta.assigned_at DESC
+         LIMIT 1',
+            [$teamId, 'closed'],
+        );
+
+        return $result[0] ?? null;
     }
 
 
